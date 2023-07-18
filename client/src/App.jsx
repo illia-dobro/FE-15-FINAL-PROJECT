@@ -1,5 +1,5 @@
 import './App.css'
-import Modal from './modules/common/components/Modaj'
+import Modal from './modules/common/components/Modal'
 
 function App() {
 
