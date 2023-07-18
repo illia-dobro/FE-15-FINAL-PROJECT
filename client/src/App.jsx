@@ -1,12 +1,14 @@
 import './App.css'
-import Card from './Card'
+import Modal from './modules/common/components/Modaj'
 
 function App() {
 
   return (
     <>
       <h1 className="text-3xl font-bold p-8">
-      <Card/>
+      <Modal>
+        test
+       </Modal>
     </h1>
     </>
   )
