@@ -3,8 +3,8 @@ import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
-export default function Modal({ children }) {
-  const [open, setOpen] = useState(true);
+export default function Modal({ children, openModal }) {
+  const [open, setOpen] = useState(openModal);
 
   const cancelButtonRef = useRef(null);
 
@@ -43,7 +43,7 @@ export default function Modal({ children }) {
                 {children}{' '}
                 <XMarkIcon
                   onClick={() => setOpen(false)}
-                  className="h-6 w-6 text-red-600 cursor-pointer absolute top-1 right-1"
+                  className="h-6 w-6 text-zinc-600 cursor-pointer absolute top-1 right-1"
                   aria-hidden="true"
                 />
               </Dialog.Panel>
@@ -57,4 +57,5 @@ export default function Modal({ children }) {
 
 Modal.propTypes = {
   children: PropTypes.node,
+  openModal: PropTypes.bool
 };
