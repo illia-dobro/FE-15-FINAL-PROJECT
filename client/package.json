@@ -1,32 +1,58 @@
 {
-  "name": "online-store",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@headlessui/react": "^1.7.15",
-    "@heroicons/react": "^2.0.18",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "devDependencies": {
-    "@tailwindcss/forms": "^0.5.4",
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.6",
-    "@vitejs/plugin-react": "^4.0.1",
-    "autoprefixer": "^10.4.14",
-    "eslint": "^8.44.0",
-    "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.1",
-    "postcss": "^8.4.26",
-    "tailwindcss": "^3.3.3",
-    "vite": "^4.4.0"
-  }
+    "name": "online-store",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "lint": "eslint --fix --ext .ts,.tsx ./src",
+        "lint:write": "eslint --debug src/ --fix",
+        "prettier": "prettier --write src/**/*.js",
+        "preview": "vite preview"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.(js|jsx)": [
+            "npm run lint",
+            "npm run lint:write",
+            "git add"
+        ]
+    },
+    "dependencies": {
+        "@headlessui/react": "^1.7.15",
+        "@heroicons/react": "^2.0.18",
+        "eslint-plugin-import": "^2.27.5",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+    },
+    "devDependencies": {
+        "@tailwindcss/forms": "^0.5.4",
+        "@types/react": "^18.2.14",
+        "@types/react-dom": "^18.2.6",
+        "@vitejs/plugin-react": "^4.0.1",
+        "autoprefixer": "^10.4.14",
+        "babel-eslint": "^8.2.3",
+        "eslint": "^8.44.0",
+        "eslint-config-airbnb": "^17.0.0",
+        "eslint-config-jest-enzyme": "^6.0.2",
+        "eslint-plugin-babel": "^5.1.0",
+        "eslint-plugin-import": "^2.12.0",
+        "eslint-plugin-jest": "^21.18.0",
+        "eslint-config-prettier": "^8.8.0",
+        "eslint-plugin-jsx-a11y": "^6.7.1",
+        "eslint-plugin-react": "^7.32.2",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "eslint-plugin-react-refresh": "^0.4.1",
+        "husky": "^1.1.2",
+        "lint-staged": "^7.3.0",
+        "postcss": "^8.4.26",
+        "prettier": "^3.0.0",
+        "tailwindcss": "^3.3.3",
+        "vite": "^4.4.0"
+    }
 }

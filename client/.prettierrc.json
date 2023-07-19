@@ -1,0 +1,8 @@
+{
+    "trailingComma": "all",
+    "tabWidth": 4,
+    "semi": true,
+    "singleQuote": false,
+	 "jsxBracketSameLine": true,
+	 "prettier": "prettier  — write src/**/*.js"
+}
