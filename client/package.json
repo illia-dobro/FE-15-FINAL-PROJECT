@@ -9,7 +9,8 @@
         "lint": "eslint --fix --ext .ts,.tsx ./src",
         "lint:write": "eslint --debug src/ --fix",
         "prettier": "prettier --write src/**/*.js",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "prepare": "husky install"
     },
     "husky": {
         "hooks": {
@@ -17,10 +18,11 @@
         }
     },
     "lint-staged": {
-        "*.(js|jsx)": [
-            "npm run lint",
-            "npm run lint:write",
-            "git add"
+        "*.{js,ts,tsx, jsx}": [
+            "eslint --quiet --fix"
+        ],
+        "*.{json,md,html,js,jsx,ts,tsx}": [
+            "prettier --write"
         ]
     },
     "dependencies": {
