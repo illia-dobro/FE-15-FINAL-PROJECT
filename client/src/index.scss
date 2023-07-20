@@ -3,7 +3,9 @@
 @tailwind utilities;
 /* Colors */
 $primary: rgba(245, 236, 227, 1);
-$secondary: rgba(85, 85, 85, 1);
+$secondary: rgba(238, 228, 218, 1);
+$dark:rgba(85, 85, 85, 1);
+$dark-hover:rgb(48, 48, 48);
 
 /* Mixins */
 @mixin boxShadow {
