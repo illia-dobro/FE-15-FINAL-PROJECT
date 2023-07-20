@@ -94,11 +94,11 @@ function Nav() {
               </div>
             </div>
           )}
-
           <Logo />
           <Link className="nav__icon" to="/shop">
             <LiaShoppingBagSolid />
           </Link>
+          {/* Here will be extra components */}
         </nav>
       )}
     </>
