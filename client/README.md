@@ -2,6 +2,12 @@
 
 ## Group Components
 
+├── components
+├── hooks
+├── utils
+├── modules
+| ├── Footer|
+
 With this structure, everything which is used in two or more places sits on the
 top level of the project, leaving the modules directory to represent specific
 parts of the application
