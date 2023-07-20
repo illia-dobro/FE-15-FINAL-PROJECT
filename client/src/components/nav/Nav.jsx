@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import Logo from "../logo";
 import { useEffect, useState} from "react";
 import { GoPerson, GoSearch } from "react-icons/go";
-import { LiaShoppingBagSolid } from "react-icons/Lia";
-import { TbMenu } from "react-icons/Tb";
-import { VscChromeClose } from "react-icons/Vsc";
+import { LiaShoppingBagSolid } from "react-icons/lia";
+import { TbMenu } from "react-icons/tb";
+import { VscChromeClose } from "react-icons/vsc";
 import "./nav.scss";
 
 function Nav() {
