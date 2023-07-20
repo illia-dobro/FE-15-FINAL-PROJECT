@@ -1,17 +1,16 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useRef } from "react";
-import Logo from "../logo/Logo";
-
+import Logo from "../logo";
+import { useEffect, useState} from "react";
 import { GoPerson, GoSearch } from "react-icons/go";
 import { LiaShoppingBagSolid } from "react-icons/Lia";
 import { TbMenu } from "react-icons/Tb";
+import { VscChromeClose } from "react-icons/Vsc";
 import "./nav.scss";
 
 function Nav() {
   const [windowDimension, setWindowDimension] = useState(null);
   const [onOpenNav, setOnOpenNav] = useState(false);
-  const navRef = useRef(null);
+  const isMobile = windowDimension <= 768;
 
   useEffect(() => {
     setWindowDimension(window.innerWidth);
@@ -25,79 +24,62 @@ function Nav() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  const isMobile = windowDimension <= 768;
-
-  useEffect(() => {
-    const closeDrawer = (event) => {
-      if (navRef.current && navRef.current.contains(event.target)) {
-        return;
-      }
-      setOnOpenNav(false);
-    };
-
-    document.addEventListener("mousedown", closeDrawer);
-    return () => document.removeEventListener("mousedown", closeDrawer);
-  }, []);
-
+  
+  const NavLink = ({ to, children, className="nav__link"}) => (
+    <Link className={className} to={to} onClick={()=>setOnOpenNav(false)}>
+      {children}
+    </Link>
+  );
   return (
     <>
       {!isMobile ? (
         <nav className="nav nav-desc">
           <div className="nav__links">
-            <Link className="nav__link" to="/catalog">
-              Catalog
-            </Link>
-            <Link className="nav__link" to="/about">
-              About
-            </Link>
-            <Link className="nav__link" to="/delivery">
-              Delivery
-            </Link>
+            <NavLink to="/catalog" children={"Catalog"}/>
+            <NavLink to="/about" children={"About"}/>
+            <NavLink to="/delivery" children={"Delivery"}/>
           </div>
           <div>
             <Logo />
           </div>
           <div className="nav__right">
-            <Link className="nav__link" to="/contacts">
-              Contacts
-            </Link>
-
+            <NavLink to="/contacts" children={"Contacts"}/>
             <div className="nav__icons">
               <span className="nav__icon">
                 <GoSearch />
               </span>
-              <Link className="nav__icon" to="/shop">
-                <LiaShoppingBagSolid />
-              </Link>
-              <Link className="nav__icon" to="/login">
-                <GoPerson />
-              </Link>
+              <NavLink className="nav__icon" to="/shop" children={<LiaShoppingBagSolid />}/>
+              <NavLink className="nav__icon" to="/login" children={ <GoPerson />}/>
             </div>
           </div>
         </nav>
       ) : (
         <nav className="nav nav-mobile">
-          <div onClick={() => setOnOpenNav(!onOpenNav)}>
-            <button>
-              <TbMenu />
+            <button onClick={() => setOnOpenNav(!onOpenNav)}>
+              {!onOpenNav?<TbMenu />:<VscChromeClose/>}
             </button>
-          </div>
+
           {onOpenNav && (
-            <div className="nav__mobile__dropdown" ref={navRef}>
+            <span className="nav__icon">
+              <GoSearch />
+            </span>
+          )}
+          {onOpenNav && (
+            <div className="nav__mobile__dropdown">
               <div className="nav-mobile__links">
-                <Link to="/">Home</Link>
-                <Link to="/catalog">Catalog</Link>
-                <Link to="/about">About</Link>
-                <Link to="/delivery">Delivery</Link>
-                <Link to="/contacts">Contacts</Link>
+                <NavLink to="/">Home</NavLink>
+                <NavLink to="/catalog">Catalog</NavLink>
+                <NavLink to="/about">About</NavLink>
+                <NavLink to="/delivery">Delivery</NavLink>
+                <NavLink to="/contacts">Contacts</NavLink>
               </div>
             </div>
           )}
           <Logo />
-          <Link className="nav__icon" to="/shop">
-            <LiaShoppingBagSolid />
-          </Link>
+          {onOpenNav && (
+            <NavLink className="nav__icon" to="/login" children={<GoPerson />}/>
+          )}
+          <NavLink className="nav__icon" to="/shop" children={<LiaShoppingBagSolid />}/>
           {/* Here will be extra components */}
         </nav>
       )}

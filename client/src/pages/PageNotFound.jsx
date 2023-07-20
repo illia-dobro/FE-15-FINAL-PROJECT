@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-
+/* с Tailwind почти не трогала. Если у кого есть желание поменять цвета 
+кнопок, что бы подходил к нашему макету то.... do it =)*/
 function PageNotFound() {
   return (
     <>

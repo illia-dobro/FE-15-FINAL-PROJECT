@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
-import "./logo.scss";
 
 function Logo() {
   return (
-    <Link to={"/"} className="logo">
+    <Link to={"/"}>
       <svg
         width="180"
         height="16"
