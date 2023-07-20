@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Nav from "./components/nav/Nav";
 import Home from "./pages";
+import About from "./pages/About";
 import Catalog from "./pages/Catalog";
 import Delivery from "./pages/Delivery";
 import Contacts from "./pages/Contacts";
@@ -20,6 +21,7 @@ function App() {
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/about"  element={<About />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>

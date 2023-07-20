@@ -1,0 +1,39 @@
+@import "../../index.scss";
+.nav {
+  @include flex-justify-around;
+  align-items: center;
+  padding: 4px;
+  background-color: $primary;
+  color: $secondary;  
+
+  height: 120px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  .nav__right {
+    display: flex;
+  }
+  .nav__icons {
+    @include flex-justify-center;
+  }
+  .nav__link {
+   font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    letter-spacing: -0.02em;
+    text-align: left;
+  }
+  .nav__link:not(:last-child) {
+    padding-right: 50px;
+  }
+  .nav__icon {
+    color: $secondary;
+    font-size: 18px;
+  }
+  .nav__icon:not(:last-child) {
+    padding-right: 25px;
+  }
+}
+.nav-mobile {
+  background-color: aqua;
+}
+.nav-mobile__links {
+}
