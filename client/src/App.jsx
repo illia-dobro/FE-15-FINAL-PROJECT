@@ -1,12 +1,11 @@
-import './App.css'
-import Modal from './modules/common/components/Modal'
+import Modal from './components/Modal'
 
 function App() {
 
   return (
     <>
       <h1 className="text-3xl font-bold p-8">
-      <Modal openModal={true}>
+      <Modal openModal={false}>
         test
        </Modal>
     </h1>
