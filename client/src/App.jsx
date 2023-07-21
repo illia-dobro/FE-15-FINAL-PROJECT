@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Nav from "./components/nav";
 import Home from "./pages";
@@ -8,6 +9,8 @@ import Contacts from "./pages/Contacts";
 import Shop from "./pages/Shop";
 import Login from "./pages/Client";
 import PageNotFound from "./pages/PageNotFound";
+import Modal from './components/Modal'
+
 
 function App() {
   return (
