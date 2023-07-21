@@ -1,0 +1,26 @@
+@import "../../assets/styles/common.scss";
+
+.button {
+  @include flex-justify-center;  
+  color: $dark;
+  border-radius: 76px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  letter-spacing: -0.02em;
+  gap: 10px;
+  align-items: center;
+  padding: 4px;
+  transition: color, background-color 0.2s ease-in-out;
+  /* I hope everyones happy now! Lol */
+  &:hover {
+    background-color: $secondary-hover;
+    color: $primary-hover;
+  }
+}
+.button-color--primary {
+  background-color: $primary;
+}
+.button-color--secondary {
+  background-color: $secondary;
+}

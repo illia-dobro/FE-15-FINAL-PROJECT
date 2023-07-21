@@ -10,13 +10,18 @@ import Shop from "./pages/Shop";
 import Login from "./pages/Client";
 import PageNotFound from "./pages/PageNotFound";
 import Modal from './components/Modal'
-
+import Button from "./components/buttons/Button";
 function App() {
   return (
     <>
       <Router>
         <Nav />
+        <Button className="button-color--primary button" childrens={<><b>"HELLLOOOOOOOOOOO444444444</b> <p>fff</p></>}/>
+        <Button className="button-color--primary button" childrens={<><b>"HELLLOOOOOOOOOOO444444444</b> <p>fff</p></>}/>
+        <Button className="button-color--secondary button" childrens="HELLLOOOOOOOOOOOOO"/>
+
         <Routes>
+          
           <Route path="/" element={<Home />} index/>
           <Route path="/catalog" element={<Catalog />} />
           <Route path="/delivery" element={<Delivery />} />
