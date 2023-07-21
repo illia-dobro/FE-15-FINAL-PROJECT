@@ -36,7 +36,7 @@ function Nav() {
   
   const otherPagesNavStyles = {
     backgroundColor: "rgba(245, 236, 227, 1)",
-    borderBottom: "1px solid rgba(0, 0, 0, 0.05)",
+    borderBottom: "1px solid rgba(0, 0, 0, 0.05)"
   };
 
   /* особые стили для домашней страницы , сюда можно кинуть position absloute или что там нужно 
@@ -94,7 +94,7 @@ function Nav() {
           {onOpenNav && (
             <div className="nav__mobile__dropdown">
               <div className="nav-mobile__links">
-                <NavLink to="/">Home</NavLink>
+                <NavLink to="/">Main Page</NavLink>
                 <NavLink to="/catalog">Catalog</NavLink>
                 <NavLink to="/about">About</NavLink>
                 <NavLink to="/delivery">Delivery</NavLink>

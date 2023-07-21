@@ -31,7 +31,7 @@
     transition: color 0.2s ease-in-out;
   }
   .nav__link:hover{
-    color: $dark-hover;
+    color: $primary-hover;
   }
 
   .nav__icon {
@@ -42,7 +42,7 @@
   }
   .nav__icon:hover {
     transform: scale(1.1);
-    color:$dark-hover
+    color:$primary-hover
   }
 
 }
