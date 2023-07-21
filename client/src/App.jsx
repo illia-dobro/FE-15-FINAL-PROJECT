@@ -10,11 +10,12 @@ import Shop from "./pages/Shop";
 import Login from "./pages/Client";
 import PageNotFound from "./pages/PageNotFound";
 import Modal from './components/Modal'
-
+import ButtonLg from "./components/buttons/BtnLg";
 
 function App() {
   return (
     <>
+    <ButtonLg childrens={"dcfgdfgsdsgsdsd"}/>
       <Router>
         <Nav />
         <Routes>
