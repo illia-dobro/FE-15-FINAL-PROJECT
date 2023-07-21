@@ -1,11 +1,8 @@
 @import "../../assets/styles/common.scss";
 .nav {
-  background-color: $primary;
   color: $dark;
   @include flex-justify-around;
-  
   align-items: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 .nav-desc {
   padding: 4px;
