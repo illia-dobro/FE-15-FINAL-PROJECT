@@ -8,7 +8,6 @@ const Category = () => {
   const category = categories.find(
     (category) => category.path === categoryName
   );
-  console.log(category);
 
   return (
     <>
@@ -19,7 +18,7 @@ const Category = () => {
         <img src={category.img} alt={"banner"} className='w-full h-80'/>
       </div>
 
-      <ProductsList />
+      <ProductsList category={category.path}/>
     </>
   );
 };

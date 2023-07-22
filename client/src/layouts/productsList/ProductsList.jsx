@@ -5,6 +5,7 @@ import styles from "../../components/productCard/ProductCard.module.scss";
 const products = [
   {
     id: 1,
+    category: "care",
     name: "Earthen Bottle",
     href: "#",
     price: "$48",
@@ -15,6 +16,7 @@ const products = [
   },
   {
     id: 2,
+    category: "accessories",
     name: "Nomad Tumbler",
     href: "#",
     price: "$35",
@@ -25,6 +27,7 @@ const products = [
   },
   {
     id: 3,
+    category: "accessories",
     name: "Focus Paper Refill",
     href: "#",
     price: "$89",
@@ -35,6 +38,7 @@ const products = [
   },
   {
     id: 4,
+    category: "care",
     name: "Machined Mechanical Pencil",
     href: "#",
     price: "$35",
@@ -45,6 +49,7 @@ const products = [
   },
   {
     id: 11,
+    category: "accessories",
     name: "Earthen Bottle",
     href: "#",
     price: "$48",
@@ -55,6 +60,7 @@ const products = [
   },
   {
     id: 12,
+    category: "eyebrow",
     name: "Nomad Tumbler",
     href: "#",
     price: "$35",
@@ -65,6 +71,7 @@ const products = [
   },
   {
     id: 13,
+    category: "care",
     name: "Focus Paper Refill",
     href: "#",
     price: "$89",
@@ -75,6 +82,7 @@ const products = [
   },
   {
     id: 14,
+    category: "eyebrow",
     name: "Machined Mechanical Pencil",
     href: "#",
     price: "$35",
@@ -85,6 +93,7 @@ const products = [
   },
   {
     id: 21,
+    category: "decorative",
     name: "Earthen Bottle",
     href: "#",
     price: "$48",
@@ -95,6 +104,7 @@ const products = [
   },
   {
     id: 22,
+    category: "decorative",
     name: "Nomad Tumbler",
     href: "#",
     price: "$35",
@@ -105,6 +115,7 @@ const products = [
   },
   {
     id: 23,
+    category: "eyebrow",
     name: "Focus Paper Refill",
     href: "#",
     price: "$89",
@@ -115,6 +126,7 @@ const products = [
   },
   {
     id: 24,
+    category: "decorative",
     name: "Machined Mechanical Pencil",
     href: "#",
     price: "$35",
@@ -125,18 +137,20 @@ const products = [
   },
   // More products...
 ];
-const ProductsList = () => {
+const ProductsList = ({ category }) => {
   return (
     <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 sm:py-6 lg:max-w-7xl lg:px-8">
       <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            href={product.href}
-            className="group"
-          />
-        ))}
+        {products
+          .filter((product) => product.category === category)
+          .map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              href={product.href}
+              className="group"
+            />
+          ))}
       </div>
     </div>
   );
