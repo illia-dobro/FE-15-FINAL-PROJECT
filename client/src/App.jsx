@@ -9,8 +9,8 @@ import Contacts from "./pages/Contacts";
 import Shop from "./pages/Shop";
 import Login from "./pages/Client";
 import PageNotFound from "./pages/PageNotFound";
-import Modal from './components/Modal'
-
+import Modal from "./components/Modal"
+import Product from "./pages/Product";
 
 function App() {
   return (
@@ -25,6 +25,7 @@ function App() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/login" element={<Login />} />
           <Route path="/about"  element={<About />} />
+          <Route path="/product" element={<Product/>}/>
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
