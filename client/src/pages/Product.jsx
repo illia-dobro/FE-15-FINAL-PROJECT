@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import products from "../helpers/productsTest";
+import QuantityBtns from "../components/buttons/quantityBtns/QuantityBtns";
 
 const Product = () => {
   const { id: productId } = useParams();
@@ -15,7 +16,8 @@ const Product = () => {
           <img src={product.img} alt={product.name} />
         </div>
         <div className="product__right">
-          
+          {/* Button */}
+
         </div>
       </div>
     </section>
