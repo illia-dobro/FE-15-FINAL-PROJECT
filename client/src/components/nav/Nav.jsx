@@ -44,10 +44,12 @@ function Nav() {
   const homePageNavStyles = {
     backgroundColor: "transparent",
     maxWidth: '1440px',
+    width: '100%',
     position: 'absolute',
     left: '50%',
     transform: 'translate(-50%)',
     zIndex: '10',
+    color: '#ffffff'
   };
 
   return (

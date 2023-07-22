@@ -1,0 +1,16 @@
+.socialMedia {
+    margin-top: 136px;
+    margin-bottom: 128px;
+    padding: 0 70px;  
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 100px;
+
+    &__text {
+        max-width: 600px;
+        font-size: 48px;
+        line-height: 130%;
+        color: #555555;
+    }
+}
