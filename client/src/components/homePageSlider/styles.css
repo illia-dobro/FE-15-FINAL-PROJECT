@@ -1,0 +1,22 @@
+
+.slick-slide {
+    position: relative !important;
+}
+
+.slick-prev {
+    left: 48px !important;
+    z-index: 2 !important;
+}
+
+.slick-next {
+    right: 48px !important;
+    z-index: 2 !important;
+}
+
+.slick-dots {
+    bottom: 48px !important;
+}
+
+.slick-dots li button:before {
+    color: #ffffff !important;
+}

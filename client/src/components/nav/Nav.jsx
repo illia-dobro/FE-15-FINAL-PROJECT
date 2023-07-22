@@ -43,7 +43,11 @@ function Nav() {
   для Home page */
   const homePageNavStyles = {
     backgroundColor: "transparent",
-  
+    maxWidth: '1440px',
+    position: 'absolute',
+    left: '50%',
+    transform: 'translate(-50%)',
+    zIndex: '10',
   };
 
   return (
