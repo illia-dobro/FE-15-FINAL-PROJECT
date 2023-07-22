@@ -9,7 +9,7 @@ import Shop from "./pages/Shop";
 import Login from "./pages/Client";
 import PageNotFound from "./pages/PageNotFound";
 import Modal from "./components/Modal";
-import Button from "./components/buttons/Button";
+import Button from "./components/buttons/Button/Button";
 function App() {
   return (
     <>
