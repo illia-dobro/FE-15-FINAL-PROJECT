@@ -15,7 +15,7 @@ const Category = () => {
 
         <div className="mx-auto max-w-2xl px-4 py-2 sm:px-6 sm:py-6 lg:max-w-7xl lg:px-8">
         {" "}
-        <img src={category.img} alt={"banner"} className='w-full h-80'/>
+        <img src={category.img} alt={"banner"} className='w-full h-80 object-cover'/>
       </div>
 
       <ProductsList category={category.path}/>

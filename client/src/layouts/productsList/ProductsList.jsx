@@ -5,7 +5,7 @@ import styles from "../../components/productCard/ProductCard.module.scss";
 const products = [
   {
     id: 1,
-    category: "care",
+    category: "accessories",
     name: "Earthen Bottle",
     href: "#",
     price: "$48",
