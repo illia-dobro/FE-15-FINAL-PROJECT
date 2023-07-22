@@ -1,13 +1,13 @@
 import "./button.scss";
 import PropTypes from "prop-types";
 
-function Button({childrens, action, className}) {
+function Button({children, action, className}) {
   return (
-    <button className={className} onClick={action}>{childrens}</button>
+    <button className={className} onClick={action}>{children}</button>
   )
 };
 Button.propTypes = {
-  childrens: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
   action: PropTypes.func.isRequired,
   className: PropTypes.string,
 };
