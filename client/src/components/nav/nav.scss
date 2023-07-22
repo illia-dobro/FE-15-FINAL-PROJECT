@@ -1,0 +1,77 @@
+@import "../../assets/styles/common.scss";
+.nav {
+  color: $dark;
+  @include flex-justify-around;
+  align-items: center;
+}
+.nav-desc {
+  padding: 4px;
+  height: 120px;
+  gap: 50px;
+  .nav__right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+  }
+  .nav__icons {
+    @include flex-justify-center;
+    gap: 25px;
+  }
+
+  .nav__links{
+     @include flex-justify-between;
+    gap: 50px;
+  }
+  .nav__link {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    letter-spacing: -0.02em;
+    padding: 4px;
+    transition: color 0.2s ease-in-out;
+  }
+  .nav__link:hover{
+    color: $primary-hover;
+  }
+
+  .nav__icon {
+    color: $dark;
+    font-size: 18px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  .nav__icon:hover {
+    transform: scale(1.1);
+    color:$primary-hover
+  }
+
+}
+.nav-mobile {
+  height: 80px;
+  position: relative;
+  .nav__mobile__dropdown {
+    position: absolute;
+    background-color: $primary;
+    padding: 40px 0 74px;
+    top: 100%;
+    width: 100%;
+    z-index: 999;
+    right: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  .nav-mobile__links {
+    @include flex-col;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 26px;
+    letter-spacing: -0.03em;
+   
+    a:hover{
+        background-color: $secondary;
+      }
+    a{
+        padding: 34px;
+    }
+  }
+}
