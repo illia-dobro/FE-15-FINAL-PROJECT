@@ -20,3 +20,14 @@
         color: #ffffff;
     }
 }
+
+@media screen and (max-width: 480px) {
+    .slider {
+        height: 598px;
+        margin-bottom: 60px;
+
+        &__image {
+            height: 598px;
+        }
+    }
+}

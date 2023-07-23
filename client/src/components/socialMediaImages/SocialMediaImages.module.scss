@@ -5,3 +5,17 @@
     justify-content: space-between;
     margin-bottom: 20px;
 }
+
+@media screen and (max-width: 480px) {
+    .socialMediaImgs {
+        max-width: 345px;
+        padding: 0px 15px;
+        flex-wrap: wrap;
+        gap: 16px;
+
+        & img {
+            max-width: 164px;
+            max-height: 164px;
+        }
+    }
+}

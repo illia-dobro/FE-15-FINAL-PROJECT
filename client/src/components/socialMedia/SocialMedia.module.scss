@@ -1,16 +1,29 @@
 .socialMedia {
     margin-top: 136px;
-    margin-bottom: 128px;
+    margin-bottom: 100px;
     padding: 0 70px;  
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 100px;
 
     &__text {
         max-width: 600px;
         font-size: 48px;
         line-height: 130%;
         color: #555555;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .socialMedia {
+        padding: 0 15px;
+        max-width: 345px;
+        margin: 90px auto 50px auto;
+        flex-direction: column;
+        gap: 30px;
+
+        &__text {
+            font-size: 30px;
+        }
     }
 }

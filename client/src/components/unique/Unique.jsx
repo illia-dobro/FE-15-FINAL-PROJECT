@@ -1,6 +1,6 @@
 // import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './Unique.module.css';
+import styles from './Unique.module.scss';
 import uniqueBrand from '../../assets/unique_brandName.png';
 
 const Unique = ({image = {}, representName = "", representPosition = "", representSignature = {}, direction = "row"}) => {

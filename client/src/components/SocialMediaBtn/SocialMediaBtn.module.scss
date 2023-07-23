@@ -3,3 +3,9 @@
     background-color: #EEE4DA;
     border-radius: 66px;
 }
+
+@media screen and (max-width: 480px) {
+    .socialMediaBtn {
+        padding: 28px 125px;  
+    }
+}
