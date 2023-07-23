@@ -8,11 +8,11 @@ const SocialMedia = ({ text = '', socialMediaIcons = [] }) => {
     return (
         <div className={styles.socialMedia}>
             <p className={styles.socialMedia__text}>{text}</p>
-            <div className={styles.socialMedia__buttons}>
+            <nav className={styles.socialMedia__buttons}>
                 {socialMediaIcons.map((el, index) => (
                     <SocialMediaBtn key={index} icon={el} />
                 ))}
-            </div>
+            </nav>
         </div>
     )
 }

@@ -23,7 +23,8 @@ function Home() {
         text='Boltaeva - this is a real society of girls who show love to themselves'
         socialMediaIcons={[{
           src: instagramUrl,
-          alt: 'Instagram icon'
+          alt: 'Instagram icon',
+          to: 'https://www.instagram.com/beauty.shop.ek/'
         }]}
       />
 
