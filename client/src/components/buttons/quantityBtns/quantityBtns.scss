@@ -2,7 +2,7 @@
 
 .quantityBtns {
   @include flex-justify-around;
-  background-color: $primary;
+  background-color: $secondary;
   border-radius: 66px;
   align-items: center;
   color: $dark;

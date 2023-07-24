@@ -1,30 +1,32 @@
 /* Test */
 import ProductTest1Img from "../assets/img/product-test1.jpg"
 import ProductTest2Img from "../assets/img/product-test2.jpg"
-const products = [
+const productsTest = [
   {
-    id: '1',
+    _id: '1',
     name: 'Luxury Moisturizing Cream',
-    price: 100,
-    description: 'Indulge in the Luxury Moisturizing Cream, enriched with natural ingredients to provide ultimate hydration for your skin.',
-    specifications: {
-      volume: '50ml',
-      ingredients: 'Aqua, Glycerin, Shea Butter, Vitamin E',
-      scent: 'Unscented',
-    },
-    img: ProductTest1Img
+    currentPrice: 100,
+    myCustomParam: 'Indulge in the Luxury Moisturizing Cream, enriched with natural ingredients to provide ultimate hydration for your skin.',
+    categories:"cream",
+    imageUrl:ProductTest2Img,
+    quantity:22,
+    enabled:true,
+    productUrl:"testcream2",
+    brand:"Lancome"
   },
+
   {
-    id: '2',
+    _id: '2',
     name: 'Advanced Rejuvenating Serum',
-    price: 200,
-    description: 'Experience the Advanced Rejuvenating Serum, a powerful formula that diminishes fine lines and wrinkles for a youthful complexion.',
-    specifications: {
-      volume: '30ml',
-      ingredients: 'Aqua, Hyaluronic Acid, Retinol, Peptides',
-      scent: 'Light Floral',
-    },
-    img: ProductTest2Img
+    currentPrice: 200,
+    myCustomParam: 'Experience the Advanced Rejuvenating Serum, a powerful formula that diminishes fine lines and wrinkles for a youthful complexion.',
+    categories:"cream",
+    imageUrl:ProductTest1Img,
+    quantity:5,
+    enabled:true,
+    productUrl:"testcream1",
+    brand:"Vichy"
   },
 ];
-export default products;
+export default productsTest;
+

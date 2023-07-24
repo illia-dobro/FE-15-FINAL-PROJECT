@@ -1,0 +1,114 @@
+@import "../../assets/styles/common.scss";
+
+.product-detail {
+  background-color: $primary;
+  color: $dark;
+  height: 100%;
+  &__flex {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  &__right,
+  &__left {
+    flex: 50%;
+    height: 100%;
+  }
+  &__right {
+    @include flex-justify-center;
+    padding: 50px 10px;
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
+    line-height: 24px;
+
+    h2 {
+      font-size: 48px;
+      font-weight: 400;
+      line-height: 53px;
+      letter-spacing: -0.03em;
+      margin-top: 30px;
+    }
+    .button {
+      margin-top: 30px;
+      width: 407px;
+      height: 80px;
+    }
+  }
+  &__quantity-price {
+    @include flex-justify-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 28px;
+    .price {
+      font-size: 32px;
+      line-height: 38px;
+      letter-spacing: -0.02em;
+    }
+  }
+  &__left {
+    img {
+      object-fit: cover;
+      min-width: 100%;
+    }
+  }
+  &__tabs {
+    margin-top: 50px;
+    width: 405px;
+    min-height:176px;
+  }
+  &__tabs-btns {
+    display: flex;
+    color: $dark-opacity;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 29px;
+    button {
+      padding: 3px 17px;
+      border: none;
+      outline: none;
+    }
+    button:hover,
+    button[data-headlessui-state="selected"] {
+      background-color: $secondary;
+      border-radius: 40px;
+    }
+    button[data-headlessui-state="selected"] {
+      color: $dark;
+    }
+  }
+  &__tabs-content {
+    margin-top: 20px;
+   
+  }
+  button {
+    transition: opacity 0.3s, color 0.3s;
+  }
+  button:hover {
+    opacity: 0.8;
+    color: $primary-hover;
+  }
+}
+@media screen and (max-width: 480px) {
+  .product-detail {
+    &__right {
+      padding: 50px 10px;
+      justify-content: start;
+      .product-detail__tabs,
+      .button {
+        width: 100%;
+      }
+      h2 {
+        font-size: 36px;
+        line-height: 40px;
+        letter-spacing: -3%;
+      }
+    }
+    &__tabs-btns {
+      button {
+        padding: 3px 10px;
+      }
+    }
+  }
+}
