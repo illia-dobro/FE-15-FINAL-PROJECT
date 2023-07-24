@@ -1,6 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 
 import styles from "./Catalog.module.scss";
+import Unique from "../../components/unique/Unique.jsx";
 
 export const categories = [
   {
@@ -45,9 +46,10 @@ const Catalog = () => {
         ))}
       </ul>
 
-      <Outlet />
+      <Outlet/>
 
-      {/*<Unique/>*/}
+      <Unique/>
+
       {/*<Footer/>*/}
     </div>
   );
