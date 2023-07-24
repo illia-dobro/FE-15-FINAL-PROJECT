@@ -3,7 +3,7 @@
 .product-detail {
   background-color: $primary;
   color: $dark;
-  height: 100%;
+
   &__flex {
     display: flex;
     align-items: center;
@@ -12,11 +12,13 @@
   &__right,
   &__left {
     flex: 50%;
-    height: 100%;
+  }
+  &__left {
+    overflow: hidden;
   }
   &__right {
     @include flex-justify-center;
-    padding: 50px 10px;
+    padding: 20px;
     flex-direction: column;
     align-items: center;
     font-size: 14px;
@@ -35,6 +37,9 @@
       height: 80px;
     }
   }
+  &__right-content {
+    max-width: 400px;
+  }
   &__quantity-price {
     @include flex-justify-between;
     align-items: center;
@@ -46,16 +51,11 @@
       letter-spacing: -0.02em;
     }
   }
-  &__left {
-    img {
-      object-fit: cover;
-      min-width: 100%;
-    }
-  }
+
   &__tabs {
     margin-top: 50px;
     width: 405px;
-    min-height:176px;
+    min-height: 176px;
   }
   &__tabs-btns {
     display: flex;
@@ -80,7 +80,6 @@
   }
   &__tabs-content {
     margin-top: 20px;
-   
   }
   button {
     transition: opacity 0.3s, color 0.3s;
@@ -88,6 +87,22 @@
   button:hover {
     opacity: 0.8;
     color: $primary-hover;
+  }
+  .image-gallery-thumbnail.active,
+  .image-gallery-thumbnail:hover,
+  .image-gallery-thumbnail:focus {
+    border: 2px solid $secondary-hover;
+  }
+  .image-gallery-thumbnails-left {
+     width: 100% !important;
+  }
+  .image-gallery-image {
+    object-fit: cover;
+    height: 900px;
+  }
+  .image-gallery-thumbnails {
+    z-index: 999;
+    padding: 20px !important;
   }
 }
 @media screen and (max-width: 480px) {
@@ -110,5 +125,9 @@
         padding: 3px 10px;
       }
     }
+    .image-gallery-image {
+      height: 520px;
+    }
   }
+  
 }

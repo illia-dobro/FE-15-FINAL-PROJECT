@@ -7,11 +7,22 @@ import Button from "../../components/buttons/button";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import Tabs from "../../components/tabs";
 import { formatCurrency } from "../../helpers/currencyFormatter";
+import ProductSlider from "../../components/ProductSlider/ProductSlider";
 import "./productDetail.scss";
 
 const ProductDetail = () => {
   const { url } = useParams();
-
+  
+  const sliderSettings = {
+    showThumbnails: true,
+    showPlayButton: false,
+    showFullscreenButton: false,
+    showNav: false,
+    slideInterval: 2000,
+    infinite: true,
+    showGalleryThumbnails: true,
+    thumbnailPosition: "left",
+  };
   /* Test */
   const product = productsTest.find((product) => product.productUrl === url);
   const productCardTabs = [
@@ -24,15 +35,20 @@ const ProductDetail = () => {
     <section className="product-detail">
       <div className="product-detail__flex">
         <div className="product-detail__left">
-          <img src={product.imageUrl} alt={product.name} />
+          <ProductSlider
+            imageUrl={product.imageUrl}
+            sliderSettings={sliderSettings}
+          />
         </div>
         <div className="product-detail__right">
-          <div>
+          <div className="product-detail__right-content">
             <FavoriteBtn />
             <h2>{product.name}</h2>
             <div className="product-detail__quantity-price">
               <QuantityBtns className="quantityBtnsLg" />
-              <span className="price">{formatCurrency(product.currentPrice)}</span>
+              <span className="price">
+                {formatCurrency(product.currentPrice)}
+              </span>
             </div>
             <Button className="button button-color--secondary">
               <LiaShoppingBagSolid />
