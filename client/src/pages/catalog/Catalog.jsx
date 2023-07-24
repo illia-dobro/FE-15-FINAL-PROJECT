@@ -32,16 +32,16 @@ export const categories = [
 const Catalog = () => {
   return (
     <div className={styles.catalog_page}>
-      <ul className="mx-auto flex grow justify-evenly text-center text-gray-500">
+      <ul className={styles.catalog_subnav + " mx-auto flex grow justify-evenly text-center text-gray-500"}>
         {categories.map((category) => (
-          <li key={category.name}>
-            <Link
-              to={category.path}
-              className="flex justify-center border-b-4 border-transparent hover:text-[#AC8F78] py-4"
-            >
-              {category.name}
-            </Link>
-          </li>
+            <li key={category.name}>
+              <Link
+                  to={category.path}
+                  className="flex justify-center border-b-4 border-transparent hover:text-[#AC8F78] py-4"
+              >
+                {category.name}
+              </Link>
+            </li>
         ))}
       </ul>
 
