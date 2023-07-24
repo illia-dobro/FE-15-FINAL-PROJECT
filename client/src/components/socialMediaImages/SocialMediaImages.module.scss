@@ -1,17 +1,17 @@
 .socialMediaImgs {
-    padding: 0 70px;
+    max-width: 1300px;
     display: flex;
     gap: 20px;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin: 0 auto 20px auto;
 }
 
 @media screen and (max-width: 480px) {
     .socialMediaImgs {
         max-width: 345px;
-        padding: 0px 15px;
         flex-wrap: wrap;
         gap: 16px;
+        margin: 0 auto 20px auto;
 
         & img {
             max-width: 164px;
