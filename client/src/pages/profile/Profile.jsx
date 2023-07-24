@@ -1,9 +1,12 @@
 import LoginForm from "../../components/loginForm";
-
-const isLoggedIn = false;
+import {useState} from "react";
+import {getToken} from "../../utils/localStorage.js";
 
 const Profile = () => {
-    return isLoggedIn ? <Account/> : <LoginForm/>
+    const jwt = getToken()
+    const [isLoggedIn, setIsLoggedIn] = useState(!!jwt);
+
+    return isLoggedIn ? <Account/> : <LoginForm setIsLoggedIn={setIsLoggedIn}/>
 }
 
 export default Profile

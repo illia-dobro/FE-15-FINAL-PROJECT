@@ -1,19 +1,21 @@
 import axios from "axios";
 import {saveToken} from "../../utils/localStorage.js";
 
-const handleSubmit = (e) => {
-    e.preventDefault()
-    const formData = new FormData(e.target)
-    const userData = {
-        loginOrEmail: formData.get('email'),
-        password: formData.get('password')
-    };
 
-    axios.post('http://localhost:4000/api/customers/login', userData).then(res => {
-        saveToken(res.data.token)
-    }).catch(e => console.log('Custom ERROR!!!:', e))
-}
 const LoginForm = () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const formData = new FormData(e.target)
+        const userData = {
+            loginOrEmail: formData.get('email'),
+            password: formData.get('password')
+        };
+
+        await axios.post('http://localhost:4000/api/customers/login', userData).then(res => {
+            saveToken(res.data.token)
+        }).catch(e => console.log('Custom ERROR!!!:', e))
+    }
+
     return (
         <>
             {/*
