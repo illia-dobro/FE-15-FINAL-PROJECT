@@ -73,9 +73,9 @@ function Nav() {
                 children={<LiaShoppingBagSolid />}
               />
               <NavLink
-                className="nav__icon"
-                to="/login"
-                children={<GoPerson />}
+                  className="nav__icon"
+                  to="/profile"
+                  children={<GoPerson/>}
               />
             </div>
           </div>
