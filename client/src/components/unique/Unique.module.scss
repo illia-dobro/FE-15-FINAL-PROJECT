@@ -1,12 +1,8 @@
 .unique {
-    max-width: 1440px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    color: #555555;
 
     &__description {
-        padding: 200px 114px;
+        max-width: 720px;
+        padding: 0 8%;
     }
 
     &__focus {
@@ -40,18 +36,37 @@
         }
 
         &_sign {
-            color: #AC8F78;
+            fill: #AC8F78;
         }
+    }
+
+    &__image {
+        max-width: 720px;
     }
 }
 
 @media screen and (max-width: 480px) {
     .unique {
-        flex-direction: column-reverse !important;
 
         &__description {
             padding: 0 15px;
             margin-bottom: 50px;
+        }
+
+        &__focus {
+            font-size: 22px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            text-shadow: none;
+        }
+
+        &__content {
+            font-size: 16px;
+            margin-bottom: 40px;
+        }
+
+        &__image {
+            max-width: 100%;
         }
     }
 }

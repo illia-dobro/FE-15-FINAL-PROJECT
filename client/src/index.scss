@@ -9,3 +9,54 @@ body{
   background-color: #F5ECE3;
 }
 
+
+// home-page
+.home-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-bottom: 108px;
+}
+
+.home-uniqueContainer {
+  max-width: 1440px;
+  margin-top: 70px;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  color: #555555;
+}
+
+.home-socialMediaContainer,
+.home-mediaImagesVisible,
+.home-mediaImagesHidden {
+  padding: 0 70px;
+}
+
+.home-mediaImagesVisible {
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 480px) {
+  .home-container {
+    max-width: 375px;
+    margin: 0 auto;
+    padding-bottom: 90px;
+  }
+
+  .home-uniqueContainer {
+    flex-direction: column;
+  }
+
+  .home-socialMediaContainer {
+    padding: 0 15px;
+  }
+  
+  .home-mediaImagesVisible {
+    margin-bottom: 0;
+    padding: 0 15px;
+  }
+
+  .home-mediaImagesHidden {
+    display: none;
+  }
+}

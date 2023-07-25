@@ -1,7 +1,6 @@
 .socialMedia {
     margin-top: 136px;
     margin-bottom: 100px;
-    padding: 0 70px;  
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -16,9 +15,8 @@
 
 @media screen and (max-width: 480px) {
     .socialMedia {
-        padding: 0 15px;
-        max-width: 345px;
-        margin: 90px auto 50px auto;
+        margin-top: 90px;
+        margin-bottom: 50px;
         flex-direction: column;
         gap: 30px;
 
