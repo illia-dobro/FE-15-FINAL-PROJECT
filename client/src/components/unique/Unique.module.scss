@@ -1,7 +1,7 @@
 .unique {
 
     &__description {
-        max-width: 720px;
+        width: 50%;
         padding: 0 8%;
     }
 
@@ -41,7 +41,7 @@
     }
 
     &__image {
-        max-width: 720px;
+        width: 50%;
     }
 }
 
@@ -49,6 +49,7 @@
     .unique {
 
         &__description {
+            width: 100%;
             padding: 0 15px;
             margin-bottom: 50px;
         }
@@ -66,7 +67,7 @@
         }
 
         &__image {
-            max-width: 100%;
+            width: 100%;
         }
     }
 }
