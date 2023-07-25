@@ -10,6 +10,7 @@ import Shop from "./pages/Shop";
 import Login from "./pages/Client";
 import PageNotFound from "./pages/PageNotFound";
 import Modal from './components/Modal'
+import Footer from './layouts/footer'
 
 
 function App() {
@@ -27,7 +28,8 @@ function App() {
           <Route path="/about"  element={<About />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
-      </Router>
+        <Footer />
+      </Router>      
     </>
   );
 }
