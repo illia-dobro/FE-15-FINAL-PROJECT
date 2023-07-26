@@ -13,3 +13,5 @@ The main frameworks and libraries used in the project are listed here. A complet
 - Vite
 - React Redux
 - tailwind css
+- headlessui
+- heroicons
