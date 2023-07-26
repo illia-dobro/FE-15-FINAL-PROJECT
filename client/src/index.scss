@@ -17,6 +17,33 @@ body{
   padding-bottom: 108px;
 }
 
+.home-cosmeticsContainer,
+.home-socialMediaContainer,
+.home-mediaImagesVisible,
+.home-mediaImagesHidden {
+  padding: 0 70px;
+}
+
+.homeCosmetics,
+.homeCosmetics-images {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.homeCosmetics-images img {
+  max-width: 310px;
+}
+
+.careCosmetics,
+.beautyCosmetics {
+  margin-bottom: 30px;
+}
+
+.beautyCosmetics {
+  flex-direction: row-reverse;
+}
+
 .home-uniqueContainer {
   max-width: 1440px;
   margin-top: 70px;
@@ -24,12 +51,6 @@ body{
   flex-direction: row-reverse;
   align-items: center;
   color: #555555;
-}
-
-.home-socialMediaContainer,
-.home-mediaImagesVisible,
-.home-mediaImagesHidden {
-  padding: 0 70px;
 }
 
 .home-mediaImagesVisible {
@@ -40,20 +61,21 @@ body{
   .home-container {
     max-width: 375px;
     margin: 0 auto;
-    padding-bottom: 90px;
+    padding: 0 0 90px 0;
   }
-
-  .home-uniqueContainer {
-    flex-direction: column;
-  }
-
-  .home-socialMediaContainer {
+  
+  .home-cosmeticsContainer,
+  .home-socialMediaContainer,
+  .home-mediaImagesVisible {
     padding: 0 15px;
   }
   
-  .home-mediaImagesVisible {
-    margin-bottom: 0;
-    padding: 0 15px;
+  .homeCosmetics-images {
+    display: none;
+  }
+  
+  .home-uniqueContainer {
+    flex-direction: column;
   }
 
   .home-mediaImagesHidden {

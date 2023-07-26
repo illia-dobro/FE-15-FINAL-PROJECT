@@ -1,0 +1,25 @@
+.category {
+    position: relative;
+
+    &__image {
+        max-width: 310px;
+    }
+
+    &__name {
+        position: absolute;
+        content: '';
+        left: 30px;
+        bottom: 24px;
+        font-size: 48px;
+        line-height: 120%;
+        color: #555555;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .category {
+        &__image {
+            max-width: 345px;
+        }
+    }
+}

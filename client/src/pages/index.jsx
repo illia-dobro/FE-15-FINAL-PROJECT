@@ -1,11 +1,15 @@
 import HomePageSlider from "../components/homePageSlider";
+import CosmeticCategory from "../components/cosmeticCategory/CosmeticCategory";
 import Unique from "../components/unique/Unique";
 import SocialMedia from "../components/socialMedia";
 import SocialMediaImages from "../components/socialMediaImages/SocialMediaImages";
 
+import careCosmeticsImg from '../components/cosmeticCategory/care-cosmetics.png';
+import beautyCosmeticsImg from '../components/cosmeticCategory/beauty-cosmetics.png';
+import browsCosmeticsImg from '../components/cosmeticCategory/brows-cosmetics.png';
 import uniqueMainImgUrl from '../assets/unique_main.png';
 import uniqueSignatureUrl from '../assets/unique_signature.svg';
-import instagramUrl from '../components/SocialMediaBtn/Instagram.png';
+import instagramUrl from '../components/socialMediaBtn/Instagram.png';
 import SocialImgUrl1 from '../components/socialMediaImages/socialImg1.png';
 import SocialImgUrl2 from '../components/socialMediaImages/socialImg2.png';
 import SocialImgUrl3 from '../components/socialMediaImages/socialImg3.png';
@@ -19,6 +23,27 @@ function Home() {
     <div className="home-container">
       <HomePageSlider />
 
+      <div className="home-cosmeticsContainer">
+        <div className="homeCosmetics careCosmetics" >
+          <CosmeticCategory image={{src: careCosmeticsImg, alt: 'Care Cosmetics Product' }} category='Care' to='/catalog'/>
+
+          <div className="homeCosmetics-images">
+            {/* <img src={careCosmeticsImg}></img> */}
+
+          </div>
+        </div>
+
+        <div className="homeCosmetics beautyCosmetics">
+          <CosmeticCategory image={{src: beautyCosmeticsImg, alt: 'Beauty Cosmetics Product' }} category='Beauty' to='/catalog'/>
+
+        </div>
+
+        <div className="homeCosmetics browsCosmetics">
+          <CosmeticCategory image={{src: browsCosmeticsImg, alt: 'Brows Cosmetics Product' }} category='Brows' to='/catalog'/>
+
+        </div>
+      </div>
+      
       <div className='home-uniqueContainer'>
         <Unique image={{src: uniqueMainImgUrl, alt: 'Our product'}} representName="Zara Boltaeva" representPosition="CEO, founder" representSignature={{src: uniqueSignatureUrl, alt: 'CEO signature'}} />
       </div>

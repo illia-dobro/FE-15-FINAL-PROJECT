@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import SocialMediaBtn from '../SocialMediaBtn/SocialMediaBtn';
+import SocialMediaBtn from '../socialMediaBtn/SocialMediaBtn';
 
 import styles from './SocialMedia.module.scss'
 
