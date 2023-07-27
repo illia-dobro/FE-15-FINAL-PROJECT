@@ -1,6 +1,6 @@
 @import "../../assets/styles/common.scss";
 .nav {
-  color: $dark;
+
   @include flex-justify-around;
   align-items: center;
 }
@@ -52,7 +52,6 @@
   .nav__mobile__dropdown {
     position: absolute;
     background-color: $primary;
-    padding: 40px 0 74px;
     top: 100%;
     width: 100%;
     z-index: 999;

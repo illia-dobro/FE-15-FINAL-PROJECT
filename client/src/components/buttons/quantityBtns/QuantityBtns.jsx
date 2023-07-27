@@ -1,7 +1,7 @@
-import "./quantityBtns.scss";
 import PropTypes from "prop-types";
-
 import Button from "../button";
+import "./quantityBtns.scss";
+
 function QuantityBtns({ handleIncrement, handleDecrement, count=1, className }) {
   
   return (

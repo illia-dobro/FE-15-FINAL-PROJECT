@@ -1,5 +1,5 @@
-import "./button.scss";
 import PropTypes from "prop-types";
+import "./button.scss";
 
 function Button({children, action, className}) {
   return (

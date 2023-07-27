@@ -1,49 +1,34 @@
 import { Link } from "react-router-dom";
 import Logo from "../logo";
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { GoPerson, GoSearch } from "react-icons/go";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import { TbMenu } from "react-icons/tb";
 import { VscChromeClose } from "react-icons/vsc";
 import { useLocation } from "react-router-dom";
+import ProductSlider from "../productSlider";
+import useDeviceType from "../../helpers/getDeviceType";
 import "./nav.scss";
 
 function Nav() {
-  const [windowDimension, setWindowDimension] = useState(null);
+  const { isMobile} = useDeviceType();
   const [onOpenNav, setOnOpenNav] = useState(false);
-  const isMobile = windowDimension <= 768;
   const location = useLocation();
   const isHomePage = location.pathname === "/";
-
-  useEffect(() => {
-    setWindowDimension(window.innerWidth);
-  }, []);
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimension(window.innerWidth);
-    }
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const NavLink = ({ to, children, className = "nav__link" }) => (
     <Link className={className} to={to} onClick={() => setOnOpenNav(false)}>
       {children}
     </Link>
   );
-  
+
   const otherPagesNavStyles = {
     backgroundColor: "rgba(245, 236, 227, 1)",
-    borderBottom: "1px solid rgba(0, 0, 0, 0.05)"
+    borderBottom: "1px solid rgba(0, 0, 0, 0.05)",
+    color: "rgba(85, 85, 85, 1)"
   };
-
-  /* особые стили для домашней страницы , сюда можно кинуть position absloute или что там нужно 
-  для Home page */
   const homePageNavStyles = {
     backgroundColor: "transparent",
-  
   };
 
   return (
@@ -81,7 +66,10 @@ function Nav() {
           </div>
         </nav>
       ) : (
-        <nav className="nav nav-mobile" style={isHomePage ? homePageNavStyles : otherPagesNavStyles}>
+        <nav
+          className="nav nav-mobile"
+          style={isHomePage ? homePageNavStyles : otherPagesNavStyles}
+        >
           <button onClick={() => setOnOpenNav(!onOpenNav)}>
             {!onOpenNav ? <TbMenu /> : <VscChromeClose />}
           </button>
@@ -100,6 +88,8 @@ function Nav() {
                 <NavLink to="/delivery">Delivery</NavLink>
                 <NavLink to="/contacts">Contacts</NavLink>
               </div>
+            
+              {/* Social Btns and signature slider*/}
             </div>
           )}
           <Logo />
@@ -115,7 +105,6 @@ function Nav() {
             to="/shop"
             children={<LiaShoppingBagSolid />}
           />
-          {/* Here will be extra components */}
         </nav>
       )}
     </>

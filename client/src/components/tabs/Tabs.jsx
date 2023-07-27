@@ -8,8 +8,8 @@ function Tabs({ tabs, classNameList, classNamePanel }) {
   return (
     <Tab.Group>
         <Tab.List className={classNameList}>
-          {tabLabels.map((label) => (
-            <Tab key={label}>{label}</Tab>
+          {tabLabels.map((label, index) => (
+            <Tab key={index}>{label}</Tab>
           ))}
         </Tab.List>
         <Tab.Panels className={classNamePanel}>

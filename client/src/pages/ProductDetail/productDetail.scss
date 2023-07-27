@@ -3,7 +3,6 @@
 .product-detail {
   background-color: $primary;
   color: $dark;
-
   &__flex {
     display: flex;
     align-items: center;
@@ -14,6 +13,7 @@
     flex: 50%;
   }
   &__left {
+
     overflow: hidden;
   }
   &__right {
@@ -28,7 +28,7 @@
       font-size: 48px;
       font-weight: 400;
       line-height: 53px;
-      letter-spacing: -0.03em;
+      letter-spacing: 3%;
       margin-top: 30px;
     }
     .button {
@@ -51,15 +51,14 @@
       letter-spacing: -0.02em;
     }
   }
-
   &__tabs {
     margin-top: 50px;
     width: 405px;
     min-height: 176px;
   }
   &__tabs-btns {
-    display: flex;
     color: $dark-opacity;
+    display: flex;
     gap: 10px;
     font-size: 16px;
     font-weight: 400;
@@ -88,21 +87,42 @@
     opacity: 0.8;
     color: $primary-hover;
   }
-  .image-gallery-thumbnail.active,
-  .image-gallery-thumbnail:hover,
-  .image-gallery-thumbnail:focus {
-    border: 2px solid $secondary-hover;
+  /*slider styles */
+  .image-gallery-image {
+    cursor: default;
   }
-  .image-gallery-thumbnails-left {
-     width: 100% !important;
+  .image-gallery-content.fullscreen {
+    background: $primary;
+    height: 100%;
+  
+  }
+  .image-gallery-thumbnail {
+    height: 70px;
+    width: 70px;
+    overflow: hidden;
+    border: 1px solid $secondary-hover;
+  }
+  .image-gallery-slide-wrapper.image-gallery-thumbnails-left {
+
   }
   .image-gallery-image {
-    object-fit: cover;
-    height: 900px;
+    height: 800px;
+    object-fit: contain;
   }
-  .image-gallery-thumbnails {
+  .image-gallery-thumbnails-left .image-gallery-thumbnails {
+    left: 20%;
+    position: absolute;
     z-index: 999;
-    padding: 20px !important;
+    align-items: center;
+    display: flex;
+  }
+}
+@media screen and (max-width: 900px) {
+  .product-detail {
+    &__quantity-price {
+      justify-content: flex-start;
+      gap: 40px;
+    }
   }
 }
 @media screen and (max-width: 480px) {
@@ -120,14 +140,22 @@
         letter-spacing: -3%;
       }
     }
+    &__right-content {
+      min-width: 100%;
+    }
     &__tabs-btns {
       button {
         padding: 3px 10px;
       }
     }
     .image-gallery-image {
-      height: 520px;
+      height: 420px;
+    }
+    .price{
+      font-size: 28px;
+    }
+    &__quantity-price {
+      gap: 20px;
     }
   }
-  
 }
