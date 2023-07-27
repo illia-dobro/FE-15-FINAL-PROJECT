@@ -14,7 +14,7 @@ import Tabs from "../../components/tabs";
 import "./productDetail.scss";
 
 
-const ProductDetail = () => {
+function ProductDetail() {
   const { url } = useParams();
   const {isDesktop} = useDeviceType();
 

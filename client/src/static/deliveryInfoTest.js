@@ -1,3 +1,3 @@
-const deliveryInfo = "Some Delivery info"
+const deliveryInfo = "Some Delivery info";
 
 export default deliveryInfo;

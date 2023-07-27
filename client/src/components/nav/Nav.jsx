@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
 import Logo from "../logo";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { GoPerson, GoSearch } from "react-icons/go";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import { TbMenu } from "react-icons/tb";
 import { VscChromeClose } from "react-icons/vsc";
 import { useLocation } from "react-router-dom";
-import ProductSlider from "../productSlider";
 import useDeviceType from "../../helpers/getDeviceType";
 import "./nav.scss";
 
@@ -89,7 +88,7 @@ function Nav() {
                 <NavLink to="/contacts">Contacts</NavLink>
               </div>
             
-              {/* Social Btns and signature slider*/}
+              {/* Social Btns and signature; slider*/}
             </div>
           )}
           <Logo />
