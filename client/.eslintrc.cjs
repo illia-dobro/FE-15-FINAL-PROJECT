@@ -10,7 +10,6 @@ module.exports = {
     'plugin:prettier/recommended',
     'plugin:jsx-a11y/strict',
   ],
-  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
