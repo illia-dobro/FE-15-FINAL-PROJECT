@@ -7,6 +7,19 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon server.js"
   },
+	"husky": {
+	  "hooks": {
+		 "pre-commit": "cd client && npm run pre-commit"
+	  }
+	},
+	"lint-staged": {
+	  "client/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+		 "eslint --fix",
+		 "prettier --write",
+		 "git add"
+	  ]
+	},
+	
   "repository": {
     "type": "git",
     "url": "https://gitlab.com/dan-it/js-course-development/fe-final-backend.git"
