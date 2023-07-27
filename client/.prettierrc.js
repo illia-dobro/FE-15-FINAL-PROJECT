@@ -1,6 +1,6 @@
 module.exports = {
   printWidth: 100,
-  tabWidth: 2,
+  tabWidth: 4,
   singleQuote: true,
   semi: true,
   trailingComma: 'all',
@@ -9,7 +9,7 @@ module.exports = {
     {
       files: '*.{js,jsx,tsx,ts,scss,json,html}',
       options: {
-        tabWidth: 4,
+        tabWidth: 2,
       },
     },
   ],
