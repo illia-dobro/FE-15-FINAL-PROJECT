@@ -1,14 +1,18 @@
-import { BiMailSend, BiLogoWhatsapp } from 'react-icons/bi';
+import ContactsLinks from '../ContactsLinks/ContactsLinks';
+import { heading, text } from '../Footer.module.scss';
+import { wrapper } from './ContactsFooter.module.scss';
 
 function ContactsFooter() {
-  return <div className='flex-1'>
-  <h3 className="text-xl">Contacts</h3>
-  <p>We are open to new opportunities, so you can contact our company representatives for any questions</p>
-  <div className='flex gap-9'>
-    <div className='flex gap-1 items-center'><BiMailSend /><span>E-mail</span></div>
-    <div className='flex gap-1 items-center'><BiLogoWhatsapp/><span>Whatsapp</span></div>
-  </div>
-  </div> 
+  return (
+    <div className={wrapper}>
+      <h3 className={heading}>Contacts</h3>
+      <p className={text}>
+        We are open to new opportunities, so you can contact our company
+        representatives for any questions
+      </p>
+      <ContactsLinks />
+    </div>
+  );
 }
 
 export default ContactsFooter;
