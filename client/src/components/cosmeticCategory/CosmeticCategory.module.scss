@@ -1,10 +1,12 @@
 .category {
     position: relative;
     max-width: 310px;
+    height: 430px; 
 
     &__image {
-        max-width: 100%;
-        height: auto;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 6px;
     }
 
     &__name {
@@ -21,6 +23,5 @@
 @media screen and (max-width: 480px) {
     .category {
         max-width: 345px;
-
     }
 }

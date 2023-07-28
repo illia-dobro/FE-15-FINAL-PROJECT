@@ -18,14 +18,14 @@ const HomePageSlider = () => {
     return (
         <div className={styles.slider}>
             <Slider {...settings}>
-                <div>
+                <div className={styles.slider__component}>
                     <img src={image1} alt='Beauty image' className={styles.slider__image} />
                     <p className={styles.slider__header}>Capsule Collection</p>
                 </div>
-                <div>
+                <div className={styles.slider__component}>
                     <img src='https://lush.com.ua/image/catalog/sleep_routines_20200033.jpg' alt='Beauty image' className={styles.slider__image} />
                 </div>
-                <div>
+                <div className={styles.slider__component}>
                     <img src='https://kodi-professional.ua/image/data/blog/art23/1.jpg' alt='Beauty image' className={styles.slider__image} />
                 </div>
             </Slider>

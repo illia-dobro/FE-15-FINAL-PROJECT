@@ -20,3 +20,10 @@
 .slick-dots li button:before {
     color: #ffffff !important;
 }
+
+@media screen and (max-width: 480px) {
+    .slick-prev,
+    .slick-next {
+        display: none !important;
+    }
+}
