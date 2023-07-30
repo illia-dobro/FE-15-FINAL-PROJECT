@@ -9,9 +9,7 @@ import Contacts from "./pages/Contacts";
 import Shop from "./pages/Shop";
 import Login from "./pages/Client";
 import PageNotFound from "./pages/PageNotFound";
-import Modal from './components/Modal'
-import Footer from './layouts/footer'
-
+import Footer from './features/footer'
 
 function App() {
   return (
@@ -28,6 +26,7 @@ function App() {
           <Route path="/about"  element={<About />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
+
         <Footer />
       </Router>
     </>

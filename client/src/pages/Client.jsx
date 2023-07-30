@@ -1,7 +1,12 @@
+import SignUp from "../features/forms/SignUp/SignUp"
+
 /* Login/Registration */
 function Login() {
   return (
-    <span>Login</span>
+    <>
+    Login
+    <SignUp />
+    </>
   )
 }
 
