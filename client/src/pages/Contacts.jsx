@@ -2,6 +2,7 @@ import ContactsDetails from "../components/contactsDetails/ContactsDetails";
 import SocialMedia from "../components/socialMedia";
 import SocialMediaBtn from "../components/socialMediaBtn";
 import SocialMediaImages from "../components/socialMediaImages/SocialMediaImages";
+import RequestCallBack from "../components/requestCallBack";
 
 import styles from '../components/contactsDetails/ContactsDetails.module.scss';
 
@@ -35,68 +36,71 @@ function Contacts() {
   ]
 
   return (
-    <div className="contacts-container">
-      
-      <p className={styles.contacts__title}>Our contacts</p>
-      <img src="../src/assets/contacts_intro.png" alt="#" />
+    <>
+      <div className="contacts-container">
+        
+        <p className={styles.contacts__title}>Our contacts</p>
+        <img src="../src/assets/contacts_intro.png" alt="#" />
 
-      <ContactsDetails />
+        <ContactsDetails />
 
-      <div className="contacts-socialMedia">
-        <SocialMedia text='Each Boltaeva brand product is truly unique - everything is thought out to the smallest detail.' />
+        <div className="contacts-socialMedia">
+          <SocialMedia text='Each Boltaeva brand product is truly unique - everything is thought out to the smallest detail.' />
 
-        <div className="contacts-socialMediaBtn">
-          <SocialMediaBtn icons={contactsMediaLinks}/>
+          <div className="contacts-socialMediaBtn">
+            <SocialMediaBtn icons={contactsMediaLinks}/>
+          </div>
+        </div>
+
+        <div className="contacts-mediaImagesVisible">
+          <SocialMediaImages 
+            socialMediaImages = {[
+              {
+                src: '../../src/components/socialMediaImages/socialImg1.png',
+                alt: 'Social Media Image',
+              },
+              {
+                src: '../../src/components/socialMediaImages/socialImg2.png',
+                alt: 'Social Media Image',
+              },
+              {
+                src: '../../src/components/socialMediaImages/socialImg1.png',
+                alt: 'Social Media Image',
+              },
+              {
+                src: '../../src/components/socialMediaImages/socialImg2.png',
+                alt: 'Social Media Image',
+              },
+            ]}
+          />
+        </div>
+
+        <div className="contacts-mediaImagesHidden">
+          <SocialMediaImages 
+            socialMediaImages = {[
+              {
+                src: '../../src/components/socialMediaImages/socialImg3.png',
+                alt: 'Social Media Image',
+              },
+              {
+                src: '../../src/components/socialMediaImages/socialImg4.png',
+                alt: 'Social Media Image',
+              },
+              {
+                src: '../../src/components/socialMediaImages/socialImg3.png',
+                alt: 'Social Media Image',
+              },
+              {
+                src: '../../src/components/socialMediaImages/socialImg4.png',
+                alt: 'Social Media Image',
+              },
+            ]}
+          />
         </div>
       </div>
-
-      <div className="contacts-mediaImagesVisible">
-        <SocialMediaImages 
-          socialMediaImages = {[
-            {
-              src: '../../src/components/socialMediaImages/socialImg1.png',
-              alt: 'Social Media Image',
-            },
-            {
-              src: '../../src/components/socialMediaImages/socialImg2.png',
-              alt: 'Social Media Image',
-            },
-            {
-              src: '../../src/components/socialMediaImages/socialImg1.png',
-              alt: 'Social Media Image',
-            },
-            {
-              src: '../../src/components/socialMediaImages/socialImg2.png',
-              alt: 'Social Media Image',
-            },
-          ]}
-        />
-      </div>
-
-      <div className="contacts-mediaImagesHidden">
-        <SocialMediaImages 
-          socialMediaImages = {[
-            {
-              src: '../../src/components/socialMediaImages/socialImg3.png',
-              alt: 'Social Media Image',
-            },
-            {
-              src: '../../src/components/socialMediaImages/socialImg4.png',
-              alt: 'Social Media Image',
-            },
-            {
-              src: '../../src/components/socialMediaImages/socialImg3.png',
-              alt: 'Social Media Image',
-            },
-            {
-              src: '../../src/components/socialMediaImages/socialImg4.png',
-              alt: 'Social Media Image',
-            },
-          ]}
-        />
-      </div>
-
-    </div>
+      
+      <RequestCallBack />
+    </>
   )
 }
 

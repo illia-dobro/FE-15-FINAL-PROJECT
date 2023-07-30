@@ -1,0 +1,35 @@
+@import "../../assets/styles/common.scss";
+
+.request {
+    &__container {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding-left: 151px;
+        padding-right: 151px;
+        @include flex-justify-between;
+        align-items: center;
+        gap: 126px;
+        margin-bottom: 140px;
+    }
+
+    &__title {
+        margin-top: 70px;
+        margin-bottom: 30px;
+        font-size: 36px;
+        color: $dark;
+    }
+
+    &__sendBtn {
+        width: 362px;
+        height: 80px;
+        @include flex-justify-center;
+        align-items: center;
+        gap: 10px;
+        border-radius: 66px;
+        font-size: 20px;
+        background-color: $secondary;
+        color: $dark;
+        margin-top: 54px;
+    }
+
+}
