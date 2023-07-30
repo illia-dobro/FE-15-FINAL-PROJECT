@@ -1,6 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import "./assets/styles/common.scss";
+
 /* Если у кого есть желания найти шрифт и подключить как в макете то Do it =) */
 /*  font-family: 'PT Sans', sans-serif;*/
 body{
@@ -26,8 +29,7 @@ body{
 
 .homeCosmetics,
 .homeCosmetics-images {
-  display: flex;
-  justify-content: space-between;
+  @include flex-justify-between;
   gap: 20px;
 }
 
@@ -50,7 +52,20 @@ body{
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  color: #555555;
+  color: $dark;
+}
+
+.home-socialMediaContainer {
+  font-size: 48px;
+  @include flex-justify-between;
+  align-items: flex-end;
+  margin-top: 136px;
+  margin-bottom: 100px;
+}
+
+.home-socialMediaBtn {
+  width: 310px;
+  height: 80px;
 }
 
 .home-mediaImagesVisible {
@@ -60,7 +75,6 @@ body{
 @media screen and (max-width: 480px) {
   .home-container {
     max-width: 375px;
-    margin: 0 auto;
     padding: 0 0 90px 0;
   }
   
@@ -70,7 +84,7 @@ body{
     padding: 0 15px;
   }
   
-  .homeCosmetics-images {
+  .home-cosmeticsImages {
     display: none;
   }
   
@@ -78,7 +92,50 @@ body{
     flex-direction: column;
   }
 
+  .home-socialMediaContainer {
+    font-size: 30px;
+    flex-direction: column;
+    margin-top: 90px;
+    margin-bottom: 50px;
+  }
+
+  .home-socialMediaBtn {
+    width: 345px;
+  }
+
   .home-mediaImagesHidden {
     display: none;
   }
+}
+
+
+//contacts page
+.contacts-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 70px;
+}
+
+.contacts-socialMedia {
+  font-size: 36px;
+  @include flex-justify-between;
+  align-items: flex-end;
+  margin-bottom: 50px;
+}
+
+.contacts-socialMediaBtn {
+  width: 414px;
+  height: 62px;
+  display: grid;
+  grid-template-columns: repeat(5, 62px);
+  gap: 26px;
+  flex-grow: 0;
+}
+
+.contacts-mediaImagesVisible {
+  margin-bottom: 20px;
+}
+
+.contacts-mediaImagesHidden {
+  margin-bottom: 110px;
 }

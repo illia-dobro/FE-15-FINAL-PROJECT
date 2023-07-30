@@ -3,18 +3,19 @@ import { NavLink } from 'react-router-dom';
 
 import styles from './SocialMediaBtn.module.scss';
 
-const SocialMediaBtn = ({ icon = {} }) => {
+const SocialMediaBtn = ({ icons = [] }) => {
     return (
-        <NavLink to={icon.to} target='_blank'>
-            <button className={styles.socialMediaBtn}>
-                <img src={icon.src} alt={icon.alt} />
-            </button>
-        </NavLink>
-    )
-}
+        icons.map((el, index) =>
+            <NavLink key={index} to={el.to} target='_blank'>
+                <button className={styles.socialMediaBtn}>
+                    <img src={el.src} alt={el.alt} />
+                </button>
+            </NavLink>)
+        )
+    }
 
 SocialMediaBtn.propTypes = {
-    icon: PropTypes.object,
+    icon: PropTypes.array,
 }
 
 export default SocialMediaBtn;

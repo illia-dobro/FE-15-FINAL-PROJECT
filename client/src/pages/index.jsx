@@ -2,6 +2,7 @@ import HomePageSlider from "../components/homePageSlider";
 import CosmeticCategory from "../components/cosmeticCategory/CosmeticCategory";
 import Unique from "../components/unique/Unique";
 import SocialMedia from "../components/socialMedia";
+import SocialMediaBtn from "../components/socialMediaBtn";
 import SocialMediaImages from "../components/socialMediaImages/SocialMediaImages";
 
 import careCosmeticsImg from '../components/cosmeticCategory/care-cosmetics.png';
@@ -9,7 +10,7 @@ import beautyCosmeticsImg from '../components/cosmeticCategory/beauty-cosmetics.
 import browsCosmeticsImg from '../components/cosmeticCategory/brows-cosmetics.png';
 import uniqueMainImgUrl from '../assets/unique_main.png';
 import uniqueSignatureUrl from '../assets/unique_signature.svg';
-import instagramUrl from '../components/socialMediaBtn/Instagram.png';
+import InstagramUrl from '../components/socialMediaBtn/Instagram.png';
 import SocialImgUrl1 from '../components/socialMediaImages/socialImg1.png';
 import SocialImgUrl2 from '../components/socialMediaImages/socialImg2.png';
 import SocialImgUrl3 from '../components/socialMediaImages/socialImg3.png';
@@ -27,7 +28,7 @@ function Home() {
         <div className="homeCosmetics careCosmetics" >
           <CosmeticCategory image={{src: careCosmeticsImg, alt: 'Care Cosmetics Product' }} category='Care' to='/catalog'/>
 
-          <div className="homeCosmetics-images">
+          <div className="home-cosmeticsImages">
             {/* <img src={careCosmeticsImg}></img> */}
 
           </div>
@@ -51,12 +52,16 @@ function Home() {
       <div className="home-socialMediaContainer">
         <SocialMedia
           text='Boltaeva - this is a real society of girls who show love to themselves'
-          socialMediaIcons={[{
-            src: instagramUrl,
-            alt: 'Instagram icon',
-            to: 'https://www.instagram.com/beauty.shop.ek/'
-          }]}
         />
+
+        <div className="home-socialMediaBtn">
+          <SocialMediaBtn 
+            icons={[{
+              src: InstagramUrl,
+              alt: 'Instagram icon',
+              to: 'https://www.instagram.com/beauty.shop.ek/'
+            }]} />
+        </div>
       </div>
 
       <div className="home-mediaImagesVisible">
@@ -110,4 +115,3 @@ function Home() {
 }
 
 export default Home;
-

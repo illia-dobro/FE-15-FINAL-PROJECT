@@ -1,3 +1,3 @@
-import SocialMediaBtn from "./SocialMediaBtn";
+import SocialMediaBtn from './SocialMediaBtn';
 
 export default SocialMediaBtn;

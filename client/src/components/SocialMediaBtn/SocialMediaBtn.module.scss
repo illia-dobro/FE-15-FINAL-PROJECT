@@ -1,11 +1,10 @@
-.socialMediaBtn {
-    padding: 28px 100px;
-    background-color: #EEE4DA;
-    border-radius: 66px;
-}
+@import "../../assets/styles/common.scss";
 
-@media screen and (max-width: 480px) {
-    .socialMediaBtn {
-        padding: 28px 125px;  
-    }
+.socialMediaBtn {
+    width: 100%;
+    height: 100%;
+    @include flex-justify-center;
+    align-items: center;
+    background-color: $secondary;
+    border-radius: 66px;
 }

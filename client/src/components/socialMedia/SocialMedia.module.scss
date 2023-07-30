@@ -1,27 +1,19 @@
+@import "../../assets/styles/common.scss";
+
 .socialMedia {
-    margin-top: 136px;
-    margin-bottom: 100px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
 
     &__text {
         max-width: 600px;
-        font-size: 48px;
         line-height: 130%;
-        color: #555555;
+        color: $dark;
     }
 }
 
 @media screen and (max-width: 480px) {
     .socialMedia {
-        margin-top: 90px;
-        margin-bottom: 50px;
-        flex-direction: column;
-        gap: 30px;
 
         &__text {
-            font-size: 30px;
+            margin-bottom: 30px;
         }
     }
 }
