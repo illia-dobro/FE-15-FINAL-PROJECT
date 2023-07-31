@@ -3,20 +3,17 @@ import { getLocalStorage } from '../../utils/localStorage';
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://binary-travel-app.xyz/api/v1/',
-    prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token;
-
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-        headers.set('mode', 'no-cors');
-      } else if (getLocalStorage()) {
-        headers.set('authorization', `Bearer ${getLocalStorage()}`);
-      }
-      return headers;
-    },
+    baseUrl: 'http://localhost:4000/api',
+    // prepareHeaders: (headers, { getState }) => {
+    //   const token = getState().auth.token;
+    //   if (token) {
+    //     headers.set('authorization', `Bearer ${token}`);
+    //   } else if (getLocalStorage()) {
+    //     headers.set('authorization', `Bearer ${getLocalStorage()}`);
+    //   }
+    //   return headers;
+    // },
   }),
-  tagTypes: ['user'],
   keepUnusedDataFor: 0,
   endpoints: (builder) => ({
     getUser: builder.query({
@@ -35,13 +32,24 @@ export const api = createApi({
     register: builder.mutation({
       query(data) {
         return {
-          url: 'auth/sign-up',
+          url: 'customers',
           method: 'POST',
           body: data,
         };
       },
     }),
+    products: builder.query({
+      query: () => ({
+        url: 'products',
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useGetUserQuery } = api;
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useGetUserQuery,
+  useProductsQuery,
+} = api;

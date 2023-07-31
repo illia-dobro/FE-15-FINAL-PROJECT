@@ -1,14 +1,41 @@
 import React from 'react';
 import { ReactComponent as Logo } from '../../../assets/images/logo.svg';
+import { useRegisterMutation, useProductsQuery } from '../../../app/services/api';
+
 
 function SignUp() {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [telephone, setTelephone] = React.useState('');
 
-  const handleSubmit = (e) => {
+  const [register] = useRegisterMutation();
+
+  const {data, error, isLoading, isSuccess} = useProductsQuery();
+
+  if (isLoading){
+    console.log("loading");
+  } else if(isSuccess){
+    console.log(data);
+  } else if(error){
+    console.log('errorrr');
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+    try {
+      const data = await register({
+        firstName: name,
+        lastName: 'sdsds',
+        email,
+        password,
+        login: name,
+        telephone,
+      });
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -62,6 +89,27 @@ function SignUp() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   autoComplete="email"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEE4DA]  sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                htmlFor="telephone"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Telephone
+              </label>
+              <div className="mt-2">
+                <input
+                  id="telephone"
+                  name="telephone"
+                  type="tel"
+                  // pattern="(\+?380)?\s?(\d{2})?\s?\d{3}\s?\d{2}\s?\d{2}"
+                  title="Format: +38 XXX XXX XX XX"
+                  value={telephone}
+                  onChange={(e) => setTelephone(e.target.value)}
                   required
                   className="block w-full rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEE4DA]  sm:text-sm sm:leading-6"
                 />

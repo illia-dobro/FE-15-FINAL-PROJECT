@@ -1,7 +1,9 @@
-import SignUp from "../features/forms/SignUp/SignUp"
+import SignUp from "../features/forms/SignUp"
 
 /* Login/Registration */
 function Login() {
+
+
   return (
     <>
     Login
