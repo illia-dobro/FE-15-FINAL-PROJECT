@@ -75,7 +75,7 @@ body{
 @media screen and (max-width: 480px) {
   .home-container {
     max-width: 375px;
-    padding: 0 0 90px 0;
+    padding-bottom: 90px;
   }
   
   .home-cosmeticsContainer,
@@ -124,12 +124,10 @@ body{
 }
 
 .contacts-socialMediaBtn {
-  width: 414px;
   height: 62px;
   display: grid;
   grid-template-columns: repeat(5, 62px);
   gap: 26px;
-  flex-grow: 0;
 }
 
 .contacts-mediaImagesVisible {
@@ -138,4 +136,31 @@ body{
 
 .contacts-mediaImagesHidden {
   margin-bottom: 110px;
+}
+
+@media screen and (max-width: 480px) {
+  .contacts-container {
+    max-width: 375px;
+    padding: 0 15px;
+  }
+
+  .contacts-socialMedia {
+    font-size: 22px;
+    flex-direction: column;
+    margin-bottom: 50px;
+  }
+
+  .contacts-socialMediaBtn {
+    height: 52px;
+    grid-template-columns: repeat(5, 52px);
+    gap: 21px;
+  }
+
+  .contacts-mediaImagesVisible {
+    margin-bottom: 90px;
+  }
+  
+  .contacts-mediaImagesHidden {
+    display: none;
+  }
 }

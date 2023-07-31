@@ -13,7 +13,7 @@ const ContactsDetails = () => {
             </div>
             <div className={styles.contacts__details_content}>
                 <p className={styles.contacts__details_name}>Adress</p>
-                <a className={styles.contacts__details_info}>UAE, Dubai, 54, 560 of.</a>
+                <a href="https://goo.gl/maps/VUWbNcdRH6CdDWny9" target="blank" className={styles.contacts__details_info}>UAE, Dubai, 54, 560 of.</a>
             </div>
             <div className={styles.contacts__details_content}>
                 <p className={styles.contacts__details_name}>Partners department</p>

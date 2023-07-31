@@ -15,7 +15,7 @@ const RequestCallBack = () => {
                     <IoIosArrowRoundForward />    
                 </button>
             </div>
-            <img src='../../src/components/requestCallBack/contacts_request_img.png'></img>
+            <img src='../../src/components/requestCallBack/contacts_request_img.png' className={styles.request__image}></img>
         </div>
     )
 }

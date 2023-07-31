@@ -1,7 +1,8 @@
-import ContactsDetails from "../components/contactsDetails/ContactsDetails";
+import ContactsDetails from "../components/contactsDetails";
+import GoogleMap from "../components/googleMap";
 import SocialMedia from "../components/socialMedia";
 import SocialMediaBtn from "../components/socialMediaBtn";
-import SocialMediaImages from "../components/socialMediaImages/SocialMediaImages";
+import SocialMediaImages from "../components/socialMediaImages";
 import RequestCallBack from "../components/requestCallBack";
 
 import styles from '../components/contactsDetails/ContactsDetails.module.scss';
@@ -40,16 +41,18 @@ function Contacts() {
       <div className="contacts-container">
         
         <p className={styles.contacts__title}>Our contacts</p>
-        <img src="../src/assets/contacts_intro.png" alt="#" />
+        <img src="../src/assets/contacts_intro_2.png" alt="#" className={styles.contacts__introImg} />
 
         <ContactsDetails />
+
+        <GoogleMap />
 
         <div className="contacts-socialMedia">
           <SocialMedia text='Each Boltaeva brand product is truly unique - everything is thought out to the smallest detail.' />
 
-          <div className="contacts-socialMediaBtn">
+          <nav className="contacts-socialMediaBtn">
             <SocialMediaBtn icons={contactsMediaLinks}/>
-          </div>
+          </nav>
         </div>
 
         <div className="contacts-mediaImagesVisible">
@@ -97,9 +100,10 @@ function Contacts() {
             ]}
           />
         </div>
+      
+        <RequestCallBack />
       </div>
       
-      <RequestCallBack />
     </>
   )
 }
