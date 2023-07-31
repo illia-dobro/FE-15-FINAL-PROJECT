@@ -1,38 +1,33 @@
 import React from 'react';
+import PhoneInput from 'react-phone-number-input/input'
 import { ReactComponent as Logo } from '../../../assets/images/logo.svg';
-import { useRegisterMutation, useProductsQuery } from '../../../app/services/api';
+import { useRegisterMutation } from '../../../app/services/api';
 
 
 function SignUp() {
-  const [name, setName] = React.useState('');
+  const [login, setLogin] = React.useState('');
+  const [firstName, setFirstName] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [telephone, setTelephone] = React.useState('');
+  const [error, setError] = React.useState('');
 
   const [register] = useRegisterMutation();
-
-  const {data, error, isLoading, isSuccess} = useProductsQuery();
-
-  if (isLoading){
-    console.log("loading");
-  } else if(isSuccess){
-    console.log(data);
-  } else if(error){
-    console.log('errorrr');
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const data = await register({
-        firstName: name,
-        lastName: 'sdsds',
+        firstName,
+        lastName,
         email,
         password,
-        login: name,
+        login: firstName,
         telephone,
+        isAdmin: false
       });
-      console.log(data);
+      setError(data.error.data);
     } catch (error) {
       console.log(error);
     }
@@ -54,25 +49,69 @@ function SignUp() {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
+          <span className='text-red-500 text-sm'>{error.message}</span>
+          <div>
+              <label
+                htmlFor="login"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Login
+              </label>
+              <div className="mt-2">
+                <input
+                  id="login"
+                  name="login"
+                  type="text"
+                  value={login}
+                  onChange={(e) => setLogin(e.target.value)}
+                  autoComplete="name"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEE4DA]  sm:text-sm sm:leading-6"
+                />
+              </div>
+              <span className='text-red-500 text-sm'>{error.login}</span>
+            </div>
+            <div>
+              <label
+                htmlFor="firstName"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                First name
+              </label>
+              <div className="mt-2">
+                <input
+                  id="firstName"
+                  name="name"
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  autoComplete="name"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEE4DA]  sm:text-sm sm:leading-6"
+                />
+              </div>
+              <span className='text-red-500 text-sm'>{error.firstName}</span>
+            </div>
             <div>
               <label
                 htmlFor="name"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Name
+                Last name
               </label>
               <div className="mt-2">
                 <input
                   id="name"
                   name="name"
                   type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
                   autoComplete="name"
                   required
                   className="block w-full rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEE4DA]  sm:text-sm sm:leading-6"
                 />
               </div>
+              <span className='text-red-500 text-sm'>{error.lastName}</span>
             </div>
             <div>
               <label
@@ -93,6 +132,7 @@ function SignUp() {
                   className="block w-full rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEE4DA]  sm:text-sm sm:leading-6"
                 />
               </div>
+              <span className='text-red-500 text-sm'>{error.email}</span>
             </div>
             <div>
               <label
@@ -102,18 +142,17 @@ function SignUp() {
                 Telephone
               </label>
               <div className="mt-2">
-                <input
+                <PhoneInput
                   id="telephone"
                   name="telephone"
-                  type="tel"
-                  // pattern="(\+?380)?\s?(\d{2})?\s?\d{3}\s?\d{2}\s?\d{2}"
-                  title="Format: +38 XXX XXX XX XX"
+                  country="UK"
                   value={telephone}
-                  onChange={(e) => setTelephone(e.target.value)}
+                  onChange={setTelephone}
                   required
                   className="block w-full rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEE4DA]  sm:text-sm sm:leading-6"
                 />
               </div>
+              <span className='text-red-500'>{error.telephone}</span>
             </div>
 
             <div>
@@ -135,6 +174,7 @@ function SignUp() {
                   className="block w-full rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEE4DA] sm:text-sm sm:leading-6"
                 />
               </div>
+              <span className='text-red-500 text-sm'>{error.password}</span>
             </div>
 
             <div className="flex items-center justify-between">
@@ -153,11 +193,7 @@ function SignUp() {
                 </label>
               </div>
 
-              {/* <div className="text-sm">
-                  <a href="#" className="font-medium text-[#555555]  hover:text-[#2f2e2d]">
-                    Forgot your password?
-                  </a>
-                </div> */}
+
             </div>
 
             <div>
