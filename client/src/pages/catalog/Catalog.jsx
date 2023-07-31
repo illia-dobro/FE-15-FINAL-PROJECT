@@ -33,23 +33,28 @@ export const categories = [
 const Catalog = () => {
   return (
     <div className={styles.catalog_page}>
-      <ul className={styles.catalog_subnav + " mx-auto flex grow justify-evenly text-center text-gray-500"}>
+      <ul
+        className={
+          styles.catalog_subnav +
+          " mx-auto flex grow justify-center text-center"
+        }
+      >
         {categories.map((category) => (
-            <li key={category.name}>
-              <Link
-                  to={category.path}
-                  className="flex justify-center border-b-4 border-transparent hover:text-[#AC8F78] py-4"
-              >
-                {category.name}
-              </Link>
-            </li>
+          <li key={category.name} className="grow-[0.1]">
+            <Link
+              to={category.path}
+              className="flex justify-center text-[#555555] opacity-40 hover:opacity-100 transition-all py-4 px-2"
+            >
+              {category.name}
+            </Link>
+          </li>
         ))}
       </ul>
 
-      <Outlet/>
+      <Outlet />
 
       {/*<Unique image={{src: 'https://w.forfun.com/fetch/61/6157e4be3da6483d461345e990a47026.jpeg'}}/>*/}
-      <Unique/>
+      <Unique />
 
       {/*<Footer/>*/}
     </div>
