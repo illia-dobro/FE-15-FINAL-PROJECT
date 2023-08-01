@@ -1,21 +1,6 @@
 @import "../../assets/styles/common.scss";
 
 .contacts {
-
-    &__title {
-        margin-top: 102px;
-        margin-bottom: 38px;
-        font-size: 48px;
-        line-height: 110%;
-        color: $dark;
-        text-align: center;
-    }
-
-    &__introImg {
-        width: 100%;
-        height: 466px;
-        object-fit: cover;
-    }
     
     &__details {
         margin-top: 38px;
@@ -51,15 +36,6 @@
 
 @media screen and (max-width: 480px) {
     .contacts {
-        &__title {
-            margin-top: 50px;
-            margin-bottom: 30px;
-            font-size: 36px;
-        }
-
-        &__introImg {
-            height: 346px;
-        }
 
         &__details {
             margin-top: 50px;

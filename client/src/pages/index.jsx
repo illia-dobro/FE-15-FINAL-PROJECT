@@ -16,45 +16,53 @@ import SocialImgUrl2 from '../components/socialMediaImages/socialImg2.png';
 import SocialImgUrl3 from '../components/socialMediaImages/socialImg3.png';
 import SocialImgUrl4 from '../components/socialMediaImages/socialImg4.png';
 
-import '../index.scss';
+import styles from '../assets/styles/homePage.module.scss';
 
 /* our home page */
 function Home() {
   return (
-    <div className="home-container">
+    <div className={styles.home__container}>
       <HomePageSlider />
 
-      <div className="home-cosmeticsContainer">
-        <div className="homeCosmetics careCosmetics" >
+      <div className={styles.home__cosmeticsContainer}>
+        <div className={styles.home__careCosmetics} >
           <CosmeticCategory image={{src: careCosmeticsImg, alt: 'Care Cosmetics Product' }} category='Care' to='/catalog'/>
 
-          <div className="home-cosmeticsImages">
+          <div className={styles.home__cosmeticsImages}>
             {/* <img src={careCosmeticsImg}></img> */}
 
           </div>
         </div>
 
-        <div className="homeCosmetics beautyCosmetics">
+        <div className={styles.home__beautyCosmetics}>
           <CosmeticCategory image={{src: beautyCosmeticsImg, alt: 'Beauty Cosmetics Product' }} category='Beauty' to='/catalog'/>
 
+          <div className={styles.home__cosmeticsImages}>
+            {/* <img src={careCosmeticsImg}></img> */}
+
+          </div>
         </div>
 
-        <div className="homeCosmetics browsCosmetics">
+        <div className={styles.home__browsCosmetics}>
           <CosmeticCategory image={{src: browsCosmeticsImg, alt: 'Brows Cosmetics Product' }} category='Brows' to='/catalog'/>
 
+          <div className={styles.home__cosmeticsImages}>
+            {/* <img src={careCosmeticsImg}></img> */}
+
+          </div>
         </div>
       </div>
       
-      <div className='home-uniqueContainer'>
+      <div className={styles.home__uniquenessContainer}>
         <Unique image={{src: uniqueMainImgUrl, alt: 'Our product'}} representName="Zara Boltaeva" representPosition="CEO, founder" representSignature={{src: uniqueSignatureUrl, alt: 'CEO signature'}} />
       </div>
 
-      <div className="home-socialMediaContainer">
+      <div className={styles.home__socialMediaContainer}>
         <SocialMedia
           text='Boltaeva - this is a real society of girls who show love to themselves'
         />
 
-        <div className="home-socialMediaBtn">
+        <div className={styles.home__socialMediaBtn}>
           <SocialMediaBtn 
             icons={[{
               src: InstagramUrl,
@@ -64,7 +72,7 @@ function Home() {
         </div>
       </div>
 
-      <div className="home-mediaImagesVisible">
+      <div className={styles.home__mediaImages_visible}>
         <SocialMediaImages 
           socialMediaImages = {[
             {
@@ -87,7 +95,7 @@ function Home() {
         />
       </div>
 
-      <div className="home-mediaImagesHidden">
+      <div className={styles.home__mediaImages_hidden}>
         <SocialMediaImages 
           socialMediaImages = {[
             {

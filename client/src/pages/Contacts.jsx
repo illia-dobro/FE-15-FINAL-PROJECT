@@ -5,7 +5,7 @@ import SocialMediaBtn from "../components/socialMediaBtn";
 import SocialMediaImages from "../components/socialMediaImages";
 import RequestCallBack from "../components/requestCallBack";
 
-import styles from '../components/contactsDetails/ContactsDetails.module.scss';
+import styles from '../assets/styles/contactsPage.module.scss';
 
 function Contacts() {
   const contactsMediaLinks = [
@@ -38,7 +38,7 @@ function Contacts() {
 
   return (
     <>
-      <div className="contacts-container">
+      <div className={styles.contacts__container}>
         
         <p className={styles.contacts__title}>Our contacts</p>
         <img src="../src/assets/contacts_intro_2.png" alt="#" className={styles.contacts__introImg} />
@@ -47,15 +47,15 @@ function Contacts() {
 
         <GoogleMap />
 
-        <div className="contacts-socialMedia">
+        <div className={styles.contacts__socialMedia}>
           <SocialMedia text='Each Boltaeva brand product is truly unique - everything is thought out to the smallest detail.' />
 
-          <nav className="contacts-socialMediaBtn">
+          <nav className={styles.contacts__socialMedia_buttons}>
             <SocialMediaBtn icons={contactsMediaLinks}/>
           </nav>
         </div>
 
-        <div className="contacts-mediaImagesVisible">
+        <div className={styles.contacts__mediaImages_visible}>
           <SocialMediaImages 
             socialMediaImages = {[
               {
@@ -78,7 +78,7 @@ function Contacts() {
           />
         </div>
 
-        <div className="contacts-mediaImagesHidden">
+        <div className={styles.contacts__mediaImages_hidden}>
           <SocialMediaImages 
             socialMediaImages = {[
               {

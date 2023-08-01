@@ -1,0 +1,101 @@
+@import './common.scss';
+
+.home {
+  &__container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding-bottom: 108px;
+  }
+
+  &__cosmeticsContainer,
+  &__socialMediaContainer,
+  &__mediaImages_visible,
+  &__mediaImages_hidden {
+    padding: 0 70px;
+  }
+
+  &__careCosmetics,
+  &__beautyCosmetics,
+  &__browsCosmetics,
+  &__cosmeticsImages {
+    @include flex-justify-between;
+    gap: 20px;    
+  }
+
+  &__careCosmetics,
+  &__beautyCosmetics {
+    margin-bottom: 30px;
+  }
+
+  &__beautyCosmetics {
+    flex-direction: row-reverse;
+  }
+
+  &__cosmeticsImages img {
+    max-width: 310px;
+  }
+
+  &__uniquenessContainer {
+    max-width: 1440px;
+    margin-top: 70px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    color: $dark;
+  }
+
+  &__socialMediaContainer {
+    font-size: 48px;
+    @include flex-justify-between;
+    align-items: flex-end;
+    margin-top: 136px;
+    margin-bottom: 100px;
+  }
+  
+  &__socialMediaBtn {
+    width: 310px;
+    height: 80px;
+  }
+
+  &__mediaImages_visible {
+    margin-bottom: 20px;
+  }
+}
+  
+@media screen and (max-width: 480px) {
+  .home {
+    &__container {
+      max-width: 375px;
+      padding-bottom: 90px;
+    }
+    
+    &__cosmeticsContainer,
+    &__socialMediaContainer,
+    &__mediaImages_visible {
+      padding: 0 15px;
+    }
+
+    &__cosmeticsImages {
+      display: none;
+    }
+    
+    &__uniquenessContainer {
+      flex-direction: column;
+    }
+  
+    &__socialMediaContainer {
+      font-size: 30px;
+      flex-direction: column;
+      margin-top: 90px;
+      margin-bottom: 50px;
+    }
+  
+    &__socialMediaBtn {
+      width: 345px;
+    }
+  
+    &__mediaImages_hidden {
+      display: none;
+    }
+  }
+}
