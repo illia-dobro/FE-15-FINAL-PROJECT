@@ -8,6 +8,8 @@ import Contacts from "./pages/Contacts";
 import Shop from "./pages/Shop";
 import Login from "./pages/Client";
 import PageNotFound from "./pages/PageNotFound";
+import Modal from './components/Modal'
+import Footer from './layouts/footer'
 import Modal from "./components/Modal";
 import ProductDetail from "./pages/ProductDetail";
 
@@ -27,6 +29,7 @@ function App() {
           <Route path="/product/:url" element={<ProductDetail />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
+        <Footer />
       </Router>
     </>
   );
