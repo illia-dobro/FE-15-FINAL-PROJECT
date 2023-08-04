@@ -55,8 +55,6 @@ const Catalog = () => {
 
       {/*<Unique image={{src: 'https://w.forfun.com/fetch/61/6157e4be3da6483d461345e990a47026.jpeg'}}/>*/}
       <Unique />
-
-      {/*<Footer/>*/}
     </div>
   );
 };

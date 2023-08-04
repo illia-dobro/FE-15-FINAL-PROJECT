@@ -2,6 +2,7 @@
 .nav {
   color: $dark;
   @include flex-justify-around;
+  
   align-items: center;
 }
 .nav-desc {
@@ -23,6 +24,7 @@
     gap: 50px;
   }
   .nav__link {
+    
     font-size: 14px;
     font-weight: 400;
     line-height: 17px;
@@ -52,7 +54,6 @@
   .nav__mobile__dropdown {
     position: absolute;
     background-color: $primary;
-    padding: 40px 0 74px;
     top: 100%;
     width: 100%;
     z-index: 999;
