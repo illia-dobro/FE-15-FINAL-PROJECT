@@ -1,10 +1,11 @@
 @import './common.scss';
 
 .home {
+  padding-bottom: 108px;
+
   &__container {
     max-width: 1440px;
     margin: 0 auto;
-    padding-bottom: 108px;
   }
 
   &__cosmeticsContainer,
@@ -61,12 +62,43 @@
     margin-bottom: 20px;
   }
 }
+
+@media screen and (max-width: 992px) {
+  .home {
+    padding-bottom: 90px;
+
+    &__container {
+      max-width: 780px;
+    }
+    
+    &__cosmeticsContainer,
+    &__socialMediaContainer,
+    &__mediaImages_visible,
+    &__mediaImages_hidden {
+      padding: 0 25px;
+    }
+  
+    &__uniquenessContainer {
+      flex-direction: column;
+    }
+
+    &__socialMediaContainer {
+      font-size: 30px;
+      margin-top: 90px;
+      margin-bottom: 50px;
+    }
+  
+    &__socialMediaBtn {
+      width: 90%;
+    }
+  
+  }
+}
   
 @media screen and (max-width: 480px) {
   .home {
     &__container {
       max-width: 375px;
-      padding-bottom: 90px;
     }
     
     &__cosmeticsContainer,
@@ -79,15 +111,8 @@
       display: none;
     }
     
-    &__uniquenessContainer {
-      flex-direction: column;
-    }
-  
     &__socialMediaContainer {
-      font-size: 30px;
       flex-direction: column;
-      margin-top: 90px;
-      margin-bottom: 50px;
     }
   
     &__socialMediaBtn {
