@@ -2,6 +2,10 @@
     display: flex;
     gap: 20px;
     justify-content: space-between;
+
+    & img {
+        max-width: 24%;
+    }
 }
 
 @media screen and (max-width: 992px) {
@@ -26,6 +30,10 @@
         & img {
             max-width: 164px;
             max-height: 164px;
+
+            &:last-child {
+                display: flex;
+            }
         }
     }
 }

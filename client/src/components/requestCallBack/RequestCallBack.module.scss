@@ -30,8 +30,7 @@
     }
 }
 
-
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 992px) {
     .request {
         &__container {
             flex-direction: column;
@@ -39,7 +38,11 @@
             gap: 70px;
             margin-bottom: 92px;
         }
+    }
+}
 
+@media screen and (max-width: 480px) {
+    .request {
         &__title {
             margin-top: 50px;
             margin-bottom: 30px;

@@ -75,9 +75,15 @@
     &__socialMediaContainer,
     &__mediaImages_visible,
     &__mediaImages_hidden {
+      gap: 2%;
       padding: 0 25px;
     }
   
+    &__cosmeticsImages {
+      gap: 2%;
+      flex-wrap: wrap;
+    }
+
     &__uniquenessContainer {
       flex-direction: column;
     }

@@ -46,6 +46,36 @@
     }
 }
 
+@media screen and (max-width: 992px) {
+    .contacts {
+        &__container {
+            max-width: 780px;
+            padding: 0 25px;
+        }
+
+        &__socialMedia {
+            flex-direction: column;
+            margin-bottom: 50px;
+
+            &_buttons {
+                margin: 0 auto;
+                height: 52px;
+                grid-template-columns: repeat(5, 66px);
+                gap: 25px;
+            }
+        }
+
+        // &__mediaImages {
+        //     &_visible {
+        //         margin-bottom: 90px;
+        //     }
+
+        //     &_hidden {
+        //         display: none;
+        //     }
+        // }
+    }
+}
 
 @media screen and (max-width: 480px) {
     .contacts {
