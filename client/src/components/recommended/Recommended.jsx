@@ -1,4 +1,4 @@
-import ProductSlider from "../../components/productSlider";
+import ProductSlider from "../../components/ProductSlider";
 import CustomBtnGroup from "../recommended/customBtnGroup/CustomBtnGroup";
 import "./recommended.scss";
 
