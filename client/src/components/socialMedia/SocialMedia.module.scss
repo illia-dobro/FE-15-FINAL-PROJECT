@@ -1,0 +1,20 @@
+@import "../../assets/styles/common.scss";
+
+.socialMedia {
+
+    &__text {
+        max-width: 600px;
+        line-height: 130%;
+        color: $dark;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .socialMedia {
+
+        &__text {
+            max-width: 100%;
+            margin-bottom: 30px;
+        }
+    }
+}

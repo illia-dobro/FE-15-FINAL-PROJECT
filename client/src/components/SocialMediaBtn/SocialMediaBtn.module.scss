@@ -1,0 +1,10 @@
+@import "../../assets/styles/common.scss";
+
+.socialMediaBtn {
+    width: 100%;
+    height: 100%;
+    @include flex-justify-center;
+    align-items: center;
+    background-color: $secondary;
+    border-radius: 66px;
+}

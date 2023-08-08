@@ -2,15 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-@import './assets/styles/common.scss';
+@import "./assets/styles/common.scss";
 
 /* Если у кого есть желания найти шрифт и подключить как в макете то Do it =) */
 /*  font-family: 'PT Sans', sans-serif;*/
-html,
-body {
-  font-family: "PT Sans", sans-serif;
+body{
+  font-family: 'PT Sans', sans-serif;
   height: 100%;
-}
-#root {
-  height: 100%;
+  background-color: #F5ECE3;
 }
