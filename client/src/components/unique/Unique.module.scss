@@ -1,8 +1,12 @@
 .unique {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    color: #555555;
 
     &__description {
-        width: 50%;
-        padding: 0 8%;
+        padding: 200px 114px;
     }
 
     &__focus {
@@ -36,53 +40,7 @@
         }
 
         &_sign {
-            fill: #AC8F78;
-        }
-    }
-
-    &__image {
-        width: 50%;
-    }
-}
-
-@media screen and (max-width: 992px) {
-    .unique {
-
-        &__description {
-            width: 100%;
-            padding: 0 25px;
-            margin-bottom: 50px;
-        }
-
-        &__focus {
-            margin-top: 30px;
-            margin-bottom: 20px;
-        }
-
-        &__content {
-            margin-bottom: 40px;
-        }
-
-        &__image {
-            width: 100%;
-        }
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .unique {
-
-        &__description {
-            padding: 0 15px;
-        }
-
-        &__focus {
-            font-size: 22px;
-            text-shadow: none;
-        }
-
-        &__content {
-            font-size: 16px;
+            color: #AC8F78;
         }
     }
 }

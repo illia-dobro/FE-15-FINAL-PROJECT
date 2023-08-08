@@ -1,11 +1,12 @@
 // import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './Unique.module.scss';
+import styles from './Unique.module.css';
 import uniqueBrand from '../../assets/unique_brandName.png';
 
-const Unique = ({image = {}, representName = "", representPosition = "", representSignature = {}}) => {
+const Unique = ({image = {}, representName = "", representPosition = "", representSignature = {}, direction = "row"}) => {
     return (
-        <>
+        <div className={styles.unique} style={{flexDirection: direction}}>
+            <img src={image.src} alt={image.alt} />
             <div className={styles.unique__description}>
                 <img src={uniqueBrand} alt="Brand Name"></img>
                 <h3 className={styles.unique__focus}>Each Boltaeva brand product is truly unique - everything is thought out to the smallest detail.</h3>
@@ -18,8 +19,7 @@ const Unique = ({image = {}, representName = "", representPosition = "", represe
                     <img className={styles.unique__signature_sign} src={representSignature.src} alt={representSignature.alt}></img>
                 </div>
             </div>
-            <img className={styles.unique__image} src={image.src} alt={image.alt} />
-        </>
+        </div>
     )
 }
 
