@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import PhoneInput from 'react-phone-number-input/input'
 import { ReactComponent as Logo } from '../../../assets/images/logo.svg';
 import { useRegisterMutation } from '../../../app/services/api';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+
 
 
 
@@ -37,6 +37,7 @@ function SignUp() {
       if(data.error){
         throw data
       } else {
+        toast("Congratulations, you have successfully registered!");
         navigate("/");
       }
 
@@ -53,7 +54,7 @@ function SignUp() {
 
   return (
     <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <ToastContainer />
+
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Logo fill={'#AC8F78'} className="mb-10 mx-auto" />
         <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-[#555555]">
