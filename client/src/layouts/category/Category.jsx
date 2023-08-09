@@ -13,7 +13,9 @@ const Category = () => {
   const { data: categories, isSuccess: isCategoriesSuccess } =
     useCategoriesQuery();
 
-  const { data: products, isSuccess } = useProductsQuery();
+  const { data: productsData, isSuccess } = useProductsQuery(
+    `filter?categories=${categoryName}`
+  );
 
   const category =
     isCategoriesSuccess &&
@@ -31,7 +33,9 @@ const Category = () => {
         />
       </div>
 
-      <Filters>{isSuccess && <ProductsList products={products} />}</Filters>
+      <Filters>
+        {isSuccess && <ProductsList products={productsData.products} />}
+      </Filters>
     </>
   );
 };
