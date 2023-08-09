@@ -1,0 +1,17 @@
+@import "../../../assets/styles/common.scss";
+
+.actionBtn {
+    @include flex-justify-center;
+    align-items: center;
+    background-color: $primary;
+    border-radius: 66px;
+    width: 100%;
+    padding: 28px 0;
+
+    &__name {
+        font-size: 20px;
+        line-height: 120%;
+        color: $dark;
+        margin-right: 12px;
+    }
+}

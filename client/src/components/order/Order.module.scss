@@ -1,0 +1,56 @@
+@import "../../assets/styles/common.scss";
+
+.order {
+    &__header {
+        @include flex-justify-between;
+        align-items: center;
+        margin-bottom: 24px;
+
+        &_title {
+            font-size: 36px;
+            line-height: 110%;
+            color: $dark;
+            margin-right: 20px;
+            color: $dark;
+        }
+
+        &_number {
+            font-size: 14px;
+            line-height: 120%;
+            color: $dark;
+        }
+    }
+
+    &__product {
+        display: grid;
+        grid-template-columns: repeat(3, 32%);
+    }
+
+    &__total {
+        @include flex-justify-between;
+        margin-top: 28px;
+        margin-bottom: 28px;
+
+        p {
+            font-size: 24px;
+            line-height: 110%;
+            color: $dark;
+        }
+
+        &_sum {
+            @include flex-justify-between;
+        }
+    }
+
+    &__edit {
+        @include flex-justify-center;
+        align-items: center;
+        color: $primary-hover;
+        margin: 20px auto 0 auto;
+
+        span {
+            display: block;
+            margin-left: 8px;
+        }
+    }
+}
