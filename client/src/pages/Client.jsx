@@ -1,5 +1,5 @@
 /* Login/Registration */
-import SignUp from '../features/forms/SignUp'
+import SignUp from '../layouts/forms/SignUp'
 
 
 function Login() {
