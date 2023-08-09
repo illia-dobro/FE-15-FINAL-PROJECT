@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import PhoneInput from 'react-phone-number-input/input'
 import { ReactComponent as Logo } from '../../../assets/images/logo.svg';
 import { useRegisterMutation } from '../../../app/services/api';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 function SignUp() {
@@ -31,19 +34,26 @@ function SignUp() {
         telephone
       });
       console.log(data);
-      if(data[error]){
+      if(data.error){
         throw data
       } else {
         navigate("/");
       }
 
-    } catch (error) {
-      setError(error.error.data);
+    } catch (err) {
+      console.log(err);
+      if(err.error.status === 400) {
+        setError(err.error.data);
+      } else {
+        toast("Something goes wrong!");
+      }
+
     }
   }
 
   return (
     <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <ToastContainer />
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Logo fill={'#AC8F78'} className="mb-10 mx-auto" />
         <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-[#555555]">
@@ -58,7 +68,7 @@ function SignUp() {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
-          <span className='text-red-500 text-sm'>{error.message}</span>
+          <span className='text-red-500 text-sm'>{error.message}{error.error}</span>
           <div>
               <label
                 htmlFor="login"
