@@ -1,12 +1,17 @@
 import ProductsList from "../productsList/index.js";
 import { useParams } from "react-router-dom";
 import Filters from "../../components/filters/index.js";
-import { useCategoriesQuery } from "../../app/services/api.js";
+import {
+  useCategoriesQuery,
+  useProductsQuery,
+} from "../../app/services/api.js";
 
 const Category = () => {
   const { categoryName } = useParams();
 
-  const { data: categories, isSuccess } = useCategoriesQuery();
+  const { data: categories } = useCategoriesQuery();
+
+  const { data: products, isSuccess } = useProductsQuery();
 
   return (
     <>
@@ -20,9 +25,7 @@ const Category = () => {
         />
       </div>
 
-      <Filters>
-        <ProductsList category={categoryName} />
-      </Filters>
+      <Filters>{isSuccess && <ProductsList products={products} />}</Filters>
     </>
   );
 };
