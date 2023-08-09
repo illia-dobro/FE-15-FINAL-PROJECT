@@ -10,8 +10,6 @@ import {
 } from "@heroicons/react/20/solid";
 
 const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
   { name: "Newest", href: "#", current: false },
   { name: "Price: Low to High", href: "#", current: false },
   { name: "Price: High to Low", href: "#", current: false },
@@ -30,11 +28,22 @@ const filters = [
     ],
   },
   {
-    id: "category",
-    name: "Category",
+    id: "manufacturerCountry",
+    name: "Manufacturer Country",
     options: [
-      { value: "new-arrivals", label: "New Arrivals", checked: false },
-      { value: "sale", label: "Sale", checked: false },
+      { value: "usa", label: "USA", checked: false },
+      { value: "ua", label: "Ukraine", checked: false },
+    ],
+  },
+  {
+    id: "product_type",
+    name: "Product Type",
+    options: [
+      { value: "cream", label: "Cream", checked: false },
+      { value: "lotion", label: "Lotion", checked: false },
+      { value: "butter", label: "Butter", checked: false },
+      { value: "balm", label: "Serum", checked: false },
+      { value: "mask", label: "Mask", checked: false },
     ],
   },
 ];
@@ -235,13 +244,13 @@ export default function Filters({ children }) {
             {/* Filters */}
             <form className="hidden lg:block">
               {filters.map((section) => (
-                  <Disclosure
-                      as="div"
-                      key={section.id}
-                      className="border-b border-gray-200 py-6"
-                  >
-                    {({open}) => (
-                        <>
+                <Disclosure
+                  as="div"
+                  key={section.id}
+                  className="border-b border-gray-200 py-6"
+                >
+                  {({ open }) => (
+                    <>
                       <h3 className="-my-3 flow-root">
                         <Disclosure.Button className="flex w-full items-center justify-between  py-3 text-sm text-gray-400 hover:text-gray-500">
                           <span className="font-medium text-gray-900">
