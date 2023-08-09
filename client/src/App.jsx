@@ -10,7 +10,8 @@ import Login from "./pages/Client";
 import PageNotFound from "./pages/PageNotFound";
 import Category from "./layouts/category";
 import Footer from './layouts/footer'
-
+import Modal from "./components/Modal";
+import ProductDetail from "./pages/ProductDetail";
 
 function App() {
   return (
@@ -29,9 +30,9 @@ function App() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/login" element={<Login />} />
           <Route path="/about" element={<About />} />
+          <Route path="/product/:url" element={<ProductDetail />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
-
         <Footer />
       </Router>
     </>
