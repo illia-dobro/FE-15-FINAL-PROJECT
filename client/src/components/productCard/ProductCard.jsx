@@ -1,8 +1,9 @@
 import styles from "./ProductCard.module.scss";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
   return (
-    <a href={product.href} className="group ">
+    <Link to={product.productUrl} className="group ">
       <div
         className={
           styles.product_card +
@@ -16,10 +17,12 @@ const ProductCard = ({ product }) => {
         />
         <div className="p-6 flex justify-between items-center gap-2 group-hover:bg-[#AC8F78]">
           <h3 className="text-sm text-gray-700">{product.name}</h3>
-          <p className="text-lg font-medium text-gray-900">{product.price}</p>
+          <p className="text-lg font-medium text-gray-900">
+            {product.currentPrice}
+          </p>
         </div>
       </div>
-    </a>
+    </Link>
   );
 };
 
