@@ -2,35 +2,17 @@ import { Link, Outlet } from "react-router-dom";
 
 import styles from "./Catalog.module.scss";
 import Unique from "../../components/unique/Unique.jsx";
-
-export const categories = [
-  {
-    id: "1",
-    path: "care",
-    name: "Care cosmetics",
-    img: "https://e0.pxfuel.com/wallpapers/951/581/desktop-wallpaper-mountains-river-valley-landscape-iceland-dual-wide-background-iceland-dual-monitor.jpg",
-  },
-  {
-    id: "2",
-    path: "decorative",
-    name: "Decorative cosmetics ",
-    img: "https://e0.pxfuel.com/wallpapers/647/161/desktop-wallpaper-aurora-borealis-nature-iceland-dual-wide-widescreen-16-9-widescreen.jpg",
-  },
-  {
-    id: "3",
-    path: "eyebrow",
-    name: "Eyebrow cosmetics",
-    img: "https://e1.pxfuel.com/desktop-wallpaper/46/973/desktop-wallpaper-aldeyjarfoss-waterfall-iceland-winter-ultra-backgrounds-for-u-tv-widescreen-ultrawide-laptop-tablet-smartphone-ultra-wide-winter.jpg",
-  },
-  {
-    id: "4",
-    path: "accessories",
-    name: "Accessories",
-    img: "https://e0.pxfuel.com/wallpapers/776/168/desktop-wallpaper-shore-iceland-%E2%9D%A4-for-ultra-tv-%E2%80%A2-wide.jpg",
-  },
-];
+import { useCategoriesQuery } from "../../app/services/api.js";
 
 const Catalog = () => {
+  const {
+    data: categories,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useCategoriesQuery();
+
   return (
     <div className={styles.catalog_page}>
       <ul
@@ -39,16 +21,17 @@ const Catalog = () => {
           " mx-auto flex grow justify-center text-center"
         }
       >
-        {categories.map((category) => (
-          <li key={category.name} className="grow-[0.1]">
-            <Link
-              to={category.path}
-              className="flex justify-center text-[#555555] opacity-40 hover:opacity-100 transition-all py-4 px-2"
-            >
-              {category.name}
-            </Link>
-          </li>
-        ))}
+        {isSuccess &&
+          categories.map((category) => (
+            <li key={category.name} className="grow-[0.1]">
+              <Link
+                to={category.name}
+                className="flex justify-center text-[#555555] opacity-40 hover:opacity-100 transition-all py-4 px-2"
+              >
+                {category.name}
+              </Link>
+            </li>
+          ))}
       </ul>
 
       <Outlet />
