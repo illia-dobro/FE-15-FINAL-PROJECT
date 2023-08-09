@@ -9,8 +9,10 @@ import {
 const Category = () => {
   const { categoryName } = useParams();
 
+  // @TODO: rewrite using useQueryState
   const { data: categories, isSuccess: isCategoriesSuccess } =
     useCategoriesQuery();
+
   const { data: products, isSuccess } = useProductsQuery();
 
   const category =
