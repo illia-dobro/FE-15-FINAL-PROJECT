@@ -4,7 +4,12 @@
     display: flex;
 
     &__checkout {
+        padding: 0 70px;
         width: 70%;
+        @include flex-justify-between;
+        align-items: center;
+        gap: 9%;
+        background-color: $primary;
     }
 
     &__order {
@@ -13,4 +18,3 @@
         width: 30%;
     }
 }
-

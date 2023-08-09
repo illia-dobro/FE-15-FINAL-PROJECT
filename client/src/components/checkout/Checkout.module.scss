@@ -1,0 +1,67 @@
+@import "../../assets/styles/common.scss";
+
+.checkout {
+    padding-top: 102px;
+    padding-bottom: 120px;
+    background-color: $primary;
+    @include flex-justify-between;
+    
+    &__header {
+        font-size: 48px;
+        line-height: 110%;
+        color: $dark;
+        margin-top: 102px;
+        margin-bottom: 48px;
+    }
+
+    &__form {
+        width: 58%;
+    }
+
+    &__details {
+        width: 35%;
+    }
+}
+
+.details {
+    &__title {
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 180%;
+        margin-bottom: 8px;
+        color: $dark;
+    }
+
+    &__signIn {
+        margin-top: 52px;
+        margin-bottom: 64px;
+
+        &_text {
+            font-size: 14px;
+            color: $dark;
+            margin-bottom: 18px;
+        }
+
+        &_icon {
+            @include flex-justify-center;
+            align-items: center;
+            gap: 12px;
+            color: $primary-hover;
+        }
+    }
+
+    &__shipping {
+        &_chooseBtns {
+            @include flex-col;
+            gap: 24px;
+        }
+    }
+
+    &__costCalc {
+        width: 80%;
+        margin-top: 20px;
+        font-size: 14px;
+        color: $dark;
+        opacity: 50%;
+    }
+}

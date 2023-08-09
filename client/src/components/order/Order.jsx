@@ -7,7 +7,7 @@ import styles from './Order.module.scss';
 
 const Order = () => {
     return (
-        <>
+        <div className={styles.order}>
             <div className={styles.order__header}>
                 <h3 className={styles.order__header_title}>Order</h3>
                 <span className={styles.order__header_number}>Number of products</span>
@@ -35,7 +35,7 @@ const Order = () => {
                 <LuEdit2 />
                 <span>Edit this order</span>
             </button>
-        </>
+        </div>
     )
 };
 

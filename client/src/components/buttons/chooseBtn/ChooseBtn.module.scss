@@ -1,0 +1,20 @@
+@import "../../../assets/styles/common.scss";
+
+.chooseBtn {
+    @include flex-justify-between;
+    align-items: center;
+    width: 100%;
+    padding: 12px 24px;
+    background-color: $secondary;
+    border-radius: 6px;
+
+    &__option {
+        font-size: 16px;
+        line-height: 180%;
+        color: $dark;
+
+        &:current {
+            opacity: 50%;
+        }
+    }
+}
