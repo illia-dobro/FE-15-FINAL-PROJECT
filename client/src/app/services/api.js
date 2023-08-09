@@ -44,6 +44,9 @@ export const api = createApi({
         method: "GET",
       }),
     }),
+    getProduct: builder.query({
+      query: (itemNo) => `products/${itemNo}`,
+    }),
     categories: builder.query({
       query: () => ({
         url: "catalog",
@@ -58,5 +61,6 @@ export const {
   useRegisterMutation,
   useGetUserQuery,
   useProductsQuery,
+  useGetProductQuery,
   useCategoriesQuery,
 } = api;
