@@ -1,10 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @import './assets/styles/common.scss';
 
-/* Если у кого есть желания найти шрифт и подключить как в макете то Do it =) */
 /*  font-family: 'PT Sans', sans-serif;*/
 html,
 body {
@@ -13,4 +11,19 @@ body {
 }
 #root {
   height: 100%;
+}
+::-webkit-scrollbar {
+  width: 8px; 
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(231, 210, 189, 1); 
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f0f0f0; 
+  border-radius: 4px; 
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(255, 237, 220); 
 }

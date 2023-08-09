@@ -24,11 +24,9 @@
     gap: 50px;
   }
   .nav__link {
-    
     font-size: 14px;
     font-weight: 400;
     line-height: 17px;
-    letter-spacing: -0.02em;
     padding: 4px;
     transition: color 0.2s ease-in-out;
   }
@@ -63,7 +61,7 @@
   .nav-mobile__links {
     @include flex-col;
     text-align: center;
-    font-size: 24px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 26px;
     letter-spacing: -0.03em;

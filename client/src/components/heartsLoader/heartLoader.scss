@@ -1,0 +1,5 @@
+@import "../../assets/styles/common.scss";
+.hearts{
+    @include flex-justify-center;
+    padding: 100px;
+  }
