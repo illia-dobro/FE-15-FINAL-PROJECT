@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 import PhoneInput from 'react-phone-number-input/input'
 import { ReactComponent as Logo } from '../../../assets/images/logo.svg';
 import { useRegisterMutation } from '../../../app/services/api';
@@ -12,24 +13,32 @@ function SignUp() {
   const [password, setPassword] = React.useState('');
   const [telephone, setTelephone] = React.useState('');
   const [error, setError] = React.useState('');
+  const navigate = useNavigate();
 
-  const [register] = useRegisterMutation();
+  const [register, {isLoading}] = useRegisterMutation();
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
+    setError('');
     try {
       const data = await register({
         firstName,
         lastName,
         email,
         password,
-        login: firstName,
-        telephone,
-        isAdmin: false
+        login,
+        telephone
       });
-      setError(data.error.data);
+      console.log(data);
+      if(data[error]){
+        throw data
+      } else {
+        navigate("/");
+      }
+
     } catch (error) {
-      console.log(error);
+      setError(error.error.data);
     }
   }
 
@@ -199,6 +208,7 @@ function SignUp() {
             <div>
               <button
                 type="submit"
+                disabled={isLoading}
                 className="flex w-full justify-center text-[#555555] rounded-md bg-[#EEE4DA] px-3 py-2 text-sm font-semibold shadow-sm hover:bg-[#eddac7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:bg-[#eddac7] transition"
               >
                 Complete registration
