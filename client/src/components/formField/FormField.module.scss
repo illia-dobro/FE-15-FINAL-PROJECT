@@ -1,0 +1,28 @@
+@import "../../assets/styles/common.scss";
+
+.formField {
+    @include flex-col;
+    margin-bottom: 44px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    &__label {
+        font-size: 13px;
+        line-height: 110%;
+        opacity: 30%;
+        margin-bottom: 16px;
+        color: #000000;
+
+        &:active {
+            color: #AC8F78;
+        }
+    }
+
+    &__input {
+        background-color: $primary;
+        padding-bottom: 16px;
+        border-bottom: 1px solid rgba(0,0,0,0.2)
+    }
+}

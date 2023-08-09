@@ -1,16 +1,21 @@
+import FormField from '../formField/FormField';
 import FavoriteBtn from '../buttons/favoriteBtn';
+import ChooseBtn from '../buttons/chooseBtn/ChooseBtn';
 
 import signInIcon from '../../pages/shop/signIn.svg';
-import ChooseBtn from '../buttons/chooseBtn/ChooseBtn';
 
 import styles from './Checkout.module.scss';
 
 const Checkout = () => {
     return (
         <div className={styles.checkout}>
+
             <div className={styles.checkout__form}>
                 <h3 className={styles.checkout__header}>Checkout</h3>
-
+                <FormField label='Surname, name and patronymic' type='text'/>
+                <FormField label='Country, city, address' type='text'/>
+                <FormField label='Contact number' type='number'/>
+                <FormField label='Email' type='email'/>
             </div>
 
             <div className={styles.checkout__details}>

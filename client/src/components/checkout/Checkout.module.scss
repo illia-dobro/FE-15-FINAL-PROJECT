@@ -5,12 +5,13 @@
     padding-bottom: 120px;
     background-color: $primary;
     @include flex-justify-between;
+    align-items: center;
+    gap: 7%;
     
     &__header {
         font-size: 48px;
         line-height: 110%;
         color: $dark;
-        margin-top: 102px;
         margin-bottom: 48px;
     }
 
@@ -58,7 +59,7 @@
     }
 
     &__costCalc {
-        width: 80%;
+        max-width: 240px;
         margin-top: 20px;
         font-size: 14px;
         color: $dark;
