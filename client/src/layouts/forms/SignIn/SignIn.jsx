@@ -2,7 +2,7 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate, Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../../assets/images/logo.svg';
-import { useLoginMutation, useGetUserQuery } from '../../../app/services/api';
+import { useLoginMutation } from '../../../app/services/api';
 import { saveState } from '../../../helpers/localStorage';
 
 function SignIn() {

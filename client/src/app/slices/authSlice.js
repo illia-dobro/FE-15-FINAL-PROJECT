@@ -21,14 +21,12 @@ const authSlice = createSlice({
     builder.addMatcher(
       api.endpoints.login.matchFulfilled,
       (state, { payload }) => {
-        console.log('sdsd', payload);
         state.token = payload.token;
       }
     );
     builder.addMatcher(
       api.endpoints.getUser.matchFulfilled,
       (state, { payload }) => {
-        console.log(payload);
         state.user = payload;
       }
     );
