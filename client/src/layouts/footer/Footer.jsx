@@ -1,11 +1,11 @@
 import { ReactComponent as Logo } from '../../assets/images/logo.svg';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import NavigationFooter from './NavigationFooter';
 import ProductsFooter from './ProductsFooter';
 import ContactsFooter from './ContactsFooter';
 import AboutCompany from './AboutCompany/AboutCompany';
 import { footer, footerFourColumn, footerLogo } from './Footer.module.scss';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 function Footer() {
   return (

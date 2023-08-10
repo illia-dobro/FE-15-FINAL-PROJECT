@@ -4,10 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#f5ece3',
-        secondary: '#eee4da',
+        'primary': '#f5ece3',
+        'secondary': '#eee4da'
       },
     },
   },
-  plugins: ['@tailwindcss/forms'],
+  plugins: [],
 };

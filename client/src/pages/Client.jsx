@@ -2,14 +2,13 @@
 import SignUp from '../layouts/forms/SignUp'
 
 
+
 function Login() {
+  return (<>
+   <span>Login</span>
+   <SignUp/>
+  </>
 
-
-  return (
-    <>
-    Login
-    <SignUp />
-    </>
   )
 }
 
