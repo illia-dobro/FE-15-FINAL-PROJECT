@@ -70,6 +70,7 @@ function Nav() {
               />
             </div>
           </div>
+          
         </nav>
       ) : (
         <nav
@@ -94,11 +95,10 @@ function Nav() {
                 <NavLink to="/delivery">Delivery</NavLink>
                 <NavLink to="/contacts">Contacts</NavLink>
               </div>
-            
               {/* Social Btns and signature; slider*/}
             </div>
           )}
-          <Logo />
+          <Logo logoFillColor={logoFillColor}/>
           {onOpenNav && (
             <NavLink
               className="nav__icon"
