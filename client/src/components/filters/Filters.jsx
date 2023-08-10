@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
@@ -8,7 +8,8 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { changeActiveFilter } from "../../app/slices/filtersSlice.js";
 
 const sortOptions = [
   { name: "Newest", href: "#", current: false },
@@ -23,9 +24,16 @@ function classNames(...classes) {
 export default function Filters({ children }) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const filters = [];
+  const dispatch = useDispatch();
 
-  const productFilter = useSelector((state) => state.filters);
+  const productFilter = useSelector((state) => state.filters.productTypes);
   filters.push(productFilter);
+
+  const handleChange = (e) => {
+    dispatch(
+      changeActiveFilter({ name: e.target.name, value: e.target.value })
+    );
+  };
 
   return (
     <div>
@@ -110,10 +118,11 @@ export default function Filters({ children }) {
                                 >
                                   <input
                                     id={`filter-mobile-${section.id}-${optionIdx}`}
-                                    name={`${section.id}[]`}
+                                    name={`${section.id}`}
                                     defaultValue={option.value}
                                     type="checkbox"
                                     defaultChecked={option.checked}
+                                    onChange={(e) => handleChange(e)}
                                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                   />
                                   <label
@@ -252,10 +261,11 @@ export default function Filters({ children }) {
                             >
                               <input
                                 id={`filter-${section.id}-${optionIdx}`}
-                                name={`${section.id}[]`}
+                                name={`${section.id}`}
                                 defaultValue={option.value}
                                 type="checkbox"
                                 defaultChecked={option.checked}
+                                onChange={(e) => handleChange(e)}
                                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                               />
                               <label
