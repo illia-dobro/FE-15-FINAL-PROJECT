@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
@@ -8,44 +8,12 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
+import { useSelector } from "react-redux";
 
 const sortOptions = [
   { name: "Newest", href: "#", current: false },
   { name: "Price: Low to High", href: "#", current: false },
   { name: "Price: High to Low", href: "#", current: false },
-];
-
-const filters = [
-  // {
-  //   id: "skin",
-  //   name: "Skin Type",
-  //   options: [
-  //     { value: "normal", label: "Normal", checked: true },
-  //     { value: "dry", label: "Dry", checked: false },
-  //     { value: "oily", label: "Oily", checked: false },
-  //     { value: "combination", label: "Combination", checked: false },
-  //     { value: "sensitive", label: "Sensitive", checked: false },
-  //   ],
-  // },
-  {
-    id: "manufacturerCountry",
-    name: "Manufacturer Country",
-    options: [
-      { value: "usa", label: "USA", checked: false },
-      { value: "ua", label: "Ukraine", checked: false },
-    ],
-  },
-  {
-    id: "product_type",
-    name: "Product Type",
-    options: [
-      { value: "cream", label: "Cream", checked: false },
-      { value: "lotion", label: "Lotion", checked: false },
-      { value: "butter", label: "Butter", checked: false },
-      { value: "balm", label: "Serum", checked: false },
-      { value: "mask", label: "Mask", checked: false },
-    ],
-  },
 ];
 
 function classNames(...classes) {
@@ -54,6 +22,10 @@ function classNames(...classes) {
 
 export default function Filters({ children }) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const filters = [];
+
+  const productFilter = useSelector((state) => state.filters);
+  filters.push(productFilter);
 
   return (
     <div>

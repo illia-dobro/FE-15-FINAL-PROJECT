@@ -6,7 +6,7 @@ import {
   useProductsQuery,
 } from "../../app/services/api.js";
 import { useDispatch } from "react-redux";
-import { setProductTypes } from "../../app/slices/filtersSlice.js";
+import { productTypes } from "../../app/slices/filtersSlice.js";
 import { useEffect } from "react";
 
 const Category = () => {
@@ -27,7 +27,7 @@ const Category = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(setProductTypes(productsData.products));
+      dispatch(productTypes(productsData.products));
     }
   }, [dispatch, isSuccess, productsData]);
 
