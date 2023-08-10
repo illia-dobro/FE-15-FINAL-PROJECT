@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate,  Link } from "react-router-dom";
 import PhoneInput from 'react-phone-number-input/input'
 import { ReactComponent as Logo } from '../../../assets/images/logo.svg';
 import { useRegisterMutation } from '../../../app/services/api';
@@ -84,7 +84,7 @@ function SignUp() {
                   type="text"
                   value={login}
                   onChange={(e) => setLogin(e.target.value)}
-                  autoComplete="name"
+                  autoComplete="login"
                   required
                   className="block w-full rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEE4DA]  sm:text-sm sm:leading-6"
                 />
@@ -101,11 +101,11 @@ function SignUp() {
               <div className="mt-2">
                 <input
                   id="firstName"
-                  name="name"
+                  name="firstName"
                   type="text"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  autoComplete="name"
+                  autoComplete="firstName"
                   required
                   className="block w-full rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEE4DA]  sm:text-sm sm:leading-6"
                 />
@@ -114,15 +114,15 @@ function SignUp() {
             </div>
             <div>
               <label
-                htmlFor="name"
+                htmlFor="lastName"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Last name
               </label>
               <div className="mt-2">
                 <input
-                  id="name"
-                  name="name"
+                  id="lastName"
+                  name="lastName"
                   type="text"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
@@ -227,9 +227,9 @@ function SignUp() {
             </div>
           </form>
           <div>
-            <a href="#" className="flex justify-center text-sm pt-4">
+            <Link to='/login' className="flex justify-center text-sm pt-4">
               Sign in
-            </a>
+            </Link>
           </div>
         </div>
       </div>

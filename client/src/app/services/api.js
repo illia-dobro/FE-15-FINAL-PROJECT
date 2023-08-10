@@ -4,27 +4,27 @@ import { getLocalStorage } from '../../helpers/localStorage';
 export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:4000/api',
-    // prepareHeaders: (headers, { getState }) => {
-    //   const token = getState().auth.token;
-    //   if (token) {
-    //     headers.set('authorization', `Bearer ${token}`);
-    //   } else if (getLocalStorage()) {
-    //     headers.set('authorization', `Bearer ${getLocalStorage()}`);
-    //   }
-    //   return headers;
-    // },
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().auth.token;
+      if (token) {
+        headers.set('authorization', `${token}`);
+      } else if (getLocalStorage()) {
+        headers.set('authorization', `${getLocalStorage()}`);
+      }
+      return headers;
+    },
   }),
   keepUnusedDataFor: 0,
   endpoints: (builder) => ({
     getUser: builder.query({
       query: () => ({
-        url: 'auth/authenticated-user',
+        url: 'customers/customer',
         method: 'GET',
       }),
     }),
     login: builder.mutation({
       query: (credentials) => ({
-        url: 'auth/sign-in',
+        url: 'customers/login',
         method: 'POST',
         body: credentials,
       }),
