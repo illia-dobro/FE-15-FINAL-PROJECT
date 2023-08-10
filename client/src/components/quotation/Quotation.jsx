@@ -19,7 +19,7 @@ function Quotation({ quote, authorName, authorCaption, imageSrc, signatureSrc })
         </div>
 
         <div className={styles.card__signature}>
-          <img src={signatureSrc} alt=""/>
+          <img src={signatureSrc} alt="signature"/>
         </div>
       </div>
     </div>
