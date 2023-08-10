@@ -5,6 +5,12 @@ module.exports = {
   semi: true,
   trailingComma: 'all',
   arrowParens: 'always',
+  files: {
+    exclude: {
+      '**/node_modules': false,
+      '**/react-script': false,
+    },
+  },
   overrides: [
     {
       files: '*.{js,jsx,tsx,ts,scss,json,html}',
