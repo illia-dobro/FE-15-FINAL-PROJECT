@@ -16,17 +16,17 @@ const sortOptions = [
 ];
 
 const filters = [
-  {
-    id: "skin",
-    name: "Skin Type",
-    options: [
-      { value: "normal", label: "Normal", checked: true },
-      { value: "dry", label: "Dry", checked: false },
-      { value: "oily", label: "Oily", checked: false },
-      { value: "combination", label: "Combination", checked: false },
-      { value: "sensitive", label: "Sensitive", checked: false },
-    ],
-  },
+  // {
+  //   id: "skin",
+  //   name: "Skin Type",
+  //   options: [
+  //     { value: "normal", label: "Normal", checked: true },
+  //     { value: "dry", label: "Dry", checked: false },
+  //     { value: "oily", label: "Oily", checked: false },
+  //     { value: "combination", label: "Combination", checked: false },
+  //     { value: "sensitive", label: "Sensitive", checked: false },
+  //   ],
+  // },
   {
     id: "manufacturerCountry",
     name: "Manufacturer Country",
