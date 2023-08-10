@@ -33,8 +33,7 @@ function ProductSlider({ settings }) {
     renderButtonGroupOutside: true,
     showDots: false,
     arrows: false,
-    partialVisible: true,
-    autoPlay: true,
+    partialVisible: true
   };
   return (
     <Carousel {...productSliderSettings} {...settings}>
