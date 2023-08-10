@@ -1,15 +1,7 @@
 /* Login/Registration */
-import SignUp from '../layouts/forms/SignUp'
-
-
 function Login() {
-
-
   return (
-    <>
-    Login
-    <SignUp />
-    </>
+    <span>Login</span>
   )
 }
 

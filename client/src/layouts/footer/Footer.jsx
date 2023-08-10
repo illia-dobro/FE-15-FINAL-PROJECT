@@ -4,13 +4,10 @@ import ProductsFooter from './ProductsFooter';
 import ContactsFooter from './ContactsFooter';
 import AboutCompany from './AboutCompany/AboutCompany';
 import { footer, footerFourColumn, footerLogo } from './Footer.module.scss';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 function Footer() {
   return (
     <footer className={footer}>
-      <ToastContainer />
       <div className={footerLogo}>
         <Logo fill={'#AC8F78'} />
       </div>
