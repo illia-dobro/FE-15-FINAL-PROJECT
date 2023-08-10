@@ -5,9 +5,13 @@ import {
   useCategoriesQuery,
   useProductsQuery,
 } from "../../app/services/api.js";
+import { useDispatch } from "react-redux";
+import { setProductTypes } from "../../app/slices/filtersSlice.js";
+import { useEffect } from "react";
 
 const Category = () => {
   const { categoryName } = useParams();
+  const dispatch = useDispatch();
 
   // @TODO: rewrite using useQueryState
   const { data: categories, isSuccess: isCategoriesSuccess } =
@@ -20,6 +24,12 @@ const Category = () => {
   const category =
     isCategoriesSuccess &&
     categories.find((category) => category.name === categoryName);
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(setProductTypes(productsData.products));
+    }
+  }, [dispatch, isSuccess, productsData.products]);
 
   return (
     <>
