@@ -1,19 +1,19 @@
 // import React from 'react';
 import PropTypes from 'prop-types';
+import useDeviceType from "../../helpers/getDeviceType";
 
 import signature from '../../assets/unique_signature.svg';
 import uniqueBrand from '../../assets/unique_brandName.png';
 
 import styles from './Unique.module.scss';
 
-import useDeviceType from "../../helpers/getDeviceType";
 
 const Unique = ({imageUrl = "", isRepresentative = false, flexDirection = "row", focus = "", content = ""}) => {
     const { isDesktop } = useDeviceType();
     const direction = isDesktop ? flexDirection : "column";
     
     return (
-        <div className={styles.unique__container} style={{flexDirection: direction}}>
+        <div className={styles.unique} style={{flexDirection: direction}}>
             <div className={styles.unique__description}>
                 <img src={uniqueBrand} alt="Brand Name"></img>
                 <h3 className={styles.unique__focus}>{focus}</h3>

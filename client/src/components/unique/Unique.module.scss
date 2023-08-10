@@ -1,12 +1,10 @@
 @import '../../assets/styles/common.scss';
 
 .unique {
-    &__container {
-        max-width: 1440px;
-        display: flex;
-        align-items: center;
-        color: $dark;
-    }
+    max-width: 1440px;
+    display: flex;
+    align-items: center;
+    color: $dark;
 
     &__description {
         width: 50%;
@@ -51,10 +49,8 @@
 
 @media screen and (max-width: 1024px) {
     .unique {
-        &__container {
-            max-width: 780px;
-            margin: 0 auto;
-        }
+        max-width: 780px;
+        margin: 0 auto;
 
         &__description {
             width: 100%;

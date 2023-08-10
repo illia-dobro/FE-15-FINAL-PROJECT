@@ -53,7 +53,7 @@ function Home() {
           </div>
         </div>
         
-        <div className={styles.home__unique}>
+        <div className={styles.home__uniqueContainer}>
           <Unique 
             imageUrl={uniqueMainImgUrl}
             isRepresentative={true}
