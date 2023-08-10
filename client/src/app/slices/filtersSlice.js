@@ -31,6 +31,9 @@ const filtersSlice = createSlice({
         state.activeFilters[name] = state.activeFilters[name].filter(
           (item) => item !== value
         );
+
+        if (state.activeFilters[name].length === 0)
+          delete state.activeFilters[name];
       } else {
         state.activeFilters = {
           ...state.activeFilters,

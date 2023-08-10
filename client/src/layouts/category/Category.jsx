@@ -5,20 +5,34 @@ import {
   useCategoriesQuery,
   useProductsQuery,
 } from "../../app/services/api.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { productTypes } from "../../app/slices/filtersSlice.js";
 import { useEffect } from "react";
 
 const Category = () => {
   const { categoryName } = useParams();
   const dispatch = useDispatch();
+  const activeFilters = useSelector((state) => state.filters.activeFilters);
+
+  function createFilterQuery(filters) {
+    let query = "";
+
+    for (const property in filters) {
+      query += `&${property}=${filters[property]}`;
+    }
+    return query;
+  }
+
+  const queryFilters = createFilterQuery(activeFilters);
+
+  console.log(queryFilters);
 
   // @TODO: rewrite using useQueryState
   const { data: categories, isSuccess: isCategoriesSuccess } =
     useCategoriesQuery();
 
-  const { data: productsData, isSuccess } = useProductsQuery(
-    `filter?categories=${categoryName}`
+  const { data: productsData, isSuccess: isProductsSuccess } = useProductsQuery(
+    `filter?categories=${categoryName}${queryFilters}`
   );
 
   const category =
@@ -26,10 +40,10 @@ const Category = () => {
     categories.find((category) => category.name === categoryName);
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isProductsSuccess) {
       dispatch(productTypes(productsData.products));
     }
-  }, [dispatch, isSuccess, productsData]);
+  }, [dispatch, isProductsSuccess, productsData]);
 
   return (
     <>
@@ -44,7 +58,7 @@ const Category = () => {
       </div>
 
       <Filters>
-        {isSuccess && <ProductsList products={productsData.products} />}
+        {isProductsSuccess && <ProductsList products={productsData.products} />}
       </Filters>
     </>
   );
