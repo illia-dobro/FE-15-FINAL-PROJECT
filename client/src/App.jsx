@@ -1,10 +1,10 @@
 import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
 import Nav from "./components/nav";
-import Home from "./pages";
+import Home from "./pages/home";
 import About from "./pages/About";
 import Catalog from "./pages/catalog";
 import Delivery from "./pages/Delivery";
-import Contacts from "./pages/Contacts";
+import Contacts from "./pages/contacts";
 import Shop from "./pages/Shop";
 import Login from "./pages/Client";
 import PageNotFound from "./pages/PageNotFound";
