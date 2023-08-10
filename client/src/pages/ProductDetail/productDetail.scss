@@ -3,6 +3,13 @@
 .product-detail {
   background-color: $primary;
   color: $dark;
+  &__card{
+    padding-bottom: 90px;
+  }
+ 
+  h2{
+    text-transform: capitalize;
+  }
   &__flex {
     display: flex;
     align-items: center;
@@ -54,6 +61,8 @@
     margin-top: 50px;
     width: 405px;
     min-height: 176px;
+    max-height: 176px;
+    overflow-y: auto;
   }
   &__tabs-btns {
     color: $dark-opacity;
@@ -111,6 +120,10 @@
     align-items: center;
     display: flex;
   }
+}
+.hearts{
+  @include flex-justify-center;
+  padding: 250px;
 }
 @media screen and (max-width: 900px) {
   .product-detail {

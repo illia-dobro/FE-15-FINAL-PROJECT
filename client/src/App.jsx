@@ -1,18 +1,18 @@
 import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
 import Nav from "./components/nav";
-import Home from "./pages";
-import About from "./pages/About";
-import Catalog from "./pages/catalog";
+import Home from "./pages/home";
+import About from "./pages/about/About";
+import Catalog from "./pages/Catalog";
+import Home from "./pages/home";
 import Delivery from "./pages/Delivery";
-import Contacts from "./pages/Contacts";
 import Shop from "./pages/shop";
+import Contacts from "./pages/contacts";
 import Login from "./pages/Client";
 import PageNotFound from "./pages/PageNotFound";
 import Category from "./layouts/category";
 import Footer from './layouts/footer'
 import Modal from "./components/Modal";
-import ProductDetail from "./pages/ProductDetail";
-
+import ProductDetail from "./pages/productDetail";
 function App() {
   return (
     <>

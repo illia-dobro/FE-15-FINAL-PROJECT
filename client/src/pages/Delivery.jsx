@@ -1,6 +1,8 @@
 function Delivery() {
   return (
+    <>
     <span>Delivery</span>
+    </>
   )
 }
 
