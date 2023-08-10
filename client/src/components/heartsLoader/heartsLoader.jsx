@@ -1,5 +1,4 @@
 import { Hearts } from "react-loader-spinner";
-import "./heartLoader.scss";
 
 function HeartsLoader({wrapperClass}) {
   return (
