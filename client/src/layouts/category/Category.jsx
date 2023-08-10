@@ -29,7 +29,7 @@ const Category = () => {
     if (isSuccess) {
       dispatch(setProductTypes(productsData.products));
     }
-  }, [dispatch, isSuccess, productsData.products]);
+  }, [dispatch, isSuccess, productsData]);
 
   return (
     <>
