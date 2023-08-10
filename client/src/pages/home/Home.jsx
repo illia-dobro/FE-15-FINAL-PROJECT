@@ -9,7 +9,6 @@ import careCosmeticsImg from '../../components/cosmeticCategory/care-cosmetics.p
 import beautyCosmeticsImg from '../../components/cosmeticCategory/beauty-cosmetics.png';
 import browsCosmeticsImg from '../../components/cosmeticCategory/brows-cosmetics.png';
 import uniqueMainImgUrl from '../../assets/unique_main.png';
-import uniqueSignatureUrl from '../../assets/unique_signature.svg';
 import InstagramUrl from '../../components/buttons/socialMediaBtn/Instagram.png';
 import SocialImgUrl1 from '../../components/socialMediaImages/socialImg1.png';
 import SocialImgUrl2 from '../../components/socialMediaImages/socialImg2.png';
@@ -55,7 +54,7 @@ function Home() {
         </div>
         
         <div className={styles.home__uniquenessContainer}>
-          <Unique image={{src: uniqueMainImgUrl, alt: 'Our product'}} representName="Zara Boltaeva" representPosition="CEO, founder" representSignature={{src: uniqueSignatureUrl, alt: 'CEO signature'}} />
+          <Unique image={{src: uniqueMainImgUrl, alt: 'Our product'}} isRepresentative={true} />
         </div>
 
         <div className={styles.home__socialMediaContainer}>

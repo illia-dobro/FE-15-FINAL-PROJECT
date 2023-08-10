@@ -27,7 +27,7 @@ const HomePageSlider = () => {
                     <img src='https://lush.com.ua/image/catalog/sleep_routines_20200033.jpg' alt='Beauty image' className={styles.slider__image} />
                 </div>
                 <div className={styles.slider__component}>
-                    <img src='https://kodi-professional.ua/image/data/blog/art23/1.jpg' alt='Beauty image' className={styles.slider__image} />
+                    <img src='https://favoritti.com/upload/iblock/2c1/2c16737931d64560825e7e4528b5e80f.jpg' alt='Beauty image' className={styles.slider__image} />
                 </div>
             </Slider>
         </div>
