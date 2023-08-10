@@ -1,9 +1,9 @@
 import styles from "./ProductCard.module.scss";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
   return (
-    <Link to={product.productUrl} className="group ">
+    <Link to={`../product/${product.itemNo}`} className="group ">
       <div
         className={
           styles.product_card +
