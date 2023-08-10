@@ -11,8 +11,7 @@ import PageNotFound from "./pages/PageNotFound";
 import Category from "./layouts/category";
 import Footer from './layouts/footer'
 import Modal from "./components/Modal";
-import ProductDetail from "./pages/ProductDetail";
-
+import ProductDetail from "./pages/productDetail";
 function App() {
   return (
     <>
