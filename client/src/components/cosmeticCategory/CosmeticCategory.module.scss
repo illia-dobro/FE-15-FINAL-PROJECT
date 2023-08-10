@@ -23,6 +23,11 @@
 @media screen and (max-width: 992px) {
     .category {
         max-width: 780px;
+
+        &__name {
+            left: 24px;
+            font-size: 40px;
+        }
     }
 }
 

@@ -26,7 +26,7 @@ function Home() {
       <div className={styles.home__container}>
         <div className={styles.home__cosmeticsContainer}>
           <div className={styles.home__careCosmetics} >
-            <CosmeticCategory image={{src: careCosmeticsImg, alt: 'Care Cosmetics Product' }} category='Care' to='/catalog'/>
+            <CosmeticCategory image={{src: careCosmeticsImg, alt: 'Care Cosmetics Product' }} category='Face' to='/catalog'/>
 
             <div className={styles.home__cosmeticsImages}>
               {/* <img src={careCosmeticsImg}></img> */}
@@ -35,7 +35,7 @@ function Home() {
           </div>
 
           <div className={styles.home__beautyCosmetics}>
-            <CosmeticCategory image={{src: beautyCosmeticsImg, alt: 'Beauty Cosmetics Product' }} category='Beauty' to='/catalog'/>
+            <CosmeticCategory image={{src: beautyCosmeticsImg, alt: 'Beauty Cosmetics Product' }} category='Hair' to='/catalog'/>
 
             <div className={styles.home__cosmeticsImages}>
               {/* <img src={careCosmeticsImg}></img> */}
@@ -53,8 +53,14 @@ function Home() {
           </div>
         </div>
         
-        <div className={styles.home__uniquenessContainer}>
-          <Unique image={{src: uniqueMainImgUrl, alt: 'Our product'}} isRepresentative={true} />
+        <div className={styles.home__unique}>
+          <Unique 
+            imageUrl={uniqueMainImgUrl}
+            isRepresentative={true}
+            flexDirection='row-reverse'
+            focus="Each Boltaeva brand product is truly unique - everything is thought out to the smallest detail"
+            content="The brand seeks to build respect among the audience for its products, so that the presence of the company&apos;s products is a sign of prestige, since the focus of the business is focused on exclusive sales, but not on the mass market"
+          />
         </div>
 
         <div className={styles.home__socialMediaContainer}>

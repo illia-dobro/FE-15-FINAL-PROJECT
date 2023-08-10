@@ -1,4 +1,12 @@
+@import '../../assets/styles/common.scss';
+
 .unique {
+    &__container {
+        max-width: 1440px;
+        display: flex;
+        align-items: center;
+        color: $dark;
+    }
 
     &__description {
         width: 50%;
@@ -34,10 +42,6 @@
             font-size: 13px;
             margin-bottom: 4px; 
         }
-
-        &_sign {
-            fill: #AC8F78;
-        }
     }
 
     &__image {
@@ -45,8 +49,12 @@
     }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1024px) {
     .unique {
+        &__container {
+            max-width: 780px;
+            margin: 0 auto;
+        }
 
         &__description {
             width: 100%;

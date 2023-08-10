@@ -36,20 +36,15 @@
     max-width: 310px;
   }
 
-  &__uniquenessContainer {
-    max-width: 1440px;
+  &__unique {
     margin-top: 70px;
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    color: $dark;
+    margin-bottom: 136px;
   }
 
   &__socialMediaContainer {
     font-size: 48px;
     @include flex-justify-between;
     align-items: flex-end;
-    margin-top: 136px;
     margin-bottom: 100px;
   }
   
@@ -70,6 +65,10 @@
     &__container {
       max-width: 780px;
     }
+
+    &__cosmeticsContainer {
+      display: flex;
+    }
     
     &__cosmeticsContainer,
     &__socialMediaContainer,
@@ -80,27 +79,25 @@
     }
   
     &__cosmeticsImages {
-      gap: 2%;
-      flex-wrap: wrap;
+      display: none;
     }
 
-    &__uniquenessContainer {
-      flex-direction: column;
+    &__unique {
+      margin-bottom: 90px;
+      margin-top: 90px;
     }
 
     &__socialMediaContainer {
       font-size: 30px;
-      margin-top: 90px;
       margin-bottom: 50px;
     }
   
     &__socialMediaBtn {
       width: 90%;
     }
-  
   }
 }
-  
+
 @media screen and (max-width: 480px) {
   .home {
     &__container {
@@ -113,10 +110,7 @@
       padding: 0 15px;
     }
 
-    &__cosmeticsImages {
-      display: none;
-    }
-    
+    &__cosmeticsContainer,
     &__socialMediaContainer {
       flex-direction: column;
     }
