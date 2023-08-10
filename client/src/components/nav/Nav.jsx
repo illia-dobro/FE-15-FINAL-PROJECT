@@ -28,7 +28,6 @@ function Nav() {
   };
   const homePageNavStyles = {
     backgroundColor: "transparent",
-    maxWidth: '1440px',
     width: '100%',
     position: 'absolute',
     left: '50%',
@@ -36,6 +35,7 @@ function Nav() {
     zIndex: '10',
     color: '#ffffff'
   };
+  const logoFillColor = isHomePage ? "#ffffff" : "rgba(85, 85, 85, 1)"; 
 
   return (
     <>
@@ -50,7 +50,7 @@ function Nav() {
             <NavLink to="/delivery" children={"Delivery"} />
           </div>
           <div>
-            <Logo />
+            <Logo logoFillColor={logoFillColor}/>
           </div>
           <div className="nav__right">
             <NavLink to="/contacts" children={"Contacts"} />

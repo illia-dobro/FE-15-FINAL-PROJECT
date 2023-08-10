@@ -6,7 +6,21 @@
   &__card{
     padding-bottom: 90px;
   }
- 
+  .unique{
+    margin-top: 100px;
+  }
+  .unique-wrapper:first-child{
+    flex-direction: row;
+    margin-bottom: 70px;
+  }
+  .unique-wrapper{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    color: $dark;
+    flex-wrap: wrap;
+  }
+
   h2{
     text-transform: capitalize;
   }
