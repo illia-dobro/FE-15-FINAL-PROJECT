@@ -1,5 +1,6 @@
 import styles from './About.module.scss';
 import Quotation from "../../components/quotation/Quotation.jsx";
+import Footer from "../../layouts/footer/index.js";
 
 function About() {
   const statistics = [
@@ -41,7 +42,7 @@ function About() {
     authorName: 'Zara Boltaeva',
     authorCaption: 'CEO, Founder',
     imageSrc: '../../../src/assets/img/about/Ellipse_8.png',
-    signatureSrc: `../../../src/assets/img/about/Untitled1.png`
+    signatureSrc: `../../../src/assets/img/about/signature.jpg`
   }
 
   return (
@@ -49,19 +50,16 @@ function About() {
       <div className={styles.container}>
         <div className={styles.page_title}>About Boltaeva</div>
         <div className={styles.text}>The brand seeks to build respect among the audience for its products, so that the presence of the
-          {/* eslint-disable-next-line react/no-unescaped-entities */}
-          company's products is a sign of prestige, since the focus of the business is focused on exclusive sales,
+          company&apos;s products is a sign of prestige, since the focus of the business is focused on exclusive sales,
           but not on the mass market. The brand seeks to build respect among the audience for its products, so
-          {/* eslint-disable-next-line react/no-unescaped-entities */}
-          that the presence of the company's products is a sign of prestige, since the focus of the business is
+          that the presence of the company&apos;s products is a sign of prestige, since the focus of the business is
           focused on exclusive sales, but not on the mass market.
         </div>
         <div className={styles.page_img}>
           <img src="../../../src/assets/img/about/Rectangle_37.png" alt="about"/>
         </div>
         <div className={styles.text}>The brand seeks to build respect among the audience for its products, so that the presence of the
-          {/* eslint-disable-next-line react/no-unescaped-entities */}
-          company's products is a sign of prestige, since the focus of the business is focused on exclusive sales,
+          company&apos;s products is a sign of prestige, since the focus of the business is focused on exclusive sales,
           but not on the mass market.
         </div>
 
@@ -79,11 +77,9 @@ function About() {
         </div>
 
         <div className={styles.text}>The brand seeks to build respect among the audience for its products, so that the presence of the
-          {/* eslint-disable-next-line react/no-unescaped-entities */}
-          company's products is a sign of prestige, since the focus of the business is focused on exclusive sales,
+          company&apos;s products is a sign of prestige, since the focus of the business is focused on exclusive sales,
           but not on the mass market. The brand seeks to build respect among the audience for its products, so
-          {/* eslint-disable-next-line react/no-unescaped-entities */}
-          that the presence of the company's products is a sign of prestige, since the focus of the business is
+          that the presence of the company&apos;s products is a sign of prestige, since the focus of the business is
           focused on exclusive sales, but not on the mass market.
         </div>
         <div className={styles.page_img}>
@@ -100,7 +96,6 @@ function About() {
           signatureSrc={quoteInfo.signatureSrc}
         />
       </div>
-      {/*<Footer/>*/}
     </div>
   )
 }
