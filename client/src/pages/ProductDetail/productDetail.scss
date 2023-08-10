@@ -121,6 +121,10 @@
     display: flex;
   }
 }
+.hearts{
+  @include flex-justify-center;
+  padding: 250px;
+}
 @media screen and (max-width: 900px) {
   .product-detail {
     &__quantity-price {

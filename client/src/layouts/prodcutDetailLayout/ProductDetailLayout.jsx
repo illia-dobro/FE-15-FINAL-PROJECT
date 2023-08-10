@@ -10,7 +10,7 @@ import Unique from "../../components/unique";
 import Button from "../../components/buttons/button";
 import Tabs from "../../components/tabs";
 
-function ProductDetailCard({product}) {
+function ProductDetailLayout({product}) {
   const { isDesktop } = useDeviceType();
 
   const thumbnailPosition = isDesktop ? "left" : "bottom";
@@ -92,4 +92,4 @@ function ProductDetailCard({product}) {
   )
 }
 
-export default ProductDetailCard
+export default ProductDetailLayout;
