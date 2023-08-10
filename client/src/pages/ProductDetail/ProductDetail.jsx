@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useGetAllProductsQuery } from "../../services/productApi";
+import { useGetAllProductsQuery } from "../../app/services/productApi";
 import ProductDetailLayout from "../../layouts/prodcutDetailLayout";
 import HeartsLoader from "../../components/heartsLoader";
 import PageNotFound from "../PageNotFound";
