@@ -7,15 +7,12 @@ import "./productDetail.scss";
 
 function ProductDetail() {
   const { url } = useParams();
-  const { data: product, isLoading, error } = useGetProductByNumberQuery(url);
+  const { data: product, isLoading, isError } = useGetProductByNumberQuery(url);
 
-  if (!product) {
-    return <HeartsLoader wrapperClass="hearts" />;
-  }
   if (isLoading) {
     return <HeartsLoader wrapperClass="hearts" />;
   }
-  if (error) {
+  if (isError) {
     return <PageNotFound />;
   }
   return (
