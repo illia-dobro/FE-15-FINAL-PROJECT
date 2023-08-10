@@ -29,7 +29,7 @@ function ProductDetail() {
     showGalleryThumbnails: true,
     thumbnailPosition: thumbnailPosition,
   };
-  // Gettins single product from server
+  // Getting single product from server
   const { data: product, isSuccess } = useGetProductQuery(url);
 
   const productTabs = [
