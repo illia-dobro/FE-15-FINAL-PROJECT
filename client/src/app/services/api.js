@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { getLocalStorage } from "../../utils/localStorage";
+import { getLocalStorage } from "../../helpers/localStorage.js";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
