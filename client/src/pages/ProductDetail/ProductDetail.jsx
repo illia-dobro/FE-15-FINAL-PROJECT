@@ -1,25 +1,26 @@
 import { useParams } from "react-router-dom";
-import { useGetAllProductsQuery } from "../../app/services/productApi";
+import { useGetProductByNumberQuery } from "../../app/services/productApi";
 import ProductDetailLayout from "../../layouts/prodcutDetailLayout";
 import HeartsLoader from "../../components/heartsLoader";
 import PageNotFound from "../PageNotFound";
 import "./productDetail.scss";
 
 function ProductDetail() {
-  const { data } = useGetAllProductsQuery();
   const { url } = useParams();
-  
- 
-  if (!data) {
-    return (
-      <HeartsLoader wrapperClass="hearts"/>
-    );
-  }
-  const product = data.find((product) => product.itemNo === url);
+  const { data: product, isLoading, error } = useGetProductByNumberQuery(url);
 
+  if (!product) {
+    return <HeartsLoader wrapperClass="hearts" />;
+  }
+  if (isLoading) {
+    return <HeartsLoader wrapperClass="hearts" />;
+  }
+  if (error) {
+    return <PageNotFound />;
+  }
   return (
     <section className="product-detail">
-      {product ? <ProductDetailLayout product={product} /> : <PageNotFound/> }
+      {product ? <ProductDetailLayout product={product} /> : <PageNotFound />}
     </section>
   );
 }
