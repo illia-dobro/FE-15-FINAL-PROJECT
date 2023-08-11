@@ -2,16 +2,11 @@ import { Link, Outlet } from "react-router-dom";
 
 import styles from "./Catalog.module.scss";
 import Unique from "../../components/unique/Unique.jsx";
-import { useCategoriesQuery } from "../../app/services/api.js";
+
+import { useGetCategoriesQuery } from "../../app/services/catalogApi.js";
 
 const Catalog = () => {
-  const {
-    data: categories,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useCategoriesQuery();
+  const { data: categories, isSuccess } = useGetCategoriesQuery();
 
   return (
     <div className={styles.catalog_page}>

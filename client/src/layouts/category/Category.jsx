@@ -1,11 +1,11 @@
 import ProductsList from "../productsList/index.js";
 import { useParams } from "react-router-dom";
 import Filters from "../../components/filters/index.js";
-import { useCategoriesQuery } from "../../app/services/api.js";
 import { useDispatch, useSelector } from "react-redux";
 import { productTypes } from "../../app/slices/filtersSlice.js";
 import { useEffect } from "react";
 import { useGetFilteredProductsQuery } from "../../app/services/productApi.js";
+import { useGetCategoriesQuery } from "../../app/services/catalogApi.js";
 
 const Category = () => {
   const { categoryName } = useParams();
@@ -26,7 +26,7 @@ const Category = () => {
   console.log(queryFilters);
 
   const { data: categories, isSuccess: isCategoriesSuccess } =
-    useCategoriesQuery();
+    useGetCategoriesQuery();
 
   const { data: productsData, isSuccess: isProductsSuccess } =
     useGetFilteredProductsQuery(`categories=${categoryName}${queryFilters}`);
