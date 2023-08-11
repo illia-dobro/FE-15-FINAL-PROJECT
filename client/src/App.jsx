@@ -12,6 +12,9 @@ import Category from "./layouts/category";
 import Footer from './layouts/footer'
 import Modal from "./components/Modal";
 import ProductDetail from "./pages/productDetail";
+import ProfilePage from "./pages/ProfilePage";
+
+
 function App() {
   return (
     <>
@@ -30,6 +33,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/about" element={<About />} />
           <Route path="/product/:url" element={<ProductDetail />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
         <Footer />
