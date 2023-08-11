@@ -1,6 +1,7 @@
 @import '../../assets/styles/common.scss';
 
 .unique {
+    margin: 0 auto;
     max-width: 1440px;
     display: flex;
     align-items: center;
@@ -33,12 +34,12 @@
 
         &_name {
             font-size: 24px;
-            margin-bottom: 4px;            
+            margin-bottom: 4px;
         }
 
         &_position {
             font-size: 13px;
-            margin-bottom: 4px; 
+            margin-bottom: 4px;
         }
     }
 
