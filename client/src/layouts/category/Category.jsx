@@ -5,7 +5,7 @@ import { useCategoriesQuery } from "../../app/services/api.js";
 import { useDispatch, useSelector } from "react-redux";
 import { productTypes } from "../../app/slices/filtersSlice.js";
 import { useEffect } from "react";
-import { useGetCategoryProductsQuery } from "../../app/services/productApi.js";
+import { useGetFilteredProductsQuery } from "../../app/services/productApi.js";
 
 const Category = () => {
   const { categoryName } = useParams();
@@ -25,14 +25,11 @@ const Category = () => {
 
   console.log(queryFilters);
 
-  // @TODO: rewrite using useQueryState
   const { data: categories, isSuccess: isCategoriesSuccess } =
     useCategoriesQuery();
 
   const { data: productsData, isSuccess: isProductsSuccess } =
-    useGetCategoryProductsQuery(
-      `filter?categories=${categoryName}${queryFilters}`
-    );
+    useGetFilteredProductsQuery(`categories=${categoryName}${queryFilters}`);
 
   const category =
     isCategoriesSuccess &&

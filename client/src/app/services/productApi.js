@@ -9,9 +9,9 @@ const productApi = createApi({
     getAllProducts: builder.query({
       query: () => ({}),
     }),
-    getCategoryProducts: builder.query({
+    getFilteredProducts: builder.query({
       query: (params) => ({
-        url: `${params}`,
+        url: `filter?${params}`,
         method: "GET",
       }),
     }),
@@ -23,7 +23,7 @@ const productApi = createApi({
 
 export const {
   useGetAllProductsQuery,
-  useGetCategoryProductsQuery,
+  useGetFilteredProductsQuery,
   useGetProductByNumberQuery,
 } = productApi;
 export default productApi;

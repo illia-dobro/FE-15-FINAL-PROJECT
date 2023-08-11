@@ -38,18 +38,6 @@ export const api = createApi({
         };
       },
     }),
-    products: builder.query({
-      query: (params) => ({
-        url: `products/${params}`,
-        method: "GET",
-      }),
-    }),
-    getFilteredProducts: builder.query({
-      query: (params) => ({
-        url: `products/filter?${params}`,
-        method: "GET",
-      }),
-    }),
     categories: builder.query({
       query: () => ({
         url: "catalog",
@@ -63,7 +51,5 @@ export const {
   useLoginMutation,
   useRegisterMutation,
   useGetUserQuery,
-  useProductsQuery,
-  useGetProductQuery,
   useCategoriesQuery,
 } = api;
