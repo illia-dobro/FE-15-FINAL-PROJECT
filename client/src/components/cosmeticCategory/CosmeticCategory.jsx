@@ -1,7 +1,7 @@
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import styles from './CosmeticCategory.module.scss';
-import { NavLink } from 'react-router-dom';
 
 const CosmeticCategory = ({ image = {}, category = '', to = ''}) => {
     return (
