@@ -1,9 +1,10 @@
 import { Link, Outlet } from "react-router-dom";
 
 import styles from "./Catalog.module.scss";
-import Unique from "../../components/unique/Unique.jsx";
+import Unique from "../../components/unique";
 
 import { useGetCategoriesQuery } from "../../app/services/catalogApi.js";
+import uniqueMainImgUrl2 from "../../assets/unique_main2.jpg";
 
 const Catalog = () => {
   const { data: categories, isSuccess } = useGetCategoriesQuery();
@@ -31,8 +32,7 @@ const Catalog = () => {
 
       <Outlet />
 
-      {/*<Unique image={{src: 'https://w.forfun.com/fetch/61/6157e4be3da6483d461345e990a47026.jpeg'}}/>*/}
-      <Unique />
+      <Unique image={{ src: uniqueMainImgUrl2, alt: "Our product" }} />
     </div>
   );
 };
