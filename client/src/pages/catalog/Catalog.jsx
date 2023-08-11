@@ -32,7 +32,12 @@ const Catalog = () => {
 
       <Outlet />
 
-      <Unique image={{ src: uniqueMainImgUrl2, alt: "Our product" }} />
+      <Unique
+        className={styles.unique}
+        imageUrl={uniqueMainImgUrl2}
+        flexDirection="row-reverse"
+        content="Each Boltaeva brand product is truly unique - everything is thought out to the smallest detail."
+      />
     </div>
   );
 };
