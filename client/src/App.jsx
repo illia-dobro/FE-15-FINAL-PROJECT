@@ -26,7 +26,10 @@ function App() {
           <Route path="/" element={<Home />} index />
           <Route path="/catalog" element={<Catalog />}>
             {/*Temporary solution for default route */}
-            {/*<Route index element={<Navigate to="/catalog/care" replace={true}/>}/>*/}
+            <Route
+              index
+              element={<Navigate to="/catalog/Bodycare" replace={true} />}
+            />
             <Route path=":categoryName" element={<Category />} />
           </Route>
           <Route path="/delivery" element={<Delivery />} />
