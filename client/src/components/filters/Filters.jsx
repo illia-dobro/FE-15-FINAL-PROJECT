@@ -8,35 +8,13 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
+import { useDispatch, useSelector } from "react-redux";
+import { changeActiveFilter } from "../../app/slices/filtersSlice.js";
 
 const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
   { name: "Newest", href: "#", current: false },
   { name: "Price: Low to High", href: "#", current: false },
   { name: "Price: High to Low", href: "#", current: false },
-];
-
-const filters = [
-  {
-    id: "skin",
-    name: "Skin Type",
-    options: [
-      { value: "normal", label: "Normal", checked: true },
-      { value: "dry", label: "Dry", checked: false },
-      { value: "oily", label: "Oily", checked: false },
-      { value: "combination", label: "Combination", checked: false },
-      { value: "sensitive", label: "Sensitive", checked: false },
-    ],
-  },
-  {
-    id: "category",
-    name: "Category",
-    options: [
-      { value: "new-arrivals", label: "New Arrivals", checked: false },
-      { value: "sale", label: "Sale", checked: false },
-    ],
-  },
 ];
 
 function classNames(...classes) {
@@ -45,6 +23,17 @@ function classNames(...classes) {
 
 export default function Filters({ children }) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const filters = [];
+  const dispatch = useDispatch();
+
+  const productFilter = useSelector((state) => state.filters.productTypes);
+  filters.push(productFilter);
+
+  const handleChange = (e) => {
+    dispatch(
+      changeActiveFilter({ name: e.target.name, value: e.target.value })
+    );
+  };
 
   return (
     <div>
@@ -129,10 +118,11 @@ export default function Filters({ children }) {
                                 >
                                   <input
                                     id={`filter-mobile-${section.id}-${optionIdx}`}
-                                    name={`${section.id}[]`}
+                                    name={`${section.id}`}
                                     defaultValue={option.value}
                                     type="checkbox"
                                     defaultChecked={option.checked}
+                                    onChange={(e) => handleChange(e)}
                                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                   />
                                   <label
@@ -235,13 +225,13 @@ export default function Filters({ children }) {
             {/* Filters */}
             <form className="hidden lg:block">
               {filters.map((section) => (
-                  <Disclosure
-                      as="div"
-                      key={section.id}
-                      className="border-b border-gray-200 py-6"
-                  >
-                    {({open}) => (
-                        <>
+                <Disclosure
+                  as="div"
+                  key={section.id}
+                  className="border-b border-gray-200 py-6"
+                >
+                  {({ open }) => (
+                    <>
                       <h3 className="-my-3 flow-root">
                         <Disclosure.Button className="flex w-full items-center justify-between  py-3 text-sm text-gray-400 hover:text-gray-500">
                           <span className="font-medium text-gray-900">
@@ -271,10 +261,11 @@ export default function Filters({ children }) {
                             >
                               <input
                                 id={`filter-${section.id}-${optionIdx}`}
-                                name={`${section.id}[]`}
+                                name={`${section.id}`}
                                 defaultValue={option.value}
                                 type="checkbox"
                                 defaultChecked={option.checked}
+                                onChange={(e) => handleChange(e)}
                                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                               />
                               <label
