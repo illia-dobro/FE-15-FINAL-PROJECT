@@ -86,28 +86,20 @@ function ProductDetailLayout({ product }) {
         </div>
       </div>
       <div className="unique">
-        <div className="unique-wrapper">
-          <Unique
-            image={{ src: uniqueMainImgUrl, alt: "Our product" }}
-            representName="Zara Boltaeva"
-            representPosition="CEO, founder"
-            representSignature={{
-              src: uniqueSignatureUrl,
-              alt: "CEO signature",
-            }}
+          <Unique 
+            imageUrl={uniqueMainImgUrl}
+            isRepresentative={false}
+            flexDirection='row'
+            focus="Each Boltaeva brand product is truly unique - everything is thought out to the smallest detail"
+            content="The brand seeks to build respect among the audience for its products, so that the presence of the company&apos;s products is a sign of prestige, since the focus of the business is focused on exclusive sales, but not on the mass market"
           />
-        </div>
-        <div className="unique-wrapper">
-          <Unique
-            image={{ src: uniqueMainImgUrl2, alt: "Our product" }}
-            representName="Zara Boltaeva"
-            representPosition="CEO, founder"
-            representSignature={{
-              src: uniqueSignatureUrl,
-              alt: "CEO signature",
-            }}
+            <Unique 
+            imageUrl={uniqueMainImgUrl2}
+            isRepresentative={true}
+            flexDirection='row-reverse'
+            focus="Each Boltaeva brand product is truly unique - everything is thought out to the smallest detail"
+            content="The brand seeks to build respect among the audience for its products, so that the presence of the company&apos;s products is a sign of prestige, since the focus of the business is focused on exclusive sales, but not on the mass market"
           />
-        </div>
       </div>
       <Recommended />
     </div>
