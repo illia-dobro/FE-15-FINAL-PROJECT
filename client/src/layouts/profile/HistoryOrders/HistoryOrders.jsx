@@ -32,7 +32,7 @@ const orders = [
 
 function historyOrders() {
   return (
-    <div className="bg-white bg-opacity-20 backdrop-blur-lg rounded drop-shadow-lg">
+    <div className="flex-1 basis-3/4 rounded drop-shadow-lg">
       <div className="mx-auto max-w-4xl py-16 sm:px-6 sm:py-24">
         <div className="px-4 sm:px-0">
           <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
@@ -55,10 +55,10 @@ function historyOrders() {
                   <time dateTime={order.datetime}>{order.date}</time>
                 </h3>
 
-                <div className="bg-white bg-opacity-70 backdrop-blur-lg rounded drop-shadow-lg px-4 py-6 sm:rounded-lg sm:p-6 md:flex md:items-center md:justify-between md:space-x-6 lg:space-x-8">
-                  <dl className="flex-auto space-y-4 divide-y divide-gray-200 text-sm text-gray-600 md:grid md:grid-cols-3 md:gap-x-6 md:space-y-0 md:divide-y-0 lg:w-1/2 lg:flex-none lg:gap-x-8">
-                    <div className="flex justify-between md:block">
-                      <dt className="font-medium text-gray-900">
+                <div className="bg-white bg-opacity-70 backdrop-blur-lg rounded drop-shadow-lg px-4 py-6 sm:rounded-lg sm:p-6 md:flex md:items-center gap-2 lg:justify-between md:space-x-6 lg:space-x-8">
+                  <dl className="flex-1 space-y-4 divide-y divide-gray-200 text-sm text-gray-600 md:grid md:grid-cols-3 md:gap-x-6 md:space-y-0 md:divide-y-0 lg:w-1/2 lg:gap-x-8">
+                    <div className="flex justify-between md:block ">
+                      <dt className="font-medium text-gray-900 flex-shrink-0">
                         Order number
                       </dt>
                       <dd className="md:mt-1">{order.number}</dd>
@@ -81,13 +81,6 @@ function historyOrders() {
                     >
                       View Order
                       <span className="sr-only">{order.number}</span>
-                    </a>
-                    <a
-                      href={order.invoiceHref}
-                      className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 md:w-auto"
-                    >
-                      View Invoice
-                      <span className="sr-only">for order {order.number}</span>
                     </a>
                   </div>
                 </div>
