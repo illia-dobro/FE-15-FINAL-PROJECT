@@ -17,30 +17,33 @@ import Category from "./layouts/category";
 import Footer from "./layouts/footer";
 import Modal from "./components/Modal";
 import ProductDetail from "./pages/productDetail";
+import SmoothScroll from "./components/smoothScroll/SmoothScroll";
 function App() {
   return (
     <>
       <Router>
-        <Nav />
-        <Routes>
-          <Route path="/" element={<Home />} index />
-          <Route path="/catalog" element={<Catalog />}>
-            {/*Temporary solution for default route */}
-            <Route
-              index
-              element={<Navigate to="/catalog/Bodycare" replace={true} />}
-            />
-            <Route path=":categoryName" element={<Category />} />
-          </Route>
-          <Route path="/delivery" element={<Delivery />} />
-          <Route path="/contacts" element={<Contacts />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/product/:url" element={<ProductDetail />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-        <Footer />
+        <SmoothScroll>
+          <Nav />
+          <Routes>
+            <Route path="/" element={<Home />} index />
+            <Route path="/catalog" element={<Catalog />}>
+              {/*Temporary solution for default route */}
+              <Route
+                index
+                element={<Navigate to="/catalog/Bodycare" replace={true} />}
+              />
+              <Route path=":categoryName" element={<Category />} />
+            </Route>
+            <Route path="/delivery" element={<Delivery />} />
+            <Route path="/contacts" element={<Contacts />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/product/:url" element={<ProductDetail />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+          <Footer />
+        </SmoothScroll>
       </Router>
     </>
   );
