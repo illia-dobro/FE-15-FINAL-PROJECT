@@ -10,6 +10,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { changeActiveFilter } from "../../app/slices/filtersSlice.js";
+import PriceSlider from "../priceRange/index.js";
 
 const sortOptions = [
   { name: "Newest", href: "#", current: false },
@@ -139,6 +140,7 @@ export default function Filters({ children }) {
                       )}
                     </Disclosure>
                   ))}
+                  <PriceSlider />
                 </form>
               </Dialog.Panel>
             </Transition.Child>
@@ -282,6 +284,7 @@ export default function Filters({ children }) {
                   )}
                 </Disclosure>
               ))}
+              <PriceSlider />
             </form>
 
             <div className="lg:col-span-4">{children}</div>
