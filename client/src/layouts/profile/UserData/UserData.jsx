@@ -16,7 +16,7 @@ function UserData() {
   return (
     <div className="flex-1 bg-[#EEE4DA] px-10 xl:px-16 py-36 flex flex-col items-center justify-center text-slate-700">
       <h3 className="text-3xl  pb-8">Profile</h3>
-      <div className='max-w-[226px]'>
+      <div className="max-w-[226px]">
         {data.avatarUrl ? (
           <img src={data.avatarUrl} alt="user photo" />
         ) : (
