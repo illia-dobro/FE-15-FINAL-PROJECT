@@ -3,8 +3,34 @@ import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 
 const PriceRange = ({ min = 0, max = 100, defaultValue = [10, 80] }) => {
-  const [minPrice, setMinPrice] = useState(45);
-  const [maxPrice, setMaxPrice] = useState(55);
+  const [priceRange, setPriceRange] = useState(defaultValue);
+
+  const handleMinChange = (event) => {
+    const newMinValue = +event.target.value;
+    setPriceRange((prevPriceRange) => {
+      if (
+        newMinValue < min ||
+        newMinValue > prevPriceRange[1] ||
+        newMinValue === prevPriceRange[1]
+      )
+        return prevPriceRange;
+
+      return [newMinValue, prevPriceRange[1]];
+    });
+  };
+
+  const handleMaxChange = (event) => {
+    const newMaxValue = +event.target.value;
+    setPriceRange((prevPriceRange) => {
+      if (
+        newMaxValue > max ||
+        newMaxValue < prevPriceRange[0] ||
+        newMaxValue === prevPriceRange[0]
+      )
+        return prevPriceRange;
+      return [prevPriceRange[0], newMaxValue];
+    });
+  };
 
   return (
     <div>
@@ -13,16 +39,22 @@ const PriceRange = ({ min = 0, max = 100, defaultValue = [10, 80] }) => {
         allowCross={false}
         min={min}
         max={max}
-        defaultValue={defaultValue}
-        value={[minPrice, maxPrice]}
+        value={priceRange}
         onChange={(value) => {
-          setMinPrice(value[0]);
-          setMaxPrice(value[1]);
-          console.log(minPrice, maxPrice);
+          setPriceRange(value);
+          console.log(priceRange);
         }}
       />
-      <input type="number" value={minPrice} />
-      <input type="number" value={maxPrice} />
+
+      <label>
+        Min Price
+        <input type="number" value={priceRange[0]} onChange={handleMinChange} />
+      </label>
+
+      <label>
+        Max Price
+        <input type="number" value={priceRange[1]} onChange={handleMaxChange} />
+      </label>
     </div>
   );
 };
