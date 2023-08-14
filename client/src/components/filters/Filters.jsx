@@ -9,13 +9,17 @@ import {
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
 import { useDispatch, useSelector } from "react-redux";
-import { changeActiveFilter } from "../../app/slices/filtersSlice.js";
-import PriceSlider from "../priceRange/index.js";
+import {
+  changeActiveFilter,
+  changeActiveSingleFilter,
+} from "../../app/slices/filtersSlice.js";
+import PriceRange from "../priceRange/PriceRange.jsx";
+import { Link } from "react-router-dom";
 
 const sortOptions = [
-  { name: "Newest", href: "#", current: false },
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
+  { name: "Newest", link: "-date", current: false },
+  { name: "Price: Low to High", link: "+currentPrice", current: false },
+  { name: "Price: High to Low", link: "-currentPrice", current: false },
 ];
 
 function classNames(...classes) {
@@ -33,6 +37,16 @@ export default function Filters({ children }) {
   const handleChange = (e) => {
     dispatch(
       changeActiveFilter({ name: e.target.name, value: e.target.value })
+    );
+  };
+
+  const handleSort = (e) => {
+    e.preventDefault();
+    dispatch(
+      changeActiveSingleFilter({
+        name: "sort",
+        value: e.target.href.split("/").pop(),
+      })
     );
   };
 
@@ -140,7 +154,7 @@ export default function Filters({ children }) {
                       )}
                     </Disclosure>
                   ))}
-                  <PriceSlider />
+                  <PriceRange />
                 </form>
               </Dialog.Panel>
             </Transition.Child>
@@ -181,7 +195,8 @@ export default function Filters({ children }) {
                       <Menu.Item key={option.name}>
                         {({ active }) => (
                           <a
-                            href={option.href}
+                            href={option.link}
+                            onClick={handleSort}
                             className={classNames(
                               option.current
                                 ? "font-medium text-gray-900"
@@ -284,7 +299,7 @@ export default function Filters({ children }) {
                   )}
                 </Disclosure>
               ))}
-              <PriceSlider />
+              <PriceRange />
             </form>
 
             <div className="lg:col-span-4">{children}</div>

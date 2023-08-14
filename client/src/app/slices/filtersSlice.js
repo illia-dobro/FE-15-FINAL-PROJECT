@@ -7,6 +7,11 @@ const initialState = {
     name: "Product Type",
     options: [],
   },
+  sort: {
+    id: "sort",
+    name: "Sort",
+    options: [],
+  },
 };
 
 const filtersSlice = createSlice({
@@ -41,9 +46,15 @@ const filtersSlice = createSlice({
         };
       }
     },
+    changeActiveSingleFilter: (state, action) => {
+      const { name, value } = action.payload;
+
+      state.activeFilters[name] = value;
+    },
   },
 });
 
-export const { changeActiveFilter, productTypes } = filtersSlice.actions;
+export const { changeActiveFilter, changeActiveSingleFilter, productTypes } =
+  filtersSlice.actions;
 
 export default filtersSlice.reducer;
