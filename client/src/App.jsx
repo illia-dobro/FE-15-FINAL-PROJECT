@@ -2,7 +2,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
+  Navigate, ScrollRestoration
 } from "react-router-dom";
 import Nav from "./components/nav";
 import Home from "./pages/home";

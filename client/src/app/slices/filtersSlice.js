@@ -26,9 +26,38 @@ const filtersSlice = createSlice({
   initialState: initialState,
   reducers: {
     productTypes: (state, action) => {
-      const uniqueProductTypes = [
-        ...new Set(action.payload.map((product) => product.product_type)),
-      ];
+      // const uniqueProductTypes = [
+      //   ...new Set(action.payload.map((product) => product.product_type)),
+      // ];
+
+      // ----------------
+      //@TODO temporary solution for product type filter
+      let uniqueProductTypes;
+      switch (action.payload[0].categories) {
+        case "Bodycare":
+          uniqueProductTypes = [
+            "cream",
+            "lotion",
+            "butter",
+            "balm",
+            "serum",
+            "oil",
+          ];
+          break;
+        case "Facecare":
+          uniqueProductTypes = [
+            "mask",
+            "serum",
+            "cleanser",
+            "toner",
+            "essence",
+          ];
+          break;
+        case "Haircare":
+          uniqueProductTypes = ["shampoo", "mask", "cream", "spray"];
+          break;
+      }
+      // ------------------
 
       state.productTypes.options = uniqueProductTypes.map((option) => ({
         value: option,

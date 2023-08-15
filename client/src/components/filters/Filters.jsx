@@ -34,6 +34,7 @@ export default function Filters({ children }) {
   filters.push(productFilter);
 
   const handleChange = (e) => {
+    console.log({ name: e.target.name, value: e.target.value })
     dispatch(
       changeActiveFilter({ name: e.target.name, value: e.target.value })
     );
