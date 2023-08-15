@@ -27,8 +27,8 @@ const ProductsList = ({ products }) => {
     const priceRangeBounds = () =>
       dispatch(
         setPriceRangeBounds({
-          min: priceRange.min,
-          max: priceRange.max,
+          min: Math.trunc(priceRange.min),
+          max: Math.ceil(priceRange.max),
         })
       );
 

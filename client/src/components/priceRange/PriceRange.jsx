@@ -4,12 +4,12 @@ import "rc-slider/assets/index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentPriceRange } from "../../app/slices/filtersSlice.js";
 
-const PriceRange = ({ min = 0, max = 100 }) => {
+const PriceRange = () => {
   const defaultRange = useSelector((state) => state.filters.priceRange);
 
   const [priceRange, setPriceRange] = useState([
-    Math.trunc(defaultRange.min),
-    Math.ceil(defaultRange.max),
+    defaultRange.min,
+    defaultRange.max,
   ]);
 
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const PriceRange = ({ min = 0, max = 100 }) => {
     const newMinValue = +event.target.value;
     setPriceRange((prevPriceRange) => {
       if (
-        newMinValue < min ||
+        newMinValue < defaultRange.min ||
         newMinValue > prevPriceRange[1] ||
         newMinValue === prevPriceRange[1]
       )
@@ -44,7 +44,7 @@ const PriceRange = ({ min = 0, max = 100 }) => {
     const newMaxValue = +event.target.value;
     setPriceRange((prevPriceRange) => {
       if (
-        newMaxValue > max ||
+        newMaxValue > defaultRange.max ||
         newMaxValue < prevPriceRange[0] ||
         newMaxValue === prevPriceRange[0]
       )
@@ -58,8 +58,8 @@ const PriceRange = ({ min = 0, max = 100 }) => {
       <Slider
         range
         allowCross={false}
-        min={min}
-        max={max}
+        min={defaultRange.min}
+        max={defaultRange.max}
         value={priceRange}
         onChange={(value) => {
           setPriceRange(value);
