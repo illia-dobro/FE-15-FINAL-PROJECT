@@ -7,7 +7,7 @@ import {
 import Nav from "./components/nav";
 import Home from "./pages/home";
 import About from "./pages/about/About";
-import Catalog from "./pages/Catalog";
+import Catalog from "./pages/catalog";
 import Delivery from "./pages/Delivery";
 import Contacts from "./pages/contacts";
 import Shop from "./pages/Shop";
