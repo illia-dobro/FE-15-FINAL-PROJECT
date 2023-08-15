@@ -192,6 +192,7 @@ export default function Filters({ children }) {
                   <div className="py-1">
                     {sortOptions.map((option) => (
                       <Menu.Item key={option.name}>
+                        {/*@TODO fix 'active' status*/}
                         {({ active }) => (
                           <a
                             href={option.link}

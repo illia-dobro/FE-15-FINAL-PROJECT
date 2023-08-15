@@ -20,6 +20,7 @@ const Catalog = () => {
         {isSuccess &&
           categories.map((category) => (
             <li key={category.name} className="grow-[0.1]">
+              {/*@TODO add 'active' status*/}
               <Link
                 to={category.name}
                 className="flex justify-center text-[#555555] opacity-40 hover:opacity-100 transition-all py-4 px-2"
