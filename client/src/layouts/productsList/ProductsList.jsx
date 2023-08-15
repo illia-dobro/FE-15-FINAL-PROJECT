@@ -3,6 +3,7 @@ import styles from "../../components/productCard/ProductCard.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { setPriceRangeBounds } from "../../app/slices/filtersSlice.js";
+import PropTypes from "prop-types";
 
 const ProductsList = ({ products }) => {
     const dispatch = useDispatch();
@@ -55,6 +56,10 @@ const ProductsList = ({ products }) => {
         </div>
       </div>
     );
+};
+
+ProductsList.propTypes = {
+    products: PropTypes.array,
 };
 
 export default ProductsList;
