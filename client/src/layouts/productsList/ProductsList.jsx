@@ -2,10 +2,7 @@ import ProductCard from "../../components/productCard/index.js";
 import styles from "../../components/productCard/ProductCard.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import {
-  changePriceRangeFilter,
-  setPriceRangeBounds,
-} from "../../app/slices/filtersSlice.js";
+import { setPriceRangeBounds } from "../../app/slices/filtersSlice.js";
 
 const ProductsList = ({ products }) => {
     const dispatch = useDispatch();
