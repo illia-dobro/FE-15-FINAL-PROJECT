@@ -20,7 +20,7 @@ const PriceRange = ({ min = 0, max = 100 }) => {
           currentMin: priceRange[0],
           currentMax: priceRange[1],
         })
-      ),;
+      );
     };
 
     updatePriceFilter();

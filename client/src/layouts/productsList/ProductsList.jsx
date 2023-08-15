@@ -37,7 +37,7 @@ const ProductsList = ({ products }) => {
         );
 
       priceRangeBounds();
-    }, [dispatch, products]);
+    }, [dispatch, prod, ucts]);
 
     return (
       <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 sm:py-6 lg:max-w-7xl lg:px-8">
@@ -49,8 +49,8 @@ const ProductsList = ({ products }) => {
                 product.currentPrice < currentMax
             )
             .map((product) => (
-              <ProductCard
-         ,       key={product.itemNo}
+      ,        <ProductCard
+                key={product.itemNo}
                 product={product}
                 className="group"
               />
