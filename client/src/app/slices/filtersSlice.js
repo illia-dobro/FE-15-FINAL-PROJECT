@@ -12,6 +12,12 @@ const initialState = {
     name: "Sort",
     options: [],
   },
+  priceRange: {
+    min: -Infinity,
+    currentMin: -Infinity,
+    currentMax: Infinity,
+    max: Infinity,
+  },
 };
 
 const filtersSlice = createSlice({
@@ -51,10 +57,28 @@ const filtersSlice = createSlice({
 
       state.activeFilters[name] = value;
     },
+
+    setPriceRangeBounds: (state, action) => {
+      const { min, max } = action.payload;
+      state.priceRange.min = min;
+      state.priceRange.max = max;
+    },
+
+    setCurrentPriceRange: (state, action) => {
+      const { currentMin, currentMax } = action.payload;
+      state.priceRange.currentMin = currentMin;
+      state.priceRange.currentMax = currentMax;
+    },
   },
 });
 
-export const { changeActiveFilter, changeActiveSingleFilter, productTypes } =
-  filtersSlice.actions;
+export const {
+  changeActiveFilter,
+  changeActiveSingleFilter,
+  changePriceRangeFilter,
+  setPriceRangeBounds,
+  setCurrentPriceRange,
+  productTypes,
+} = filtersSlice.actions;
 
 export default filtersSlice.reducer;

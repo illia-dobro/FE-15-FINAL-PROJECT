@@ -1,9 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentPriceRange } from "../../app/slices/filtersSlice.js";
 
-const PriceRange = ({ min = 0, max = 100, defaultValue = [10, 80] }) => {
-  const [priceRange, setPriceRange] = useState(defaultValue);
+const PriceRange = ({ min = 0, max = 100 }) => {
+  const defaultRange = useSelector((state) => state.filters.priceRange);
+
+  const [priceRange, setPriceRange] = useState([
+    Math.trunc(defaultRange.min),
+    Math.ceil(defaultRange.max),
+  ]);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const updatePriceFilter = () => {
+      dispatch(
+        setCurrentPriceRange({
+          currentMin: priceRange[0],
+          currentMax: priceRange[1],
+        })
+      ),;
+    };
+
+    updatePriceFilter();
+  }, [dispatch, priceRange]);
 
   const handleMinChange = (event) => {
     const newMinValue = +event.target.value;
@@ -42,7 +63,6 @@ const PriceRange = ({ min = 0, max = 100, defaultValue = [10, 80] }) => {
         value={priceRange}
         onChange={(value) => {
           setPriceRange(value);
-          console.log(priceRange);
         }}
       />
 

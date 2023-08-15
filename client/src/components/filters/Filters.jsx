@@ -14,7 +14,6 @@ import {
   changeActiveSingleFilter,
 } from "../../app/slices/filtersSlice.js";
 import PriceRange from "../priceRange/PriceRange.jsx";
-import { Link } from "react-router-dom";
 
 const sortOptions = [
   { name: "Newest", link: "-date", current: false },
