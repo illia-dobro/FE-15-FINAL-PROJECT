@@ -23,8 +23,6 @@ const Category = () => {
 
   const queryFilters = createFilterQuery(activeFilters);
 
-  console.log(queryFilters);
-
   const { data: categories, isSuccess: isCategoriesSuccess } =
     useGetCategoriesQuery();
 
