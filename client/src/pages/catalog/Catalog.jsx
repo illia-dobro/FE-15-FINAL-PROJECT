@@ -5,9 +5,19 @@ import Unique from "../../components/unique";
 
 import { useGetCategoriesQuery } from "../../app/services/catalogApi.js";
 import uniqueMainImgUrl2 from "../../assets/unique_main2.jpg";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { clearUserPriceRange } from "../../app/slices/filtersSlice.js";
 
 const Catalog = () => {
   const { data: categories, isSuccess } = useGetCategoriesQuery();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearUserPriceRange());
+    };
+  }, [dispatch]);
 
   return (
     <div className={styles.catalog_page}>

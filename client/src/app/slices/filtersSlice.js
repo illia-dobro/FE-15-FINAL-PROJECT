@@ -82,10 +82,15 @@ const filtersSlice = createSlice({
         };
       }
     },
+
     changeActiveSingleFilter: (state, action) => {
       const { name, value } = action.payload;
 
       state.activeFilters[name] = value;
+    },
+
+    clearActiveFilters: (state) => {
+      state.activeFilters = {};
     },
 
     setPriceRangeBounds: (state, action) => {
@@ -114,14 +119,20 @@ const filtersSlice = createSlice({
       state.priceRange.currentMax = max;
       state.priceRange.isSetByUser = true;
     },
+
+    clearUserPriceRange: (state) => {
+      state.priceRange.isSetByUser = false;
+    },
   },
 });
 
 export const {
   changeActiveFilter,
   changeActiveSingleFilter,
+  clearActiveFilters,
   setPriceRangeBounds,
   setCurrentPriceRange,
+  clearUserPriceRange,
   productTypes,
 } = filtersSlice.actions;
 

@@ -2,7 +2,7 @@ import ProductsList from "../productsList/index.js";
 import { useParams } from "react-router-dom";
 import Filters from "../../components/filters/index.js";
 import { useDispatch, useSelector } from "react-redux";
-import { productTypes } from "../../app/slices/filtersSlice.js";
+import { clearActiveFilters, productTypes } from "../../app/slices/filtersSlice.js";
 import { useEffect } from "react";
 import { useGetFilteredProductsQuery } from "../../app/services/productApi.js";
 import { useGetCategoriesQuery } from "../../app/services/catalogApi.js";
@@ -36,6 +36,10 @@ const Category = () => {
   useEffect(() => {
     if (isProductsSuccess) {
       dispatch(productTypes(productsData.products));
+    }
+
+    return ()=>{
+      dispatch(clearActiveFilters)
     }
   }, [dispatch, isProductsSuccess, productsData]);
 
