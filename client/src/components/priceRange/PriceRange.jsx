@@ -12,7 +12,7 @@ const PriceRange = () => {
   const handleRangeChange = (value) => {
     dispatch(setCurrentPriceRange(value));
   };
-
+  // @TODO add keyboard input
   const handleMinChange = (event) => {
     const newMin = +event.target.value;
     if (newMin < min || newMin >= currentMax) return;
@@ -52,7 +52,7 @@ const PriceRange = () => {
           </div>
           <input
             type="number"
-            value={currentMin}
+            value={currentMin || ""}
             onChange={handleMinChange}
             name="minPrice"
             id="minPrice"
@@ -74,7 +74,7 @@ const PriceRange = () => {
           </div>
           <input
             type="number"
-            value={currentMax}
+            value={currentMax || ""}
             onChange={handleMaxChange}
             name="maxPrice"
             id="maxPrice"
