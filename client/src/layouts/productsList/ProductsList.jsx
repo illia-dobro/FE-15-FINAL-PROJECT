@@ -7,9 +7,6 @@ import PropTypes from "prop-types";
 
 const ProductsList = ({ products }) => {
   const dispatch = useDispatch();
-  const { currentMin, currentMax } = useSelector(
-    (state) => state.filters.priceRange
-  );
 
   useEffect(() => {
     const priceRange = products.reduce(
@@ -34,6 +31,10 @@ const ProductsList = ({ products }) => {
 
     priceRangeBounds();
   }, [dispatch, products]);
+
+  const { currentMin, currentMax } = useSelector(
+    (state) => state.filters.priceRange
+  );
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 sm:py-6 lg:max-w-7xl lg:px-8">

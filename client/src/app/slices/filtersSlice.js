@@ -61,13 +61,15 @@ const filtersSlice = createSlice({
     setPriceRangeBounds: (state, action) => {
       const { min, max } = action.payload;
       state.priceRange.min = min;
+      state.priceRange.currentMin = min;
+      state.priceRange.currentMax = max;
       state.priceRange.max = max;
     },
 
     setCurrentPriceRange: (state, action) => {
-      const { currentMin, currentMax } = action.payload;
-      state.priceRange.currentMin = currentMin;
-      state.priceRange.currentMax = currentMax;
+      const [min, max] = action.payload;
+      state.priceRange.currentMin = min;
+      state.priceRange.currentMax = max;
     },
   },
 });
