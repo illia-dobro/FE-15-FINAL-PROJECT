@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   changeActiveFilter,
   changeActiveSingleFilter,
+  clearFilters,
   updateFiltersQuery,
 } from "../../app/slices/filtersSlice.js";
 import PriceRange from "../priceRange/PriceRange.jsx";
@@ -48,11 +49,17 @@ export default function Filters({ children }) {
         value: e.target.href.split("/").pop(),
       })
     );
+    dispatch(updateFiltersQuery());
   };
 
   const applyFilters = (e) => {
     e.preventDefault();
     dispatch(updateFiltersQuery());
+  };
+
+  const resetFilters = (e) => {
+    e.preventDefault();
+    dispatch(clearFilters());
   };
 
   return (
@@ -275,6 +282,7 @@ export default function Filters({ children }) {
                               key={option.value}
                               className="flex items-center"
                             >
+                              {/*@TODO fix checkbox value for active filters*/}
                               <input
                                 id={`filter-${section.id}-${optionIdx}`}
                                 name={`${section.id}`}
@@ -299,12 +307,21 @@ export default function Filters({ children }) {
                 </Disclosure>
               ))}
               <PriceRange />
-              <Button
-                action={(e) => applyFilters(e)}
-                className={"mt-4 button button-color--secondary py-2 px-4"}
-              >
-                Apply filters
-              </Button>
+              <div className="flex">
+                {" "}
+                <Button
+                  action={(e) => resetFilters(e)}
+                  className={"mt-4 button button-color--secondary py-2 px-4"}
+                >
+                  Reset filters
+                </Button>{" "}
+                <Button
+                  action={(e) => applyFilters(e)}
+                  className={"mt-4 button button-color--secondary py-2 px-4"}
+                >
+                  Apply filters
+                </Button>
+              </div>
             </form>
 
             <div className="lg:col-span-4">{children}</div>

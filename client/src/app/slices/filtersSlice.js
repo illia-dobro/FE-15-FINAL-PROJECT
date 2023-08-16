@@ -28,6 +28,11 @@ const filtersSlice = createSlice({
       state.filtersQuery = joinFiltersQuery(state.activeFilters);
     },
 
+    clearFilters: (state) => {
+      state.filtersQuery = "";
+      state.activeFilters = {};
+    },
+
     productTypes: (state, action) => {
       // const uniqueProductTypes = [
       //   ...new Set(action.payload.map((product) => product.product_type)),
@@ -92,10 +97,6 @@ const filtersSlice = createSlice({
       state.activeFilters[name] = value;
     },
 
-    clearActiveFilters: (state) => {
-      state.activeFilters = {};
-    },
-
     setPriceRangeBounds: (state, action) => {
       const { min, max } = action.payload;
 
@@ -107,21 +108,16 @@ const filtersSlice = createSlice({
       const { name, value } = action.payload;
       state.activeFilters[name] = value;
     },
-
-    clearUserPriceRange: (state) => {
-      state.priceRange.isSetByUser = false;
-    },
   },
 });
 
 export const {
   updateFiltersQuery,
+  clearFilters,
   changeActiveFilter,
   changeActiveSingleFilter,
-  clearActiveFilters,
   setPriceRangeBounds,
   setCurrentPriceBound,
-  clearUserPriceRange,
   productTypes,
 } = filtersSlice.actions;
 
