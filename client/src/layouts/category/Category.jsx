@@ -2,12 +2,9 @@ import ProductsList from "../productsList/index.js";
 import { useParams } from "react-router-dom";
 import Filters from "../../components/filters/index.js";
 import { useDispatch, useSelector } from "react-redux";
-import { clearFilters, productTypes } from "../../app/slices/filtersSlice.js";
-import { useEffect } from "react";
+import { productTypes } from "../../app/slices/filtersSlice.js";
 import { useGetFilteredProductsQuery } from "../../app/services/productApi.js";
 import { useGetCategoriesQuery } from "../../app/services/catalogApi.js";
-import { findMinAndMax } from "../../helpers/findMinAndMax.js";
-import { joinFiltersQuery } from "../../helpers/joinFiltersQuery.js";
 
 const Category = () => {
   const { categoryName } = useParams();
