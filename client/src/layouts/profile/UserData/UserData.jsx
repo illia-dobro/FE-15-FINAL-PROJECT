@@ -1,5 +1,7 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useGetUserQuery } from '../../../app/services/api';
+import { logout } from '../../../app/slices/authSlice';
+import { useDispatch } from 'react-redux';
 import { FaCircleUser } from 'react-icons/fa6';
 import { BsArrowRight } from 'react-icons/bs';
 import { FiLogOut } from 'react-icons/fi';
@@ -8,8 +10,17 @@ function UserData() {
   const { data, isError, isSuccess } = useGetUserQuery();
   console.log(useGetUserQuery());
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+
   if (isError) {
     return <Navigate to="/login" replace={true} />;
+  }
+
+  function handleLogout(){
+    localStorage.removeItem('tokenDanIT');
+    dispatch(logout());
+    window.location.reload();
   }
 
   if (isSuccess) {
@@ -30,8 +41,8 @@ function UserData() {
           <BsArrowRight size={14} />
         </button>
 
-        <button className="text-sm flex gap-3 items-center transition-all hover:text-slate-500">
-          <FiLogOut /> Logout
+        <button className="text-sm flex gap-3 items-center transition-all hover:text-slate-500" onClick={handleLogout}>
+          <FiLogOut />Logout
         </button>
       </div>
     );
