@@ -1,9 +1,12 @@
 import React from 'react';
+import { useUpdateUserMutation } from '../../../app/services/api';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
-import PhoneInput from 'react-phone-number-input/input';
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 
-function EditProfile({data}) {
+function EditProfile({data, setIsModalOpen}) {
   const [login, setLogin] = React.useState(data.login);
   const [firstName, setFirstName] = React.useState(data.firstName);
   const [lastName, setLastName] = React.useState(data.lastName);
@@ -11,12 +14,39 @@ function EditProfile({data}) {
   const [telephone, setTelephone] = React.useState(data.telephone);
   const [error, setError] = React.useState('');
 
+  const [updateUser, {isLoading}] = useUpdateUserMutation()
 
+  async function handleSubmit(e) {
+      e.preventDefault()
+      setError('');
+    try {
+      const data = await updateUser({
+        firstName,
+        lastName,
+        email,
+        login,
+        telephone: telephone[0] === '+' ?  telephone : '+' + telephone
+      });
+      if(data.error){
+        throw data
+      } else {
+        toast("Congratulations, you have successfully update profile!");
+        setIsModalOpen(false);
+      }
 
-  function handleSubmit() {}
+    } catch (err) {
+      console.log(err);
+      if(err.error.status === 400) {
+        setError(err.error.data);
+      } else {
+        toast("Something goes wrong!");
+      }
+
+    }
+  }
 
   return (
-    <div className="flex min-h-full flex-col justify-center py-12 px-2 sm:px-6 lg:px-8">
+    <div className='flex min-h-full flex-col justify-center py-12 px-2 sm:px-6 lg:px-8'>
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-[#555555]">
           Edit profile
@@ -118,19 +148,19 @@ function EditProfile({data}) {
                 Telephone
               </label>
               <div className="mt-2">
-                <PhoneInput
+              <PhoneInput
+                  inputStyle={{width:'100%'}}
+                  country={'ua'}
                   id="telephone"
                   name="telephone"
-                  country="UK"
                   value={telephone}
-                  onChange={setTelephone}
+                  onChange={(phone) => setTelephone(phone)}
                   required
-                  className="block w-full rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEE4DA]  sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEE4DA]  sm:text-sm sm:leading-6"
                 />
               </div>
+              </div>
               <span className="text-red-500">{error.telephone}</span>
-            </div>
-
             <div>
               <span className="text-red-500 text-sm pb-1 block">
                 {error.message}
@@ -146,8 +176,8 @@ function EditProfile({data}) {
             </div>
           </form>
         </div>
-      </div>
     </div>
+  </div>
   );
 }
 
@@ -156,5 +186,5 @@ export default EditProfile;
 
 EditProfile.propTypes = {
   data: PropTypes.object,
-
+  setIsModalOpen: PropTypes.func
 };
