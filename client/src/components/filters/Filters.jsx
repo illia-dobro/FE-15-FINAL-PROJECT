@@ -16,16 +16,13 @@ import {
 } from "../../app/slices/filtersSlice.js";
 import PriceRange from "../priceRange/PriceRange.jsx";
 import Button from "../buttons/button/Button.jsx";
+import { joinClassNames } from "../../helpers/joinClassNames.js";
 
 const sortOptions = [
   { name: "Newest", link: "-date", current: false },
   { name: "Price: Low to High", link: "+currentPrice", current: false },
   { name: "Price: High to Low", link: "-currentPrice", current: false },
 ];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function Filters({ children }) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -210,7 +207,7 @@ export default function Filters({ children }) {
                           <a
                             href={option.link}
                             onClick={handleSort}
-                            className={classNames(
+                            className={joinClassNames(
                               option.current
                                 ? "font-medium text-gray-900"
                                 : "text-gray-500",
