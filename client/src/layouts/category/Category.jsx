@@ -25,12 +25,6 @@ const Category = () => {
     isCategoriesSuccess &&
     categories.find((category) => category.name === categoryName);
 
-  useEffect(() => {
-    return () => {
-      dispatch(clearFilters);
-    };
-  }, [dispatch]);
-
   return (
     <>
       <h2 className="text-center text-7xl mx-auto my-4">{category.name}</h2>

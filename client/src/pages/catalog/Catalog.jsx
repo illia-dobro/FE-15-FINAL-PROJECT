@@ -7,7 +7,10 @@ import { useGetCategoriesQuery } from "../../app/services/catalogApi.js";
 import uniqueMainImgUrl2 from "../../assets/unique_main2.jpg";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { setPriceRangeBounds } from "../../app/slices/filtersSlice.js";
+import {
+  clearFilters,
+  setPriceRangeBounds,
+} from "../../app/slices/filtersSlice.js";
 import { useGetAllProductsQuery } from "../../app/services/productApi.js";
 import { findMinAndMax } from "../../helpers/findMinAndMax.js";
 
@@ -29,6 +32,10 @@ const Catalog = () => {
         })
       );
     }
+
+    return () => {
+      dispatch(clearFilters());
+    };
   }, [allProducts, dispatch, isAllProductsSuccess]);
 
   return (
