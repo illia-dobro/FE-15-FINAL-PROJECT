@@ -1,28 +1,32 @@
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentPriceRange } from "../../app/slices/filtersSlice.js";
+import { setCurrentPriceBound } from "../../app/slices/filtersSlice.js";
 
 const PriceRange = () => {
-  const { min, currentMin, currentMax, max } = useSelector(
-    (state) => state.filters.priceRange
+  const { min, max } = useSelector((state) => state.filters.priceRange);
+  const { minPrice: currentMin, maxPrice: currentMax } = useSelector(
+    (state) => state.filters.activeFilters
   );
+
   const dispatch = useDispatch();
 
   const handleRangeChange = (value) => {
-    dispatch(setCurrentPriceRange(value));
+    const [newMin, newMax] = value;
+    dispatch(setCurrentPriceBound({ name: "minPrice", value: newMin }));
+    dispatch(setCurrentPriceBound({ name: "maxPrice", value: newMax }));
   };
   // @TODO add keyboard input
   const handleMinChange = (event) => {
     const newMin = +event.target.value;
-    if (newMin < min || newMin >= currentMax) return;
-    dispatch(setCurrentPriceRange([newMin, currentMax]));
+    // if (newMin < min || newMin >= currentMax) return;
+    dispatch(setCurrentPriceBound({ name: "minPrice", value: newMin }));
   };
 
   const handleMaxChange = (event) => {
     const newMax = +event.target.value;
-    if (newMax > max || newMax <= currentMin) return;
-    dispatch(setCurrentPriceRange([currentMin, newMax]));
+    // if (newMax > max || newMax <= currentMin) return;
+    dispatch(setCurrentPriceBound({ name: "maxPrice", value: newMax }));
   };
 
   return (
@@ -33,7 +37,7 @@ const PriceRange = () => {
         allowCross={false}
         min={min}
         max={max}
-        value={[currentMin, currentMax]}
+        value={[currentMin || min, currentMax || max]}
         onChange={(value) => {
           handleRangeChange(value);
         }}
@@ -53,7 +57,7 @@ const PriceRange = () => {
             </div>
             <input
               type="number"
-              value={currentMin || ""}
+              value={currentMin || min || ""}
               onChange={handleMinChange}
               name="minPrice"
               id="minPrice"
@@ -75,7 +79,7 @@ const PriceRange = () => {
             </div>
             <input
               type="number"
-              value={currentMax || ""}
+              value={currentMax || max || ""}
               onChange={handleMaxChange}
               name="maxPrice"
               id="maxPrice"

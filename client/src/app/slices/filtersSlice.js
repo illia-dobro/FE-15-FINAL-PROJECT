@@ -14,10 +14,7 @@ const initialState = {
   },
   priceRange: {
     min: null,
-    currentMin: null,
-    currentMax: null,
     max: null,
-    isSetByUser: false,
   },
 };
 
@@ -33,7 +30,7 @@ const filtersSlice = createSlice({
       // ----------------
       //@TODO temporary solution for product type filter
       let uniqueProductTypes;
-      switch (action.payload[0].categories) {
+      switch (action.payload) {
         case "Bodycare":
           uniqueProductTypes = [
             "cream",
@@ -98,26 +95,11 @@ const filtersSlice = createSlice({
 
       state.priceRange.min = min;
       state.priceRange.max = max;
-
-      const { currentMin, currentMax, isSetByUser } = state.priceRange;
-
-      if (!currentMin) state.priceRange.currentMin = min;
-      if (!currentMax) state.priceRange.currentMax = max;
-
-      if (isSetByUser) {
-        state.priceRange.currentMin = Math.max(min, Math.min(currentMin, max));
-        state.priceRange.currentMax = Math.min(max, Math.max(currentMax, min));
-      } else {
-        state.priceRange.currentMin = min;
-        state.priceRange.currentMax = max;
-      }
     },
 
-    setCurrentPriceRange: (state, action) => {
-      const [min, max] = action.payload;
-      state.priceRange.currentMin = min;
-      state.priceRange.currentMax = max;
-      state.priceRange.isSetByUser = true;
+    setCurrentPriceBound: (state, action) => {
+      const { name, value } = action.payload;
+      state.activeFilters[name] = value;
     },
 
     clearUserPriceRange: (state) => {
@@ -131,7 +113,7 @@ export const {
   changeActiveSingleFilter,
   clearActiveFilters,
   setPriceRangeBounds,
-  setCurrentPriceRange,
+  setCurrentPriceBound,
   clearUserPriceRange,
   productTypes,
 } = filtersSlice.actions;

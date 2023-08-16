@@ -2,30 +2,27 @@ import ProductsList from "../productsList/index.js";
 import { useParams } from "react-router-dom";
 import Filters from "../../components/filters/index.js";
 import { useDispatch, useSelector } from "react-redux";
-import { clearActiveFilters, productTypes } from "../../app/slices/filtersSlice.js";
+import {
+  clearActiveFilters,
+  productTypes,
+  setCurrentPriceBound,
+} from "../../app/slices/filtersSlice.js";
 import { useEffect } from "react";
 import { useGetFilteredProductsQuery } from "../../app/services/productApi.js";
 import { useGetCategoriesQuery } from "../../app/services/catalogApi.js";
+import { findMinAndMax } from "../../helpers/findMinAndMax.js";
+import { joinFiltersQuery } from "../../helpers/joinFiltersQuery.js";
 
 const Category = () => {
   const { categoryName } = useParams();
   const dispatch = useDispatch();
-  const activeFilters = useSelector((state) => state.filters.activeFilters);
-
-  function createFilterQuery(filters) {
-    let query = "";
-
-    for (const property in filters) {
-      query += `&${property}=${filters[property]}`;
-    }
-    return query;
-  }
-
-  const queryFilters = createFilterQuery(activeFilters);
+  dispatch(productTypes(categoryName));
 
   const { data: categories, isSuccess: isCategoriesSuccess } =
     useGetCategoriesQuery();
 
+  const activeFilters = useSelector((state) => state.filters.activeFilters);
+  const queryFilters = joinFiltersQuery(activeFilters);
   const { data: productsData, isSuccess: isProductsSuccess } =
     useGetFilteredProductsQuery(`categories=${categoryName}${queryFilters}`);
 
@@ -34,14 +31,10 @@ const Category = () => {
     categories.find((category) => category.name === categoryName);
 
   useEffect(() => {
-    if (isProductsSuccess) {
-      dispatch(productTypes(productsData.products));
-    }
-
-    return ()=>{
-      dispatch(clearActiveFilters)
-    }
-  }, [dispatch, isProductsSuccess, productsData]);
+    return () => {
+      dispatch(clearActiveFilters);
+    };
+  }, [dispatch]);
 
   return (
     <>

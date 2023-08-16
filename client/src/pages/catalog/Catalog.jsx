@@ -7,17 +7,35 @@ import { useGetCategoriesQuery } from "../../app/services/catalogApi.js";
 import uniqueMainImgUrl2 from "../../assets/unique_main2.jpg";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { clearUserPriceRange } from "../../app/slices/filtersSlice.js";
+import {
+  clearUserPriceRange,
+  setPriceRangeBounds,
+} from "../../app/slices/filtersSlice.js";
+import { useGetAllProductsQuery } from "../../app/services/productApi.js";
+import { findMinAndMax } from "../../helpers/findMinAndMax.js";
 
 const Catalog = () => {
   const { data: categories, isSuccess } = useGetCategoriesQuery();
+  const { data: allProducts, isSuccess: isAllProductsSuccess } =
+    useGetAllProductsQuery();
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    return () => {
-      dispatch(clearUserPriceRange());
-    };
-  }, [dispatch]);
+    if (isAllProductsSuccess) {
+      const priceRange = findMinAndMax(allProducts);
+
+      dispatch(
+        setPriceRangeBounds({
+          min: Math.trunc(priceRange.min),
+          max: Math.ceil(priceRange.max),
+        })
+      );
+      return () => {
+        dispatch(clearUserPriceRange());
+      };
+    }
+  }, [allProducts, dispatch, isAllProductsSuccess]);
 
   return (
     <div className={styles.catalog_page}>
