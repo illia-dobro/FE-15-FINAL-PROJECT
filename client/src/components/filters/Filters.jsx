@@ -17,7 +17,6 @@ import {
 import PriceRange from "../priceRange/PriceRange.jsx";
 import Button from "../buttons/button/Button.jsx";
 import { joinClassNames } from "../../helpers/joinClassNames.js";
-import item from "react-image-gallery/src/components/Item.jsx";
 
 const sortOptions = [
   { name: "Newest", link: "-date", current: false },
@@ -36,7 +35,7 @@ export default function Filters({ children }) {
   const activeFilters = useSelector((state) => state.filters.activeFilters);
 
   const getCheckedStatus = (arrayFilters, section, option) => {
-    return arrayFilters[section]?.includes(option);
+    return arrayFilters[section]?.includes(option) || false;
   };
 
   const handleChange = (e) => {
@@ -152,7 +151,11 @@ export default function Filters({ children }) {
                                     name={`${section.id}`}
                                     defaultValue={option.value}
                                     type="checkbox"
-                                    defaultChecked={option.checked}
+                                    checked={getCheckedStatus(
+                                      activeFilters,
+                                      section.id,
+                                      option.value
+                                    )}
                                     onChange={(e) => handleChange(e)}
                                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                   />
