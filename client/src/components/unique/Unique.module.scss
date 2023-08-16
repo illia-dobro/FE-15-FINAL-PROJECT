@@ -1,0 +1,93 @@
+@import '../../assets/styles/common.scss';
+
+.unique {
+    margin: 0 auto;
+    max-width: 1440px;
+    display: flex;
+    align-items: center;
+    color: $dark;
+
+    &__description {
+        width: 50%;
+        padding: 0 8%;
+    }
+
+    &__focus {
+        font-size: 32px;
+        line-height: 150%;
+        margin-top: 68px;
+        margin-bottom: 36px;
+        text-shadow: 0 4px 4px rgba(0, 0, 0, .25);
+    }
+
+    &__content {
+        font-size: 18px;
+        line-height: 180%;
+        margin-bottom: 44px;
+    }
+
+    &__signature {
+        display: flex;
+        align-items: center;
+        gap: 36px;
+        line-height: 130%;
+
+        &_name {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        &_position {
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+    }
+
+    &__image {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .unique {
+        max-width: 780px;
+        margin: 0 auto;
+
+        &__description {
+            width: 100%;
+            padding: 0 25px;
+            margin-bottom: 50px;
+        }
+
+        &__focus {
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        &__content {
+            margin-bottom: 40px;
+        }
+
+        &__image {
+            width: 100%;
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .unique {
+
+        &__description {
+            padding: 0 15px;
+        }
+
+        &__focus {
+            font-size: 22px;
+            text-shadow: none;
+        }
+
+        &__content {
+            font-size: 16px;
+        }
+    }
+}

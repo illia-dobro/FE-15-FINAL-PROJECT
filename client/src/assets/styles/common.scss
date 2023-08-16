@@ -1,0 +1,38 @@
+/* для общих стилей */
+
+/* Colors */
+$primary: rgba(245, 236, 227, 1);
+$secondary: rgba(238, 228, 218, 1);
+$dark:rgba(85, 85, 85, 1);
+$dark-opacity:rgba(85, 85, 85, 0.5);
+$primary-hover:#AC8F78;
+$secondary-hover:rgba(231, 210, 189, 1);
+
+/* Mixins */
+@mixin boxShadow {
+  box-shadow: 1px 2px 3px $primary;
+}
+@mixin flex-col {
+  display: flex;
+  flex-direction: column;
+}
+@mixin flex-justify-between {
+  display: flex;
+  justify-content: space-between;
+}
+@mixin flex-justify-around {
+  display: flex;
+  justify-content: space-around;
+}
+@mixin flex-justify-center {
+  display: flex;
+  justify-content: center;
+}
+@mixin flex-end {
+  display: flex;
+  justify-content: end;
+}
+@mixin bgCoverCenter {
+  background-size: cover;
+  background-position: center;
+}

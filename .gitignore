@@ -22,3 +22,27 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# dependencies
+/node_modules
+package-lock.json
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+documentation
+
+# misc
+.idea/
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# secure data
+/config/keys_dev.js
+/.env
