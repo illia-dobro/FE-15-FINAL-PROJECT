@@ -6,14 +6,15 @@ import {
   FunnelIcon,
   MinusIcon,
   PlusIcon,
-  Squares2X2Icon,
 } from "@heroicons/react/20/solid";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeActiveFilter,
   changeActiveSingleFilter,
+  updateFiltersQuery,
 } from "../../app/slices/filtersSlice.js";
 import PriceRange from "../priceRange/PriceRange.jsx";
+import Button from "../buttons/button/Button.jsx";
 
 const sortOptions = [
   { name: "Newest", link: "-date", current: false },
@@ -47,6 +48,11 @@ export default function Filters({ children }) {
         value: e.target.href.split("/").pop(),
       })
     );
+  };
+
+  const applyFilters = (e) => {
+    e.preventDefault();
+    dispatch(updateFiltersQuery());
   };
 
   return (
@@ -215,13 +221,6 @@ export default function Filters({ children }) {
               </Transition>
             </Menu>
 
-            {/*<button*/}
-            {/*  type="button"*/}
-            {/*  className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"*/}
-            {/*>*/}
-            {/*  <span className="sr-only">View grid</span>*/}
-            {/*  <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />*/}
-            {/*</button>*/}
             <button
               type="button"
               className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
@@ -300,6 +299,12 @@ export default function Filters({ children }) {
                 </Disclosure>
               ))}
               <PriceRange />
+              <Button
+                action={(e) => applyFilters(e)}
+                className={"mt-4 button button-color--secondary py-2 px-4"}
+              >
+                Apply filters
+              </Button>
             </form>
 
             <div className="lg:col-span-4">{children}</div>

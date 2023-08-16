@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { joinFiltersQuery } from "../../helpers/joinFiltersQuery.js";
 
 const initialState = {
   activeFilters: {},
+  filtersQuery: "",
   productTypes: {
     id: "product_type",
     name: "Product Type",
@@ -22,6 +24,10 @@ const filtersSlice = createSlice({
   name: "filters",
   initialState: initialState,
   reducers: {
+    updateFiltersQuery: (state) => {
+      state.filtersQuery = joinFiltersQuery(state.activeFilters);
+    },
+
     productTypes: (state, action) => {
       // const uniqueProductTypes = [
       //   ...new Set(action.payload.map((product) => product.product_type)),
@@ -109,6 +115,7 @@ const filtersSlice = createSlice({
 });
 
 export const {
+  updateFiltersQuery,
   changeActiveFilter,
   changeActiveSingleFilter,
   clearActiveFilters,

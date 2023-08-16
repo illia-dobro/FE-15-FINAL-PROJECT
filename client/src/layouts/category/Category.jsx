@@ -21,10 +21,9 @@ const Category = () => {
   const { data: categories, isSuccess: isCategoriesSuccess } =
     useGetCategoriesQuery();
 
-  const activeFilters = useSelector((state) => state.filters.activeFilters);
-  const queryFilters = joinFiltersQuery(activeFilters);
+  const filtersQuery = useSelector((state) => state.filters.filtersQuery);
   const { data: productsData, isSuccess: isProductsSuccess } =
-    useGetFilteredProductsQuery(`categories=${categoryName}${queryFilters}`);
+    useGetFilteredProductsQuery(`categories=${categoryName}${filtersQuery}`);
 
   const category =
     isCategoriesSuccess &&
