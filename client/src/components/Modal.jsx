@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useRef} from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
@@ -10,6 +10,7 @@ export default function Modal({ children, openModal, setOpen }){
   return (
     <Transition.Root show={openModal} as={Fragment}>
       <Dialog
+        title='modal'
         as="div"
         className="relative z-10"
         initialFocus={cancelButtonRef}
