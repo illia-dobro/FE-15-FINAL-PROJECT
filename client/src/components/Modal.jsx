@@ -3,13 +3,12 @@ import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
-export default function Modal({ children, openModal }) {
-  const [open, setOpen] = useState(openModal);
+export default function Modal({ children, openModal, setOpen }){
 
   const cancelButtonRef = useRef(null);
 
   return (
-    <Transition.Root show={open} as={Fragment}>
+    <Transition.Root show={openModal} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"
@@ -17,6 +16,7 @@ export default function Modal({ children, openModal }) {
         onClose={setOpen}
       >
         <Transition.Child
+
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="opacity-0"
@@ -57,5 +57,6 @@ export default function Modal({ children, openModal }) {
 
 Modal.propTypes = {
   children: PropTypes.node,
-  openModal: PropTypes.bool
+  openModal: PropTypes.bool,
+  setOpen: PropTypes.func
 };

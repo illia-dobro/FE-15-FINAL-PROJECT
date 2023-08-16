@@ -1,80 +1,32 @@
 import React from 'react';
-import { useNavigate,  Link, Navigate } from "react-router-dom";
-import PhoneInput from 'react-phone-input-2'
-import 'react-phone-input-2/lib/style.css'
-import { useRegisterMutation, useGetUserQuery } from '../../../app/services/api';
-import { toast } from 'react-toastify';
-import { glass } from '../forms.module.scss'
+import PropTypes from 'prop-types';
+import PhoneInput from 'react-phone-number-input/input';
 
 
-function SignUp() {
-  const [login, setLogin] = React.useState('');
-  const [firstName, setFirstName] = React.useState('');
-  const [lastName, setLastName] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [telephone, setTelephone] = React.useState('');
+function EditProfile({data}) {
+  const [login, setLogin] = React.useState(data.login);
+  const [firstName, setFirstName] = React.useState(data.firstName);
+  const [lastName, setLastName] = React.useState(data.lastName);
+  const [email, setEmail] = React.useState(data.email);
+  const [telephone, setTelephone] = React.useState(data.telephone);
   const [error, setError] = React.useState('');
-  const navigate = useNavigate();
-
-  const [register, {isLoading}] = useRegisterMutation();
 
 
-  const {isSuccess} = useGetUserQuery();
 
-  if (isSuccess) {
-    return  <Navigate to="/" replace={true} />
-  }
-
-  console.log(telephone);
-  const handleSubmit = async (e) => {
-
-    e.preventDefault();
-    setError('');
-    try {
-      const data = await register({
-        firstName,
-        lastName,
-        email,
-        password,
-        login,
-        telephone: '+' +  telephone
-      });
-      if(data.error){
-        throw data
-      } else {
-        toast("Congratulations, you have successfully registered!");
-        navigate("/");
-      }
-
-    } catch (err) {
-      console.log(err);
-      if(err.error.status === 400) {
-        setError(err.error.data);
-      } else {
-        toast("Something goes wrong!");
-      }
-
-    }
-  }
+  function handleSubmit() {}
 
   return (
     <div className="flex min-h-full flex-col justify-center py-12 px-2 sm:px-6 lg:px-8">
-
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-[#555555]">
-          Sign Up
+          Edit profile
         </h2>
-        <p className="mt-2 px-4 pt-15px text-center text-sm text-gray-600">
-          If this is your first time on the site, then you should fill out a
-          questionnaire so that we can keep a history of your orders
-        </p>
       </div>
 
-      <div className={`${glass} mt-8 sm:mx-auto sm:w-full sm:max-w-md`}>
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="px-4 py-8 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
-          <div>
+            <div>
               <label
                 htmlFor="login"
                 className="block text-sm font-medium leading-6 text-gray-900"
@@ -93,7 +45,7 @@ function SignUp() {
                   className="block w-full rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEE4DA]  sm:text-sm sm:leading-6"
                 />
               </div>
-              <span className='text-red-500 text-sm'>{error.login}</span>
+              <span className="text-red-500 text-sm">{error.login}</span>
             </div>
             <div>
               <label
@@ -114,7 +66,7 @@ function SignUp() {
                   className="block w-full rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEE4DA]  sm:text-sm sm:leading-6"
                 />
               </div>
-              <span className='text-red-500 text-sm'>{error.firstName}</span>
+              <span className="text-red-500 text-sm">{error.firstName}</span>
             </div>
             <div>
               <label
@@ -135,7 +87,7 @@ function SignUp() {
                   className="block w-full rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEE4DA]  sm:text-sm sm:leading-6"
                 />
               </div>
-              <span className='text-red-500 text-sm'>{error.lastName}</span>
+              <span className="text-red-500 text-sm">{error.lastName}</span>
             </div>
             <div>
               <label
@@ -156,7 +108,7 @@ function SignUp() {
                   className="block w-full rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEE4DA]  sm:text-sm sm:leading-6"
                 />
               </div>
-              <span className='text-red-500 text-sm'>{error.email}</span>
+              <span className="text-red-500 text-sm">{error.email}</span>
             </div>
             <div>
               <label
@@ -167,61 +119,42 @@ function SignUp() {
               </label>
               <div className="mt-2">
                 <PhoneInput
-                  inputStyle={{width:'100%'}}
-                  country={'ua'}
                   id="telephone"
                   name="telephone"
+                  country="UK"
                   value={telephone}
-                  onChange={(phone) => setTelephone(phone)}
+                  onChange={setTelephone}
                   required
-                  className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEE4DA]  sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEE4DA]  sm:text-sm sm:leading-6"
                 />
               </div>
-              <span className='text-red-500'>{error.telephone}</span>
+              <span className="text-red-500">{error.telephone}</span>
             </div>
 
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Password
-              </label>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  autoComplete="current-password"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 pl-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEE4DA] sm:text-sm sm:leading-6"
-                />
-              </div>
-              <span className='text-red-500 text-sm'>{error.password}</span>
-            </div>
-            <div>
-            <span className='text-red-500 text-sm pb-1 block'>{error.message}{error.error}</span>
+              <span className="text-red-500 text-sm pb-1 block">
+                {error.message}
+                {error.error}
+              </span>
               <button
                 type="submit"
-                disabled={isLoading}
+                // disabled={isLoading}
                 className="flex w-full justify-center text-[#555555] rounded-md bg-[#EEE4DA] px-3 py-2 text-sm font-semibold shadow-sm hover:bg-[#eddac7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:bg-[#eddac7] transition"
               >
-                Sign Up
+                Edit
               </button>
             </div>
           </form>
-          <div className='flex gap-2 items-center pt-4 justify-center'>
-          <span>Do you have an account?</span>
-            <Link to='/login' className='font-bold text-gray-600 hover:text-gray-700'>
-                Sign In
-            </Link>
-          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default SignUp;
+export default EditProfile;
+
+
+EditProfile.propTypes = {
+  data: PropTypes.object,
+
+};
