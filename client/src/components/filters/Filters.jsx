@@ -41,7 +41,7 @@ export default function Filters({ children }) {
     return arrayFilters[section]?.includes(option) || false;
   };
 
-  const handleChange = (e) => {
+  const handleCheckboxChange = (e) => {
     dispatch(
       changeActiveFilter({ name: e.target.name, value: e.target.value })
     );
@@ -159,7 +159,7 @@ export default function Filters({ children }) {
                                       section.id,
                                       option.value
                                     )}
-                                    onChange={(e) => handleChange(e)}
+                                    onChange={(e) => handleCheckboxChange(e)}
                                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                   />
                                   <label
@@ -177,6 +177,21 @@ export default function Filters({ children }) {
                     </Disclosure>
                   ))}
                   <PriceRange />
+                  <div className="flex justify-between">
+                    {" "}
+                    <Button
+                      action={(e) => resetFilters(e)}
+                      className={"mt-4 button button-color--secondary py-2 px-4"}
+                    >
+                      Reset filters
+                    </Button>{" "}
+                    <Button
+                      action={(e) => applyFilters(e)}
+                      className={"mt-4 button button-color--secondary py-2 px-4"}
+                    >
+                      Apply filters
+                    </Button>
+                  </div>
                 </form>
               </Dialog.Panel>
             </Transition.Child>
@@ -250,10 +265,6 @@ export default function Filters({ children }) {
         </div>
 
         <section aria-labelledby="products-heading" className="pb-24 pt-6">
-          <h2 id="products-heading" className="sr-only">
-            Products
-          </h2>
-
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
             {/* Filters */}
             <form className="hidden lg:block">
@@ -302,7 +313,7 @@ export default function Filters({ children }) {
                                   section.id,
                                   option.value
                                 )}
-                                onChange={(e) => handleChange(e)}
+                                onChange={(e) => handleCheckboxChange(e)}
                                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                               />
                               <label
