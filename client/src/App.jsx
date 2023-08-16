@@ -22,7 +22,7 @@ import { useGetUserQuery } from "./app/services/api";
 import SignUp from '../src/layouts/forms/SignUp'
 
 function App() {
-  useGetUserQuery();
+  const {isSuccess} = useGetUserQuery();
 
   return (
     <>

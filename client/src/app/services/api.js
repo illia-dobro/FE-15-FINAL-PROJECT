@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { getLocalStorage } from '../../helpers/localStorage.js';
+//import { getLocalStorage } from '../../helpers/localStorage.js';
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
@@ -8,8 +8,6 @@ export const api = createApi({
       const token = getState().auth.token;
       if (token) {
         headers.set('authorization', `${token}`);
-      } else if (getLocalStorage()) {
-        headers.set('authorization', `${getLocalStorage()}`);
       }
       return headers;
     },
