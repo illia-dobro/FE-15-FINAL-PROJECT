@@ -1,5 +1,7 @@
 import React from 'react';
 import { useNavigate,  Link, Navigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { setCredentials } from '../../../app/slices/authSlice';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import { useRegisterMutation, useGetUserQuery } from '../../../app/services/api';
@@ -16,6 +18,8 @@ function SignUp() {
   const [telephone, setTelephone] = React.useState('');
   const [error, setError] = React.useState('');
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const [register, {isLoading}] = useRegisterMutation();
 
@@ -44,7 +48,8 @@ function SignUp() {
         throw data
       } else {
         toast("Congratulations, you have successfully registered!");
-        navigate("/");
+        dispatch(setCredentials({user: data}))
+        navigate("/login");
       }
 
     } catch (err) {
