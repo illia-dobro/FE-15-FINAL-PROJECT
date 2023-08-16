@@ -1,12 +1,15 @@
+@import '../../assets/styles/common.scss';
+
 .unique {
-    max-width: 1440px;
     margin: 0 auto;
+    max-width: 1440px;
     display: flex;
     align-items: center;
-    color: #555555;
+    color: $dark;
 
     &__description {
-        padding: 200px 114px;
+        width: 50%;
+        padding: 0 8%;
     }
 
     &__focus {
@@ -31,16 +34,60 @@
 
         &_name {
             font-size: 24px;
-            margin-bottom: 4px;            
+            margin-bottom: 4px;
         }
 
         &_position {
             font-size: 13px;
-            margin-bottom: 4px; 
+            margin-bottom: 4px;
+        }
+    }
+
+    &__image {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .unique {
+        max-width: 780px;
+        margin: 0 auto;
+
+        &__description {
+            width: 100%;
+            padding: 0 25px;
+            margin-bottom: 50px;
         }
 
-        &_sign {
-            color: #AC8F78;
+        &__focus {
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        &__content {
+            margin-bottom: 40px;
+        }
+
+        &__image {
+            width: 100%;
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .unique {
+
+        &__description {
+            padding: 0 15px;
+        }
+
+        &__focus {
+            font-size: 22px;
+            text-shadow: none;
+        }
+
+        &__content {
+            font-size: 16px;
         }
     }
 }

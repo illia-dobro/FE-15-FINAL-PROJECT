@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { getLocalStorage } from '../../helpers/localStorage';
+import { getLocalStorage } from '../../helpers/localStorage.js';
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
@@ -38,18 +38,13 @@ export const api = createApi({
         };
       },
     }),
-    products: builder.query({
+    categories: builder.query({
       query: () => ({
-        url: 'products',
+        url: 'catalog',
         method: 'GET',
       }),
     }),
   }),
 });
 
-export const {
-  useLoginMutation,
-  useRegisterMutation,
-  useGetUserQuery,
-  useProductsQuery,
-} = api;
+export const { useLoginMutation, useRegisterMutation, useGetUserQuery } = api;

@@ -28,7 +28,14 @@ function Nav() {
   };
   const homePageNavStyles = {
     backgroundColor: "transparent",
+    width: '100%',
+    position: 'absolute',
+    left: '50%',
+    transform: 'translate(-50%)',
+    zIndex: '10',
+    color: '#ffffff'
   };
+  const logoFillColor = isHomePage ? "#ffffff" : "rgba(85, 85, 85, 1)"; 
 
   return (
     <>
@@ -43,7 +50,7 @@ function Nav() {
             <NavLink to="/delivery" children={"Delivery"} />
           </div>
           <div>
-            <Logo />
+            <Logo logoFillColor={logoFillColor}/>
           </div>
           <div className="nav__right">
             <NavLink to="/contacts" children={"Contacts"} />
@@ -63,6 +70,7 @@ function Nav() {
               />
             </div>
           </div>
+          
         </nav>
       ) : (
         <nav
@@ -87,11 +95,10 @@ function Nav() {
                 <NavLink to="/delivery">Delivery</NavLink>
                 <NavLink to="/contacts">Contacts</NavLink>
               </div>
-            
               {/* Social Btns and signature; slider*/}
             </div>
           )}
-          <Logo />
+          <Logo logoFillColor={logoFillColor}/>
           {onOpenNav && (
             <NavLink
               className="nav__icon"
