@@ -4,11 +4,6 @@ import { joinFiltersQuery } from "../../helpers/joinFiltersQuery.js";
 const initialState = {
   activeFilters: {},
   filtersQuery: "",
-  productTypes: {
-    id: "product_type",
-    name: "Product Type",
-    options: [],
-  },
   sort: {
     id: "sort",
     name: "Sort",
@@ -17,6 +12,19 @@ const initialState = {
   priceRange: {
     min: null,
     max: null,
+  },
+  productTypes: {
+    id: "product_type",
+    name: "Product Type",
+    options: [],
+  },
+  manufacturerCountry: {
+    id: "manufacturerCountry",
+    name: "Manufacturer Country",
+    options: [
+      { value: "UA", label: "UA", checked: false },
+      { value: "USA", label: "USA", checked: false },
+    ],
   },
 };
 
@@ -73,6 +81,7 @@ const filtersSlice = createSlice({
         checked: false,
       }));
     },
+
     changeActiveFilter: (state, action) => {
       const { name, value } = action.payload;
 

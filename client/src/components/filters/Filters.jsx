@@ -29,8 +29,11 @@ export default function Filters({ children }) {
   const filters = [];
   const dispatch = useDispatch();
 
-  const productFilter = useSelector((state) => state.filters.productTypes);
-  filters.push(productFilter);
+  const productTypes = useSelector((state) => state.filters.productTypes);
+  const manufacturerCountry = useSelector(
+    (state) => state.filters.manufacturerCountry
+  );
+  filters.push(productTypes, manufacturerCountry);
 
   const activeFilters = useSelector((state) => state.filters.activeFilters);
 
