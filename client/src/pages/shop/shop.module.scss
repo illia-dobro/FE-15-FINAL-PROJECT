@@ -1,0 +1,69 @@
+@import "../../assets/styles/common.scss";
+
+.shop {
+	padding-top: 10px;
+
+	&__container {
+		/* Стилі для контейнера */
+	}
+
+	&__title {
+		/* Стилі для заголовка */
+	}
+
+	&__list {
+		/* Стилі для списку */
+	}
+
+	&__item {
+		/* Стилі для елементів списку */
+		&_img {
+			margin-top: 10px;
+		}
+		&_info {
+			padding-top: 10px;
+		}
+		&_main {
+			padding: auto;
+		}
+		&_title {
+			padding: auto;
+		}
+		&_quantityBtn {
+			padding: auto;
+		}
+		&_adidional {
+			padding: 1px;
+		}
+		&_close {
+			padding: auto;
+		}
+		&_price {
+			padding: 0;
+		}
+		&_count {
+			padding: auto;
+		}
+		&_sum {
+			padding: 1px;
+		}
+	}
+	&__total {
+		padding: auto;
+		&_text {
+			padding: auto;
+		}
+		&_sum {
+			padding: auto;
+		}
+	}
+	&__order {
+		padding: 0;
+		&_text {
+			padding: 0;
+		}
+		&_arrow {
+			padding: 0;
+		}
+	}
+}
