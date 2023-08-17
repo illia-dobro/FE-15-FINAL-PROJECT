@@ -4,8 +4,7 @@ import Filters from "../../components/filters/index.js";
 import { useDispatch, useSelector } from "react-redux";
 import {
   productTypes,
-  setPagesQty,
-  setPerPage,
+  setProductsAndPagesQty,
   updateFiltersQuery,
 } from "../../app/slices/filtersSlice.js";
 import { useGetFilteredProductsQuery } from "../../app/services/productApi.js";
@@ -25,7 +24,7 @@ const Category = () => {
     useGetFilteredProductsQuery(`categories=${categoryName}${filtersQuery}`);
 
   if (isProductsSuccess) {
-    dispatch(setPagesQty(productsData.productsQuantity));
+    dispatch(setProductsAndPagesQty(productsData.productsQuantity));
   }
 
   const perPage = useSelector((state) => state.filters.pagination.perPage);

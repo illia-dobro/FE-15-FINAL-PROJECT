@@ -14,6 +14,7 @@ const initialState = {
     max: null,
   },
   pagination: {
+    productsQty: null,
     pagesQty: null,
     perPage: 4,
     startPage: 1,
@@ -123,7 +124,9 @@ const filtersSlice = createSlice({
       state.activeFilters[name] = value;
     },
 
-    setPagesQty: (state, action) => {
+    setProductsAndPagesQty: (state, action) => {
+      state.pagination.productsQty = action.payload;
+
       state.pagination.pagesQty = Math.ceil(
         action.payload / state.pagination.perPage
       );
@@ -148,7 +151,7 @@ export const {
   setPriceRangeBounds,
   setCurrentPriceBound,
   productTypes,
-  setPagesQty,
+  setProductsAndPagesQty,
   setPerPage,
   changePage,
 } = filtersSlice.actions;

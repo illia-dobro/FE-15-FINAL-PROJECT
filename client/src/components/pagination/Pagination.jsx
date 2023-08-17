@@ -3,18 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   changeActiveSingleFilter,
   changePage,
-  setPagesQty,
+  setProductsAndPagesQty,
   setPerPage,
   updateFiltersQuery,
 } from "../../app/slices/filtersSlice.js";
 
-const Pagination = ({ pages }) => {
+const Pagination = () => {
   const dispatch = useDispatch();
 
-  const startPage = useSelector((state) => state.filters.pagination.startPage);
-
-  const pagesQty = useSelector((state) => state.filters.pagination.pagesQty);
-  console.log(pagesQty);
+  const { pagesQty, productsQty, perPage, startPage } = useSelector(
+    (state) => state.filters.pagination
+  );
 
   const pagesNums = Array.from(
     { length: pagesQty },
@@ -54,9 +53,13 @@ const Pagination = ({ pages }) => {
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
           <p className="text-sm text-gray-700">
-            Showing <span className="font-medium">1</span> to{" "}
-            <span className="font-medium">10</span> of{" "}
-            <span className="font-medium">97</span> results
+            Showing{" "}
+            <span className="font-medium">{(startPage - 1) * perPage + 1}</span>{" "}
+            to{" "}
+            <span className="font-medium">
+              {startPage === pagesQty ? productsQty : startPage * perPage}
+            </span>{" "}
+            of <span className="font-medium">{productsQty}</span> results
           </p>
         </div>
         <div>
