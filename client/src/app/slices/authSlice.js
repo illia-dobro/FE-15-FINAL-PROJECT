@@ -30,6 +30,12 @@ const authSlice = createSlice({
         state.user = payload;
       }
     );
+    builder.addMatcher(
+      api.endpoints.updateUser.matchFulfilled,
+      (state, { payload }) => {
+        state.user = payload;
+      }
+    );
   },
 });
 

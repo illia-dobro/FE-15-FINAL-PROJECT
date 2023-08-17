@@ -23,7 +23,7 @@ import SignUp from '../src/layouts/forms/SignUp'
 
 import SmoothScroll from "./components/smoothScroll/SmoothScroll";
 function App() {
-  useGetUserQuery();
+  const {isSuccess} = useGetUserQuery();
 
   return (
     <>
