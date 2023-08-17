@@ -131,14 +131,11 @@ const filtersSlice = createSlice({
 
     setPerPage: (state) => {
       // @TODO add selector
-      state.activeFilters.perPage = state.pagination.perPage;
+      state.pagination.perPage = 6;
     },
 
     changePage: (state, action) => {
-      state.activeFilters.startPage
-        ? (state.activeFilters.startPage += action.payload)
-        : (state.activeFilters.startPage =
-            state.pagination.startPage + action.payload);
+      state.pagination.startPage += action.payload;
     },
   },
 });

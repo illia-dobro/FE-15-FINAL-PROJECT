@@ -10,6 +10,7 @@ import {
 } from "../../app/slices/filtersSlice.js";
 import { useGetFilteredProductsQuery } from "../../app/services/productApi.js";
 import { useGetCategoriesQuery } from "../../app/services/catalogApi.js";
+import Pagination from "../../components/pagination/index.js";
 
 const Category = () => {
   const { categoryName } = useParams();
@@ -24,11 +25,16 @@ const Category = () => {
     useGetFilteredProductsQuery(`categories=${categoryName}${filtersQuery}`);
 
   if (isProductsSuccess) {
-    console.log(productsData);
-    // dispatch(setPagesQty(productsData.products.length));
-    // dispatch(setPerPage());
-    // dispatch(updateFiltersQuery());
+    dispatch(setPagesQty(productsData.productsQuantity));
   }
+
+  const perPage = useSelector((state) => state.filters.pagination.perPage);
+  const startPage = useSelector((state) => state.filters.pagination.startPage);
+
+  const { data: paginatedProductsData, isSuccess: isPaginatedProductsSuccess } =
+    useGetFilteredProductsQuery(
+      `categories=${categoryName}${filtersQuery}&perPage=${perPage}&startPage=${startPage}`
+    );
 
   const category =
     isCategoriesSuccess &&
@@ -47,7 +53,10 @@ const Category = () => {
       </div>
 
       <Filters>
-        {isProductsSuccess && <ProductsList products={productsData.products} />}
+        {isPaginatedProductsSuccess && (
+          <ProductsList products={paginatedProductsData.products} />
+        )}
+        <Pagination />
       </Filters>
     </>
   );

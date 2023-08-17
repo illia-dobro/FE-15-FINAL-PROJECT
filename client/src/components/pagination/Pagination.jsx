@@ -8,7 +8,7 @@ import {
   updateFiltersQuery,
 } from "../../app/slices/filtersSlice.js";
 
-const Pagination = ({ products }) => {
+const Pagination = ({ pages }) => {
   const dispatch = useDispatch();
 
   const startPage = useSelector((state) => state.filters.pagination.startPage);
