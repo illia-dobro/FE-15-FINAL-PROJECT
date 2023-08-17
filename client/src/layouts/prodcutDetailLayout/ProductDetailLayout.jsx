@@ -7,14 +7,24 @@ import FavoriteBtn from "../../components/buttons/favoriteBtn";
 import { formatCurrency } from "../../helpers/currencyFormatter";
 import uniqueMainImgUrl from "../../assets/unique_main.png";
 import uniqueMainImgUrl2 from "../../assets/unique_main2.jpg";
-import uniqueSignatureUrl from "../../assets/unique_signature.svg";
 import DeliveryInfo from "../../components/static/DeliveryInfo";
 import Unique from "../../components/unique";
 import Button from "../../components/buttons/button";
 import Tabs from "../../components/tabs";
+import { useGetFilteredProductsQuery } from "../../app/services/productApi";
 
 function ProductDetailLayout({ product }) {
   const { isDesktop } = useDeviceType();
+  
+  const { data: filtredProducts, isSuccess} = useGetFilteredProductsQuery(
+    `categories=${product.categories}&product_type=${product.product_type}&enabled=true&perPage=8`
+  );
+  
+  if(!filtredProducts){
+    return;
+  };
+
+  const recommendedProducts = filtredProducts.products.filter(recommendedProduct => product._id !== recommendedProduct._id);
 
   const thumbnailPosition = isDesktop ? "left" : "bottom";
   const productDetailSliderSettings = {
@@ -38,7 +48,7 @@ function ProductDetailLayout({ product }) {
         Country:<strong> {product.manufacturerCountry}</strong>
       </li>
       <li>
-        <strong>{product.sizes}</strong>{" "}
+        <strong>{product.sizes}</strong>
       </li>
       <li>{product.composition}</li>
     </ul>
@@ -53,6 +63,7 @@ function ProductDetailLayout({ product }) {
     thumbnail: image,
   }));
   return (
+    
     <div className="product-detail__card">
       <div className="product-detail__flex">
         <div className="product-detail__left">
@@ -86,30 +97,24 @@ function ProductDetailLayout({ product }) {
         </div>
       </div>
       <div className="unique">
-        <div className="unique-wrapper">
-          <Unique
-            image={{ src: uniqueMainImgUrl, alt: "Our product" }}
-            representName="Zara Boltaeva"
-            representPosition="CEO, founder"
-            representSignature={{
-              src: uniqueSignatureUrl,
-              alt: "CEO signature",
-            }}
-          />
-        </div>
-        <div className="unique-wrapper">
-          <Unique
-            image={{ src: uniqueMainImgUrl2, alt: "Our product" }}
-            representName="Zara Boltaeva"
-            representPosition="CEO, founder"
-            representSignature={{
-              src: uniqueSignatureUrl,
-              alt: "CEO signature",
-            }}
-          />
-        </div>
+        <Unique
+          imageUrl={uniqueMainImgUrl}
+          isRepresentative={false}
+          flexDirection="row"
+          focus="Each Boltaeva brand product is truly unique - everything is thought out to the smallest detail"
+          content="The brand seeks to build respect among the audience for its products, so that the presence of the company's products is a sign of prestige, since the focus of the business is focused on exclusive sales, but not on the mass market"
+        />
+        <Unique
+          imageUrl={uniqueMainImgUrl2}
+          isRepresentative={true}
+          flexDirection="row-reverse"
+          focus="Each Boltaeva brand product is truly unique - everything is thought out to the smallest detail"
+          content="The brand seeks to build respect among the audience for its products, so that the presence of the company's products is a sign of prestige, since the focus of the business is focused on exclusive sales, but not on the mass market"
+        />
       </div>
-      <Recommended />
+      {isSuccess &&(
+        <Recommended products={recommendedProducts} />
+      )} 
     </div>
   );
 }
