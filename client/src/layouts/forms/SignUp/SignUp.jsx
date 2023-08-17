@@ -47,9 +47,9 @@ function SignUp() {
       if(data.error){
         throw data
       } else {
-        toast("Congratulations, you have successfully registered!");
-        dispatch(setCredentials({user: data}))
-        navigate("/login");
+        toast("Congratulations, you have successfully Sign Up! Now you can sign In");
+        setTimeout(() => navigate("/login"), 0.5)
+
       }
 
     } catch (err) {
