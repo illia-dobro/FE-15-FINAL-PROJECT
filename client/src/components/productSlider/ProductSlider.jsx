@@ -1,11 +1,10 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import PropTypes from "prop-types";
-import ProductTest1Img from "../../assets/img/product-test1.jpg";
-import ProductTest3Img from "../../assets/img/product-test3.jpg";
+import ProductCard from "../productCard/ProductCard";
 import useDeviceType from "../../helpers/getDeviceType";
 
-function ProductSlider({ settings }) {
+function ProductSlider({ settings, products }) {
   const { isDesktop } = useDeviceType();
   const isSwipeable = isDesktop ? false : true;
 
@@ -37,14 +36,9 @@ function ProductSlider({ settings }) {
   };
   return (
     <Carousel {...productSliderSettings} {...settings}>
-      {/* Test . Here product-cards*/}
-      <img src={ProductTest1Img}></img>
-      <img src={ProductTest3Img}></img>
-      <img src={ProductTest1Img}></img>
-      <img src={ProductTest3Img}></img>
-      <img src={ProductTest1Img}></img>
-      <img src={ProductTest3Img}></img>
-
+      {products.map((product) => (
+        <ProductCard key={product.itemNo} product={product} />
+      ))}
     </Carousel>
   );
 }
