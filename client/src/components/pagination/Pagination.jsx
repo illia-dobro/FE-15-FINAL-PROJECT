@@ -2,28 +2,28 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeActiveSingleFilter,
-  changePage, setPerPage, updateFiltersQuery
+  changePage,
+  setPagesQty,
+  setPerPage,
+  updateFiltersQuery,
 } from "../../app/slices/filtersSlice.js";
 
 const Pagination = ({ products }) => {
   const dispatch = useDispatch();
-  const productsQty = products.length;
 
-  const perPage = useSelector((state) => state.filters.perPage);
-  const startPage = useSelector((state) => state.filters.startPage);
+  const startPage = useSelector((state) => state.filters.pagination.startPage);
 
-  const pagesQty = Math.ceil(productsQty / perPage);
+  const pagesQty = useSelector((state) => state.filters.pagination.pagesQty);
+  console.log(pagesQty);
 
   const pagesNums = Array.from(
     { length: pagesQty },
     (value, index) => index + 1
   );
-  console.log(pagesNums);
 
   const handlePreviousPage = (e) => {
     console.log("go prev");
     e.preventDefault();
-    dispatch(setPerPage());
     dispatch(changePage(-1));
     dispatch(updateFiltersQuery());
   };
@@ -31,7 +31,6 @@ const Pagination = ({ products }) => {
   const handleNextPage = (e) => {
     e.preventDefault();
     console.log("go next");
-    dispatch(setPerPage());
     dispatch(changePage(1));
     dispatch(updateFiltersQuery());
   };
@@ -77,7 +76,7 @@ const Pagination = ({ products }) => {
             {pagesNums.map((pageNum) => (
               <a
                 key={pageNum}
-                href="#"
+                href=""
                 className={
                   startPage === pageNum
                     ? "relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -105,7 +104,7 @@ const Pagination = ({ products }) => {
             {/*</a>*/}
 
             <a
-              href="#"
+              href=""
               onClick={(e) => handleNextPage(e)}
               className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
             >

@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { joinFiltersQuery } from "../../helpers/joinFiltersQuery.js";
-import { FaArrowsToDot } from "react-icons/fa6";
 
 const initialState = {
   activeFilters: {},
@@ -14,8 +13,11 @@ const initialState = {
     min: null,
     max: null,
   },
-  perPage: 4,
-  startPage: 1,
+  pagination: {
+    pagesQty: null,
+    perPage: 4,
+    startPage: 1,
+  },
   productTypes: {
     id: "product_type",
     name: "Product Type",
@@ -121,16 +123,22 @@ const filtersSlice = createSlice({
       state.activeFilters[name] = value;
     },
 
+    setPagesQty: (state, action) => {
+      state.pagination.pagesQty = Math.ceil(
+        action.payload / state.pagination.perPage
+      );
+    },
+
     setPerPage: (state) => {
       // @TODO add selector
-      console.log("hooo");
-      state.activeFilters.perPage = state.perPage;
+      state.activeFilters.perPage = state.pagination.perPage;
     },
 
     changePage: (state, action) => {
       state.activeFilters.startPage
         ? (state.activeFilters.startPage += action.payload)
-        : (state.activeFilters.startPage = state.startPage + action.payload);
+        : (state.activeFilters.startPage =
+            state.pagination.startPage + action.payload);
     },
   },
 });
@@ -143,6 +151,7 @@ export const {
   setPriceRangeBounds,
   setCurrentPriceBound,
   productTypes,
+  setPagesQty,
   setPerPage,
   changePage,
 } = filtersSlice.actions;

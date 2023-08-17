@@ -2,7 +2,12 @@ import ProductsList from "../productsList/index.js";
 import { useParams } from "react-router-dom";
 import Filters from "../../components/filters/index.js";
 import { useDispatch, useSelector } from "react-redux";
-import { productTypes } from "../../app/slices/filtersSlice.js";
+import {
+  productTypes,
+  setPagesQty,
+  setPerPage,
+  updateFiltersQuery,
+} from "../../app/slices/filtersSlice.js";
 import { useGetFilteredProductsQuery } from "../../app/services/productApi.js";
 import { useGetCategoriesQuery } from "../../app/services/catalogApi.js";
 
@@ -17,6 +22,13 @@ const Category = () => {
   const filtersQuery = useSelector((state) => state.filters.filtersQuery);
   const { data: productsData, isSuccess: isProductsSuccess } =
     useGetFilteredProductsQuery(`categories=${categoryName}${filtersQuery}`);
+
+  if (isProductsSuccess) {
+    console.log(productsData);
+    // dispatch(setPagesQty(productsData.products.length));
+    // dispatch(setPerPage());
+    // dispatch(updateFiltersQuery());
+  }
 
   const category =
     isCategoriesSuccess &&
