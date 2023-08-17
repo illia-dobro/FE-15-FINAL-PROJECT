@@ -2,12 +2,12 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
+  Navigate, ScrollRestoration
 } from "react-router-dom";
 import Nav from "./components/nav";
 import Home from "./pages/home";
 import About from "./pages/about/About";
-import Catalog from "./pages/Catalog";
+import Catalog from "./pages/catalog";
 import Delivery from "./pages/Delivery";
 import Contacts from "./pages/contacts";
 import Shop from "./pages/Shop";
@@ -16,7 +16,7 @@ import PageNotFound from "./pages/PageNotFound";
 import Category from "./layouts/category";
 import Footer from "./layouts/footer";
 import Modal from "./components/Modal";
-import ProductDetail from "./pages/ProductDetail";
+import ProductDetail from "./pages/productDetail";
 import ProfilePage from "./pages/ProfilePage"
 import { useGetUserQuery } from "./app/services/api";
 import SignUp from '../src/layouts/forms/SignUp'

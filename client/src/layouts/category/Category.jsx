@@ -2,44 +2,42 @@ import ProductsList from "../productsList/index.js";
 import { useParams } from "react-router-dom";
 import Filters from "../../components/filters/index.js";
 import { useDispatch, useSelector } from "react-redux";
-import { productTypes } from "../../app/slices/filtersSlice.js";
-import { useEffect } from "react";
+import {
+  productTypes,
+  setProductsAndPagesQty,
+  updateFiltersQuery,
+} from "../../app/slices/filtersSlice.js";
 import { useGetFilteredProductsQuery } from "../../app/services/productApi.js";
 import { useGetCategoriesQuery } from "../../app/services/catalogApi.js";
+import Pagination from "../../components/pagination/index.js";
 
 const Category = () => {
   const { categoryName } = useParams();
   const dispatch = useDispatch();
-  const activeFilters = useSelector((state) => state.filters.activeFilters);
-
-  function createFilterQuery(filters) {
-    let query = "";
-
-    for (const property in filters) {
-      query += `&${property}=${filters[property]}`;
-    }
-    return query;
-  }
-
-  const queryFilters = createFilterQuery(activeFilters);
-
-  console.log(queryFilters);
+  dispatch(productTypes(categoryName));
 
   const { data: categories, isSuccess: isCategoriesSuccess } =
     useGetCategoriesQuery();
 
+  const filtersQuery = useSelector((state) => state.filters.filtersQuery);
   const { data: productsData, isSuccess: isProductsSuccess } =
-    useGetFilteredProductsQuery(`categories=${categoryName}${queryFilters}`);
+    useGetFilteredProductsQuery(`categories=${categoryName}${filtersQuery}`);
+
+  if (isProductsSuccess) {
+    dispatch(setProductsAndPagesQty(productsData.productsQuantity));
+  }
+
+  const perPage = useSelector((state) => state.filters.pagination.perPage);
+  const startPage = useSelector((state) => state.filters.pagination.startPage);
+
+  const { data: paginatedProductsData, isSuccess: isPaginatedProductsSuccess } =
+    useGetFilteredProductsQuery(
+      `categories=${categoryName}${filtersQuery}&perPage=${perPage}&startPage=${startPage}`
+    );
 
   const category =
     isCategoriesSuccess &&
     categories.find((category) => category.name === categoryName);
-
-  useEffect(() => {
-    if (isProductsSuccess) {
-      dispatch(productTypes(productsData.products));
-    }
-  }, [dispatch, isProductsSuccess, productsData]);
 
   return (
     <>
@@ -54,7 +52,10 @@ const Category = () => {
       </div>
 
       <Filters>
-        {isProductsSuccess && <ProductsList products={productsData.products} />}
+        {isPaginatedProductsSuccess && (
+          <ProductsList products={paginatedProductsData.products} />
+        )}
+        <Pagination />
       </Filters>
     </>
   );

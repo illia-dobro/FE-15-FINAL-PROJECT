@@ -5,9 +5,38 @@ import Unique from "../../components/unique";
 
 import { useGetCategoriesQuery } from "../../app/services/catalogApi.js";
 import uniqueMainImgUrl2 from "../../assets/unique_main2.jpg";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import {
+  clearFilters,
+  setPriceRangeBounds,
+} from "../../app/slices/filtersSlice.js";
+import { useGetAllProductsQuery } from "../../app/services/productApi.js";
+import { findMinAndMax } from "../../helpers/findMinAndMax.js";
 
 const Catalog = () => {
   const { data: categories, isSuccess } = useGetCategoriesQuery();
+  const { data: allProducts, isSuccess: isAllProductsSuccess } =
+    useGetAllProductsQuery();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isAllProductsSuccess) {
+      const priceRange = findMinAndMax(allProducts);
+
+      dispatch(
+        setPriceRangeBounds({
+          min: Math.trunc(priceRange.min),
+          max: Math.ceil(priceRange.max),
+        })
+      );
+    }
+
+    return () => {
+      dispatch(clearFilters());
+    };
+  }, [allProducts, dispatch, isAllProductsSuccess]);
 
   return (
     <div className={styles.catalog_page}>
@@ -20,6 +49,7 @@ const Catalog = () => {
         {isSuccess &&
           categories.map((category) => (
             <li key={category.name} className="grow-[0.1]">
+              {/*@TODO add 'active' status*/}
               <Link
                 to={category.name}
                 className="flex justify-center text-[#555555] opacity-40 hover:opacity-100 transition-all py-4 px-2"
