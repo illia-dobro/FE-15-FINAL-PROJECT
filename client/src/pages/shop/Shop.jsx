@@ -43,6 +43,11 @@ function Shop() {
 		);
 	};
 
+	const handleRemoveItem = (itemId) => {
+		console.log("Removing item with ID:", itemId);
+		setItems(prevItems => prevItems.filter(item => item.id !== itemId));
+	};
+
 	const totalAmount = items.reduce((total, item) => total + item.quantity * itemPrice, 0);
 
 	return (
@@ -71,10 +76,17 @@ function Shop() {
 										/>
 									</div>
 									<div className={styles.shop__item_price}>
-										<small className={styles.shop__item_count}>{item.quantity}x</small>
-										<span className={styles.shop__item_sum}>
-											{formatCurrency(item.quantity * itemPrice)}
-										</span>
+										<div className={styles.shop__item_adidional}>
+											<button
+												className={styles.shop__item_close}
+												onClick={() => handleRemoveItem(item.id)}
+											>x
+											</button>
+											<small className={styles.shop__item_count}>{item.quantity}x</small>
+											<span className={styles.shop__item_sum}>
+												{formatCurrency(item.quantity * itemPrice)}
+											</span>
+										</div>
 									</div>
 								</div>
 							</li>
