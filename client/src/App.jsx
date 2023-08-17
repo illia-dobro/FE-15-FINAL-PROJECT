@@ -16,9 +16,15 @@ import PageNotFound from "./pages/PageNotFound";
 import Category from "./layouts/category";
 import Footer from "./layouts/footer";
 import Modal from "./components/Modal";
-import ProductDetail from "./pages/productDetail";
+import ProductDetail from "./pages/ProductDetail";
+import ProfilePage from "./pages/ProfilePage"
+import { useGetUserQuery } from "./app/services/api";
+import SignUp from '../src/layouts/forms/SignUp'
+
 import SmoothScroll from "./components/smoothScroll/SmoothScroll";
 function App() {
+  useGetUserQuery();
+
   return (
     <>
       <Router>
@@ -38,8 +44,10 @@ function App() {
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/login" element={<Login />} />
+          <Route path="/sign-up" element={<SignUp />} />
             <Route path="/about" element={<About />} />
             <Route path="/product/:url" element={<ProductDetail />} />
+          <Route path="/profile" element={<ProfilePage />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
           <Footer />

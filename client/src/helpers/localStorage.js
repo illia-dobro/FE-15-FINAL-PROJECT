@@ -1,6 +1,6 @@
 export const getLocalStorage = () => {
   try {
-    const serializedState = localStorage.getItem('token');
+    const serializedState = localStorage.getItem('tokenDanIT');
     if (serializedState === null) {
       return undefined;
     }
@@ -13,7 +13,7 @@ export const getLocalStorage = () => {
 export const saveState = (state) => {
   try {
     const serializedState = JSON.stringify(state);
-    localStorage.setItem('token', serializedState);
+    localStorage.setItem('tokenDanIT', serializedState);
   } catch {
     // ignore write errors
   }

@@ -1,47 +1,47 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { getLocalStorage } from "../../helpers/localStorage.js";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { getLocalStorage } from '../../helpers/localStorage.js';
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:4000/api",
-    // prepareHeaders: (headers, { getState }) => {
-    //   const token = getState().auth.token;
-    //   if (token) {
-    //     headers.set('authorization', `Bearer ${token}`);
-    //   } else if (getLocalStorage()) {
-    //     headers.set('authorization', `Bearer ${getLocalStorage()}`);
-    //   }
-    //   return headers;
-    // },
+    baseUrl: 'http://localhost:4000/api',
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().auth.token;
+      if (token) {
+        headers.set('authorization', `${token}`);
+      } else if (getLocalStorage()) {
+        headers.set('authorization', `${getLocalStorage()}`);
+      }
+      return headers;
+    },
   }),
   keepUnusedDataFor: 0,
   endpoints: (builder) => ({
     getUser: builder.query({
       query: () => ({
-        url: "auth/authenticated-user",
-        method: "GET",
+        url: 'customers/customer',
+        method: 'GET',
       }),
     }),
     login: builder.mutation({
       query: (credentials) => ({
-        url: "auth/sign-in",
-        method: "POST",
+        url: 'customers/login',
+        method: 'POST',
         body: credentials,
       }),
     }),
     register: builder.mutation({
       query(data) {
         return {
-          url: "customers",
-          method: "POST",
+          url: 'customers',
+          method: 'POST',
           body: data,
         };
       },
     }),
     categories: builder.query({
       query: () => ({
-        url: "catalog",
-        method: "GET",
+        url: 'catalog',
+        method: 'GET',
       }),
     }),
   }),
