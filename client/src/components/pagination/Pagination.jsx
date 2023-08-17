@@ -16,12 +16,12 @@ const Pagination = () => {
 
   const handlePreviousPage = (e) => {
     e.preventDefault();
-    dispatch(changePage(-1));
+    if (startPage > 1) dispatch(changePage(-1));
   };
 
   const handleNextPage = (e) => {
     e.preventDefault();
-    dispatch(changePage(1));
+    if (startPage < pagesQty) dispatch(changePage(1));
   };
 
   const handleSelectPage = (e) => {
@@ -34,13 +34,13 @@ const Pagination = () => {
       <div className="flex flex-1 justify-between sm:hidden">
         <a
           href="#"
-          className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+          className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-[#d6cdc4]"
         >
           Previous
         </a>
         <a
           href="#"
-          className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+          className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-[#d6cdc4]"
         >
           Next
         </a>
@@ -65,7 +65,7 @@ const Pagination = () => {
             <a
               href="#"
               onClick={(e) => handlePreviousPage(e)}
-              className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+              className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-[#d6cdc4] focus:z-20 focus:outline-offset-0"
             >
               <span className="sr-only">Previous</span>
               <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
@@ -78,8 +78,8 @@ const Pagination = () => {
                 onClick={(e) => handleSelectPage(e)}
                 className={
                   startPage === pageNum
-                    ? "relative z-10 inline-flex items-center bg-[#555555] px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    : "relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+                    ? "relative z-10 inline-flex items-center bg-[#555555] px-4 py-2 text-sm font-semibold text-[#F5ECE3] focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    : "relative inline-flex items-center px-4 py-2 text-sm font-semibold text-[#555555] ring-1 ring-inset ring-gray-300 hover:bg-[#d6cdc4] focus:z-20 focus:outline-offset-0"
                 }
               >
                 {pageNum}
@@ -105,7 +105,7 @@ const Pagination = () => {
             <a
               href=""
               onClick={(e) => handleNextPage(e)}
-              className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+              className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-[#d6cdc4] focus:z-20 focus:outline-offset-0"
             >
               <span className="sr-only">Next</span>
               <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
