@@ -6,6 +6,7 @@ import {
   setProductsAndPagesQty,
   setPerPage,
   updateFiltersQuery,
+  setStartPage,
 } from "../../app/slices/filtersSlice.js";
 
 const Pagination = () => {
@@ -21,17 +22,18 @@ const Pagination = () => {
   );
 
   const handlePreviousPage = (e) => {
-    console.log("go prev");
     e.preventDefault();
     dispatch(changePage(-1));
-    dispatch(updateFiltersQuery());
   };
 
   const handleNextPage = (e) => {
     e.preventDefault();
-    console.log("go next");
     dispatch(changePage(1));
-    dispatch(updateFiltersQuery());
+  };
+
+  const handleSelectPage = (e) => {
+    e.preventDefault();
+    dispatch(setStartPage(+e.target.href.split("/").pop()));
   };
 
   return (
@@ -79,7 +81,8 @@ const Pagination = () => {
             {pagesNums.map((pageNum) => (
               <a
                 key={pageNum}
-                href=""
+                href={pageNum}
+                onClick={(e) => handleSelectPage(e)}
                 className={
                   startPage === pageNum
                     ? "relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

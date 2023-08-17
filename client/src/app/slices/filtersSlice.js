@@ -137,8 +137,15 @@ const filtersSlice = createSlice({
       state.pagination.perPage = 6;
     },
 
+    setStartPage: (state, action) => {
+      state.pagination.startPage = action.payload;
+    },
+
     changePage: (state, action) => {
       state.pagination.startPage += action.payload;
+
+      // if (state.pagination.startPage > state.pagination.pagesQty)
+      //   state.pagination.startPage = state.pagination.pagesQty;
     },
   },
 });
@@ -152,6 +159,7 @@ export const {
   setCurrentPriceBound,
   productTypes,
   setProductsAndPagesQty,
+  setStartPage,
   setPerPage,
   changePage,
 } = filtersSlice.actions;
