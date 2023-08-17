@@ -6,33 +6,66 @@ import {
   FunnelIcon,
   MinusIcon,
   PlusIcon,
-  Squares2X2Icon,
 } from "@heroicons/react/20/solid";
 import { useDispatch, useSelector } from "react-redux";
-import { changeActiveFilter } from "../../app/slices/filtersSlice.js";
+import {
+  changeActiveFilter,
+  changeActiveSingleFilter,
+  clearFilters,
+  updateFiltersQuery,
+} from "../../app/slices/filtersSlice.js";
+import PriceRange from "../priceRange/PriceRange.jsx";
+import Button from "../buttons/button/Button.jsx";
+import { joinClassNames } from "../../helpers/joinClassNames.js";
 
 const sortOptions = [
-  { name: "Newest", href: "#", current: false },
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
+  { name: "Newest", link: "-date", current: false },
+  { name: "Price: Low to High", link: "+currentPrice", current: false },
+  { name: "Price: High to Low", link: "-currentPrice", current: false },
 ];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function Filters({ children }) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const filters = [];
   const dispatch = useDispatch();
 
-  const productFilter = useSelector((state) => state.filters.productTypes);
-  filters.push(productFilter);
+  const productTypes = useSelector((state) => state.filters.productTypes);
+  const manufacturerCountry = useSelector(
+    (state) => state.filters.manufacturerCountry
+  );
+  filters.push(productTypes, manufacturerCountry);
 
-  const handleChange = (e) => {
+  const activeFilters = useSelector((state) => state.filters.activeFilters);
+
+  const getCheckedStatus = (arrayFilters, section, option) => {
+    return arrayFilters[section]?.includes(option) || false;
+  };
+
+  const handleCheckboxChange = (e) => {
     dispatch(
       changeActiveFilter({ name: e.target.name, value: e.target.value })
     );
+  };
+
+  const handleSort = (e) => {
+    e.preventDefault();
+    dispatch(
+      changeActiveSingleFilter({
+        name: "sort",
+        value: e.target.href.split("/").pop(),
+      })
+    );
+    dispatch(updateFiltersQuery());
+  };
+
+  const applyFilters = (e) => {
+    e.preventDefault();
+    dispatch(updateFiltersQuery());
+  };
+
+  const resetFilters = (e) => {
+    e.preventDefault();
+    dispatch(clearFilters());
   };
 
   return (
@@ -121,8 +154,12 @@ export default function Filters({ children }) {
                                     name={`${section.id}`}
                                     defaultValue={option.value}
                                     type="checkbox"
-                                    defaultChecked={option.checked}
-                                    onChange={(e) => handleChange(e)}
+                                    checked={getCheckedStatus(
+                                      activeFilters,
+                                      section.id,
+                                      option.value
+                                    )}
+                                    onChange={(e) => handleCheckboxChange(e)}
                                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                   />
                                   <label
@@ -139,6 +176,22 @@ export default function Filters({ children }) {
                       )}
                     </Disclosure>
                   ))}
+                  <PriceRange />
+                  <div className="flex justify-between">
+                    {" "}
+                    <Button
+                      action={(e) => resetFilters(e)}
+                      className={"mt-4 button button-color--secondary py-2 px-4"}
+                    >
+                      Reset filters
+                    </Button>{" "}
+                    <Button
+                      action={(e) => applyFilters(e)}
+                      className={"mt-4 button button-color--secondary py-2 px-4"}
+                    >
+                      Apply filters
+                    </Button>
+                  </div>
                 </form>
               </Dialog.Panel>
             </Transition.Child>
@@ -177,10 +230,12 @@ export default function Filters({ children }) {
                   <div className="py-1">
                     {sortOptions.map((option) => (
                       <Menu.Item key={option.name}>
+                        {/*@TODO fix 'active' status*/}
                         {({ active }) => (
                           <a
-                            href={option.href}
-                            className={classNames(
+                            href={option.link}
+                            onClick={handleSort}
+                            className={joinClassNames(
                               option.current
                                 ? "font-medium text-gray-900"
                                 : "text-gray-500",
@@ -198,13 +253,6 @@ export default function Filters({ children }) {
               </Transition>
             </Menu>
 
-            {/*<button*/}
-            {/*  type="button"*/}
-            {/*  className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"*/}
-            {/*>*/}
-            {/*  <span className="sr-only">View grid</span>*/}
-            {/*  <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />*/}
-            {/*</button>*/}
             <button
               type="button"
               className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
@@ -217,10 +265,6 @@ export default function Filters({ children }) {
         </div>
 
         <section aria-labelledby="products-heading" className="pb-24 pt-6">
-          <h2 id="products-heading" className="sr-only">
-            Products
-          </h2>
-
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
             {/* Filters */}
             <form className="hidden lg:block">
@@ -264,8 +308,12 @@ export default function Filters({ children }) {
                                 name={`${section.id}`}
                                 defaultValue={option.value}
                                 type="checkbox"
-                                defaultChecked={option.checked}
-                                onChange={(e) => handleChange(e)}
+                                checked={getCheckedStatus(
+                                  activeFilters,
+                                  section.id,
+                                  option.value
+                                )}
+                                onChange={(e) => handleCheckboxChange(e)}
                                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                               />
                               <label
@@ -282,6 +330,22 @@ export default function Filters({ children }) {
                   )}
                 </Disclosure>
               ))}
+              <PriceRange />
+              <div className="flex">
+                {" "}
+                <Button
+                  action={(e) => resetFilters(e)}
+                  className={"mt-4 button button-color--secondary py-2 px-4"}
+                >
+                  Reset filters
+                </Button>{" "}
+                <Button
+                  action={(e) => applyFilters(e)}
+                  className={"mt-4 button button-color--secondary py-2 px-4"}
+                >
+                  Apply filters
+                </Button>
+              </div>
             </form>
 
             <div className="lg:col-span-4">{children}</div>

@@ -1,5 +1,7 @@
 import ProductCard from "../../components/productCard/index.js";
 import styles from "../../components/productCard/ProductCard.module.scss";
+import PropTypes from "prop-types";
+import Pagination from "../../components/pagination";
 
 const ProductsList = ({ products }) => {
   return (
@@ -15,6 +17,10 @@ const ProductsList = ({ products }) => {
       </div>
     </div>
   );
+};
+
+ProductsList.propTypes = {
+  products: PropTypes.array,
 };
 
 export default ProductsList;
