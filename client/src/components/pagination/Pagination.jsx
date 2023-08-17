@@ -14,6 +14,9 @@ const Pagination = () => {
     (value, index) => index + 1
   );
 
+  const fromValue = (startPage - 1) * perPage + 1;
+  const toValue = startPage === pagesQty ? productsQty : startPage * perPage;
+
   const handlePreviousPage = (e) => {
     e.preventDefault();
     if (startPage > 1) dispatch(changePage(-1));
@@ -48,13 +51,9 @@ const Pagination = () => {
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
           <p className="text-sm text-gray-700">
-            Showing{" "}
-            <span className="font-medium">{(startPage - 1) * perPage + 1}</span>{" "}
-            to{" "}
-            <span className="font-medium">
-              {startPage === pagesQty ? productsQty : startPage * perPage}
-            </span>{" "}
-            of <span className="font-medium">{productsQty}</span> results
+            Showing <span className="font-medium">{fromValue}</span> to{" "}
+            <span className="font-medium">{toValue}</span> of{" "}
+            <span className="font-medium">{productsQty}</span> results
           </p>
         </div>
         <div>
