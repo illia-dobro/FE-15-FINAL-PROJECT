@@ -75,13 +75,13 @@ function Shop() {
 											className={styles.shop__item_quantityBtn}
 										/>
 									</div>
-									<div className={styles.shop__item_price}>
-										<div className={styles.shop__item_adidional}>
-											<button
-												className={styles.shop__item_close}
-												onClick={() => handleRemoveItem(item.id)}
-											>x
-											</button>
+									<div className={styles.shop__item_adidional}>
+										<button
+											className={styles.shop__item_close}
+											onClick={() => handleRemoveItem(item.id)}
+										>x
+										</button>
+										<div className={styles.shop__item_price}>
 											<small className={styles.shop__item_count}>{item.quantity}x</small>
 											<span className={styles.shop__item_sum}>
 												{formatCurrency(item.quantity * itemPrice)}
