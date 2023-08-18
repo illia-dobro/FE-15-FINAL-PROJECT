@@ -51,10 +51,10 @@ function Shop() {
 	
 	};	
  */
-  const totalAmount = items.reduce(
+/*   const totalAmount = items.reduce(
     (total, item) => total + item.quantity * item.currentPrice,
     0
-  );
+  ); */
 
   return (
     <>
@@ -106,7 +106,7 @@ function Shop() {
             <div className={styles.shop__total}>
               <p className={styles.shop__total_text}>Total</p>
               <p className={styles.shop__total_sum}>
-                {formatCurrency(totalAmount)}
+              {/*   {formatCurrency(totalAmount)} */}
               </p>
             </div>
           )}
