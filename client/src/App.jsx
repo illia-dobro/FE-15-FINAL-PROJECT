@@ -15,15 +15,12 @@ import Login from "./pages/Client";
 import PageNotFound from "./pages/PageNotFound";
 import Category from "./layouts/category";
 import Footer from "./layouts/footer";
-import Modal from "./components/Modal";
 import ProductDetail from "./pages/productDetail";
 import ProfilePage from "./pages/ProfilePage"
-import { useGetUserQuery } from "./app/services/api";
 import SignUp from '../src/layouts/forms/SignUp'
 
 import SmoothScroll from "./components/smoothScroll/SmoothScroll";
 function App() {
-  const {isSuccess} = useGetUserQuery();
 
   return (
     <>
