@@ -13,6 +13,7 @@ import {
 } from "../../app/slices/filtersSlice.js";
 import { useGetAllProductsQuery } from "../../app/services/productApi.js";
 import { findMinAndMax } from "../../helpers/findMinAndMax.js";
+import HeartsLoader from "../../components/heartsLoader/heartsLoader.jsx";
 
 const Catalog = () => {
   const { data: categories, isSuccess } = useGetCategoriesQuery();

@@ -55,7 +55,7 @@ const Pagination = () => {
               <>
                 Showing <span className="font-medium">{fromValue}</span> to{" "}
                 <span className="font-medium">{toValue}</span> of{" "}
-                <span className="font-medium">{productsQty}</span> results
+                <span className="font-medium">{productsQty}</span> result(s)
               </>
             ) : (
               <>No products</>
