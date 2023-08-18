@@ -13,8 +13,10 @@
     }
   }
 
-  @media screen and (max-width: 640px) {
+
+  @media screen and (max-width: 380px) {
     justify-content: space-between;
+    flex-direction: column;
   }
 }
 
