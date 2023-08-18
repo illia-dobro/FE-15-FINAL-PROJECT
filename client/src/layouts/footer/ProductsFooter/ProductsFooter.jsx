@@ -1,26 +1,28 @@
 import { Link } from 'react-router-dom';
+import { useGetCategoriesQuery } from '../../../app/services/catalogApi';
+import SkeletonFooter from '../../../helpers/loaders/SkeletonFootet'
 import { heading, list } from '../Footer.module.scss';
 import { wrapper } from './ProductsFooter.module.scss';
 
-// it is for test, actually this data we get from server(redux store)
-const dataCategory = [
-  { id: 1, name: 'Care cosmetics', url: '#' },
-  { id: 2, name: 'Eyebrow cosmetics', url: '#' },
-  { id: 3, name: 'Decorative cosmetics', url: '#' },
-  { id: 4, name: 'New in the collection', url: '#' },
-  { id: 5, name: 'Box and complect', url: '#' },
-  { id: 6, name: 'Accessories', url: '#' },
-];
-
-const categories = dataCategory.map(({ id, name, url }) => {
-  return (
-    <li key={id}>
-      <Link to={url}>{name}</Link>
-    </li>
-  );
-});
-
 function ProductsFooter() {
+  const {data, isError, isSuccess, isLoading} = useGetCategoriesQuery();
+
+  let categories;
+
+  if(isError) {
+    return null
+  } else if(isLoading){
+    categories = <SkeletonFooter/>
+  } else if(isSuccess){
+    categories = data.map(({ id, name}) => {
+      return (
+        <li key={id}>
+          <Link to={`catalog/${name}`}>{name}</Link>
+        </li>
+      );
+    })
+    }
+
   return (
     <div className={wrapper}>
       <h3 className={heading}>Products</h3>
