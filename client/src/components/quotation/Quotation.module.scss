@@ -1,0 +1,54 @@
+@import "../../assets/styles/common.scss";
+
+.card {
+  background-color: #EEE4DA;
+  padding: 54px 36px 59px 77px;
+
+  &__description {
+    margin-bottom: 29px;
+    font-size: 20px;
+    color: #555555;
+    font-weight: 400;
+
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__person {
+
+  }
+
+  &__signature {
+  }
+
+  @media (max-width: 575px) {
+    padding: 30px 20px;
+  }
+}
+
+.person {
+  display: flex;
+
+  &__avatar {
+    margin-right: 25px;
+    border-radius: 50%;
+    @media (max-width: 545px) {
+      display: none;
+    }
+  }
+
+  &__naming {
+    color: #555555;
+  }
+
+  &__name {
+    font-size: 24px;
+  }
+
+  &__title {
+    font-size: 14px;
+  }
+}

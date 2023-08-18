@@ -1,0 +1,73 @@
+@import "../../assets/styles/common.scss";
+
+.contacts {
+    
+    &__details {
+        margin-top: 38px;
+        @include flex-justify-between;
+        gap: 15px;
+        
+        &_content {
+            width: 24%;
+            height: 139px;
+            @include flex-col;
+            justify-content: center;
+            padding-left: 20px;
+            background-color: $secondary;
+            border-radius: 6px;
+            color: $dark;
+        }
+
+        &_name {
+            font-size: 16px;
+            opacity: 30%;
+            margin-bottom: 12px;
+        }
+
+        &_info {
+            font-size: 21px;
+        }
+    }
+}
+
+.socialMedia__text {
+    font-size: 36px;
+}
+
+@media screen and (max-width: 992px) {
+    .contacts {
+
+        &__details {
+            flex-wrap: wrap;
+            gap: 10px;
+
+            &_content {
+                width: 48%;
+                height: 100px;
+                padding-left: 10px;
+            }
+
+            &_name {
+                margin-bottom: 0;
+            }
+
+            &_info {
+                font-size: 18px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .contacts {
+
+        &__details {
+            margin-top: 50px;
+            flex-direction: column;
+
+            &_content {
+                width: 100%;
+            }
+        }
+    }
+}
