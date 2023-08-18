@@ -1,4 +1,5 @@
 import useDeviceType from "../../helpers/getDeviceType";
+import { useDispatch } from "react-redux";
 import ProductDetailSlider from "../../components/productDetailSlider";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import Recommended from "../../components/recommended";
@@ -12,20 +13,30 @@ import Unique from "../../components/unique";
 import Button from "../../components/buttons/button";
 import Tabs from "../../components/tabs";
 import { useGetFilteredProductsQuery } from "../../app/services/productApi";
+import { addToCart } from "../../app/slices/cartSlice";
+
 
 function ProductDetailLayout({ product }) {
   const { isDesktop } = useDeviceType();
-  
-  const { data: filtredProducts, isSuccess} = useGetFilteredProductsQuery(
+  const dispatch = useDispatch();
+  const { data: filtredProducts, isSuccess } = useGetFilteredProductsQuery(
     `categories=${product.categories}&product_type=${product.product_type}&enabled=true&perPage=8`
   );
-  
-  if(!filtredProducts){
+  if (!filtredProducts) {
     return;
-  };
+  }
+  const recommendedProducts = filtredProducts.products.filter(
+    (recommendedProduct) => product._id !== recommendedProduct._id
+  );
 
-  const recommendedProducts = filtredProducts.products.filter(recommendedProduct => product._id !== recommendedProduct._id);
+  const handleAddToCart = async () => {
+  try {
 
+    dispatch(addToCart(product));
+  } catch (error) {
+    console.error("Error adding product to cart:", error);
+  }
+};
   const thumbnailPosition = isDesktop ? "left" : "bottom";
   const productDetailSliderSettings = {
     showThumbnails: true,
@@ -38,7 +49,6 @@ function ProductDetailLayout({ product }) {
     showGalleryThumbnails: true,
     thumbnailPosition: thumbnailPosition,
   };
-
   const spesificationTabsContent = (
     <ul>
       <li>
@@ -62,8 +72,8 @@ function ProductDetailLayout({ product }) {
     original: image,
     thumbnail: image,
   }));
+
   return (
-    
     <div className="product-detail__card">
       <div className="product-detail__flex">
         <div className="product-detail__left">
@@ -82,7 +92,10 @@ function ProductDetailLayout({ product }) {
                 {formatCurrency(product.currentPrice)}
               </span>
             </div>
-            <Button className="button button-color--secondary">
+            <Button
+              className="button button-color--secondary"
+              action={handleAddToCart}
+            >
               <LiaShoppingBagSolid />
               <span>Add to shopping cart</span>
             </Button>
@@ -112,9 +125,7 @@ function ProductDetailLayout({ product }) {
           content="The brand seeks to build respect among the audience for its products, so that the presence of the company's products is a sign of prestige, since the focus of the business is focused on exclusive sales, but not on the mass market"
         />
       </div>
-      {isSuccess &&(
-        <Recommended products={recommendedProducts} />
-      )} 
+      {isSuccess && <Recommended products={recommendedProducts} />}
     </div>
   );
 }
