@@ -132,7 +132,7 @@ const filtersSlice = createSlice({
       );
 
       if (state.pagination.startPage > state.pagination.pagesQty)
-        state.pagination.startPage = state.pagination.pagesQty;
+        state.pagination.startPage = state.pagination.pagesQty || 1;
     },
 
     setPerPage: (state) => {
