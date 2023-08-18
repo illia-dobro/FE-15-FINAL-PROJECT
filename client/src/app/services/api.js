@@ -47,6 +47,15 @@ export const api = createApi({
       },
       invalidatesTags: ['User'],
     }),
+    updatePassword: builder.mutation({
+      query(data) {
+        return {
+          url: 'customers/password',
+          method: 'PUT',
+          body: data,
+        };
+      },
+    }),
     categories: builder.query({
       query: () => ({
         url: 'catalog',
@@ -61,4 +70,5 @@ export const {
   useRegisterMutation,
   useGetUserQuery,
   useUpdateUserMutation,
+  useUpdatePasswordMutation,
 } = api;
