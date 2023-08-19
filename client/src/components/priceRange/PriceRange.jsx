@@ -41,6 +41,15 @@ const PriceRange = () => {
         onChange={(value) => {
           handleRangeChange(value);
         }}
+        handleStyle={{
+          borderColor: "#555555",
+          backgroundColor: "#d6cdc4",
+          opacity: 1,
+        }}
+        trackStyle={{ backgroundColor: "#555555" }}
+        railStyle={{
+          backgroundColor: "lightgray",
+        }}
       />
 
       <div className="flex">
