@@ -56,6 +56,15 @@ export const api = createApi({
         };
       },
     }),
+    createWishList: builder.mutation({
+      query(data) {
+        return {
+          url: 'wishlist',
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
     categories: builder.query({
       query: () => ({
         url: 'catalog',
@@ -71,4 +80,5 @@ export const {
   useGetUserQuery,
   useUpdateUserMutation,
   useUpdatePasswordMutation,
+  useCreateWishListMutation,
 } = api;

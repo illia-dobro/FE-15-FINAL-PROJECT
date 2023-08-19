@@ -15,14 +15,14 @@ import { useGetFilteredProductsQuery } from "../../app/services/productApi";
 
 function ProductDetailLayout({ product }) {
   const { isDesktop } = useDeviceType();
-  
+
   const { data: filtredProducts, isSuccess} = useGetFilteredProductsQuery(
     `categories=${product.categories}&product_type=${product.product_type}&enabled=true&perPage=8`
   );
-  
+
   if(!filtredProducts){
     return;
-  };
+  }
 
   const recommendedProducts = filtredProducts.products.filter(recommendedProduct => product._id !== recommendedProduct._id);
 
@@ -62,8 +62,11 @@ function ProductDetailLayout({ product }) {
     original: image,
     thumbnail: image,
   }));
+
+
+  console.log(product);
   return (
-    
+
     <div className="product-detail__card">
       <div className="product-detail__flex">
         <div className="product-detail__left">
@@ -74,7 +77,7 @@ function ProductDetailLayout({ product }) {
         </div>
         <div className="product-detail__right">
           <div className="product-detail__right-content">
-            <FavoriteBtn />
+            <FavoriteBtn id={product._id}/>
             <h2>{product.name}</h2>
             <div className="product-detail__quantity-price">
               <QuantityBtns className="quantityBtnsLg" />
@@ -114,7 +117,7 @@ function ProductDetailLayout({ product }) {
       </div>
       {isSuccess &&(
         <Recommended products={recommendedProducts} />
-      )} 
+      )}
     </div>
   );
 }
