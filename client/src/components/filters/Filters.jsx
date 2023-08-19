@@ -41,6 +41,10 @@ export default function Filters({ children }) {
     return arrayFilters[section]?.includes(option) || false;
   };
 
+  const activeSorting = useSelector(
+    (state) => state.filters.activeFilters.sort
+  );
+
   const handleCheckboxChange = (e) => {
     dispatch(
       changeActiveFilter({ name: e.target.name, value: e.target.value })
@@ -238,8 +242,8 @@ export default function Filters({ children }) {
                             href={option.link}
                             onClick={handleSort}
                             className={joinClassNames(
-                              option.current
-                                ? "font-medium text-gray-900"
+                              activeSorting === option.link
+                                ? "font-semibold"
                                 : "text-gray-500",
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm"
