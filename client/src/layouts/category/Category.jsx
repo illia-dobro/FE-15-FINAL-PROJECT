@@ -10,6 +10,7 @@ import { useGetFilteredProductsQuery } from "../../app/services/productApi.js";
 import { useGetCategoriesQuery } from "../../app/services/catalogApi.js";
 import Pagination from "../../components/pagination/index.js";
 import HeartsLoader from "../../components/heartsLoader/heartsLoader.jsx";
+import styles from "./Category.module.scss";
 
 const Category = () => {
   const { categoryName } = useParams();

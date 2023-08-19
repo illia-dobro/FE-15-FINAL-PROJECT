@@ -83,7 +83,7 @@ const filtersSlice = createSlice({
 
       state.productTypes.options = uniqueProductTypes.map((option) => ({
         value: option,
-        label: option.toUpperCase(),
+        label: option,
         checked: false,
       }));
     },

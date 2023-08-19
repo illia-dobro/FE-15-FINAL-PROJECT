@@ -3,7 +3,7 @@ import "rc-slider/assets/index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentPriceBound } from "../../app/slices/filtersSlice.js";
 
-const PriceRange = () => {
+const PriceRange = ({ className = "" }) => {
   const { min, max } = useSelector((state) => state.filters.priceRange);
   const { minPrice: currentMin, maxPrice: currentMax } = useSelector(
     (state) => state.filters.activeFilters
@@ -30,8 +30,8 @@ const PriceRange = () => {
   };
 
   return (
-    <div>
-      <p>Price</p>
+    <div className={className}>
+      <span>Price</span>
       <Slider
         range
         allowCross={false}
@@ -50,6 +50,7 @@ const PriceRange = () => {
         railStyle={{
           backgroundColor: "lightgray",
         }}
+        className="my-4"
       />
 
       <div className="flex">
@@ -60,7 +61,7 @@ const PriceRange = () => {
           >
             from
           </label>
-          <div className="relative mt-2 rounded-md shadow-sm">
+          <div className="relative mt-2 rounded-md">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <span className="text-gray-500 sm:text-sm">$</span>
             </div>
@@ -82,7 +83,7 @@ const PriceRange = () => {
           >
             to
           </label>
-          <div className="relative mt-2 rounded-md shadow-sm">
+          <div className="relative mt-2 rounded-md">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <span className="text-gray-500 sm:text-sm">$</span>
             </div>

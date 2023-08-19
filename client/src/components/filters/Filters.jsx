@@ -101,10 +101,10 @@ export default function Filters({ children }) {
             >
               <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
                 <div className="flex items-center justify-between px-4">
-                  <h2 className="text-lg font-medium text-gray-900">Filters</h2>
+                  <h2 className="text-lg font-medium">Filters</h2>
                   <button
                     type="button"
-                    className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
+                    className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2"
                     onClick={() => setMobileFiltersOpen(false)}
                   >
                     <span className="sr-only">Close menu</span>
@@ -113,7 +113,7 @@ export default function Filters({ children }) {
                 </div>
 
                 {/* Filters */}
-                <form className="mt-4 border-t border-gray-200">
+                <form className="mt-4">
                   {filters.map((section) => (
                     <Disclosure
                       as="div"
@@ -124,7 +124,7 @@ export default function Filters({ children }) {
                         <>
                           <h3 className="-mx-2 -my-3 flow-root">
                             <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                              <span className="font-medium text-gray-900">
+                              <span className="font-medium">
                                 {section.name}
                               </span>
                               <span className="ml-6 flex items-center">
@@ -160,11 +160,11 @@ export default function Filters({ children }) {
                                       option.value
                                     )}
                                     onChange={(e) => handleCheckboxChange(e)}
-                                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                    className="h-4 w-4 rounded border-gray-500 text-indigo-600 focus:ring-indigo-500"
                                   />
                                   <label
                                     htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                                    className="ml-3 min-w-0 flex-1 text-gray-500"
+                                    className="ml-3 min-w-0 flex-1 text-gray-500 capitalize"
                                   >
                                     {option.label}
                                   </label>
@@ -176,18 +176,24 @@ export default function Filters({ children }) {
                       )}
                     </Disclosure>
                   ))}
-                  <PriceRange />
+                  <PriceRange
+                    className={"border-t border-gray-200 px-4 py-6"}
+                  />
                   <div className="flex justify-between">
                     {" "}
                     <Button
                       action={(e) => resetFilters(e)}
-                      className={"mt-4 button button-color--secondary py-2 px-4"}
+                      className={
+                        "mt-4 button button-color--secondary py-2 px-4"
+                      }
                     >
                       Reset filters
                     </Button>{" "}
                     <Button
                       action={(e) => applyFilters(e)}
-                      className={"mt-4 button button-color--secondary py-2 px-4"}
+                      className={
+                        "mt-4 button button-color--secondary py-2 px-4"
+                      }
                     >
                       Apply filters
                     </Button>
@@ -201,9 +207,7 @@ export default function Filters({ children }) {
 
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-            Our products
-          </h1>
+          <h1 className="text-4xl font-bold tracking-tight">Our products</h1>
 
           <div className="flex items-center">
             <Menu as="div" className="relative inline-block text-left">
@@ -278,7 +282,7 @@ export default function Filters({ children }) {
                     <>
                       <h3 className="-my-3 flow-root">
                         <Disclosure.Button className="flex w-full items-center justify-between  py-3 text-sm text-gray-400 hover:text-gray-500">
-                          <span className="font-medium text-gray-900">
+                          <span className="font-medium">
                             {section.name}
                           </span>
                           <span className="ml-6 flex items-center">
@@ -318,7 +322,7 @@ export default function Filters({ children }) {
                               />
                               <label
                                 htmlFor={`filter-${section.id}-${optionIdx}`}
-                                className="ml-3 text-sm text-gray-600"
+                                className="ml-3 text-sm text-gray-600 capitalize"
                               >
                                 {option.label}
                               </label>
@@ -330,7 +334,7 @@ export default function Filters({ children }) {
                   )}
                 </Disclosure>
               ))}
-              <PriceRange />
+              <PriceRange className={"mt-4"}/>
               <div className="flex">
                 {" "}
                 <Button
