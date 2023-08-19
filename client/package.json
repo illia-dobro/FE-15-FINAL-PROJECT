@@ -16,6 +16,7 @@
     "axios": "^1.4.0",
     "rc-slider": "^10.2.1",
     "react": "^18.2.0",
+    "react-content-loader": "^6.2.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
     "react-image-gallery": "^1.2.12",
@@ -31,6 +32,7 @@
     "vite-plugin-svgr": "^3.2.0"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.4",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
     "@vitejs/plugin-react": "^4.0.1",

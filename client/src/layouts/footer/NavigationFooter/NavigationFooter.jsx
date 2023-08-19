@@ -9,10 +9,7 @@ function NavigationFooter() {
       <nav className={list}>
         <Link to="/catalog">Product catalog</Link>
         <Link to="/about">About company</Link>
-        <Link to="#">Bonus program</Link>
-        <Link to="#">Work process</Link>
-        <Link to="#">Partners</Link>
-        <Link to="#">Privacy Policy</Link>
+        <Link to="/delivery">Delivery</Link>
       </nav>
     </div>
   );
