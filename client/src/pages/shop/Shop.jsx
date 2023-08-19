@@ -11,19 +11,18 @@ import styles from "./shop.module.scss";
 function Shop() {
   const items = useSelector((state) => state.cart.products);
   const isAuthenticated = useSelector((state) => state.auth.token);
-  const [createCart, { isLoading, isError, isSuccess, error }] =
-    useCreateCartMutation();
+  const [createCart, { isLoading, isError, isSuccess, error }] = useCreateCartMutation();
+
 
   const formattedItems = items.map((item) => ({
     product: item.product._id,
     cartQuantity: item.cartQuantity,
   }));
-  const jsonData = JSON.stringify(formattedItems);
 
   useEffect(() => {
     if (isAuthenticated) {
       console.log("User is authenticated. Creating cart...");
-      createCart(jsonData)
+      createCart({ products: formattedItems })
         .unwrap()
         .then((response) => {
           console.log("Cart created successfully:", response);
@@ -31,14 +30,10 @@ function Shop() {
         .catch((error) => {
           console.error("Error creating cart:", error);
         });
-    } else {
-      return;
     }
   }, []);
-
   return (
     <>
-      {console.log(jsonData)}
       <div className={styles.shop}>
         <div className={styles.shop__container}>
           <h2 className={styles.shop__title}>Your cart</h2>

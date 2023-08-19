@@ -16,7 +16,7 @@ const cartApi = createApi({
     endpoints: (builder) => ({
         createCart: builder.mutation({
             query: (cartData) => ({
-                method: 'PUT',
+                method: 'POST',
                 body: cartData,
             }),
         }),
