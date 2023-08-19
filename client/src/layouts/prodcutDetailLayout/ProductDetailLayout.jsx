@@ -12,17 +12,20 @@ import Unique from "../../components/unique";
 import Button from "../../components/buttons/button";
 import Tabs from "../../components/tabs";
 import { useGetFilteredProductsQuery } from "../../app/services/productApi";
+import { useCreateCartMutation } from "../../app/services/api";
 
 function ProductDetailLayout({ product }) {
   const { isDesktop } = useDeviceType();
-  
+
+  const [createCart] = useCreateCartMutation()
+
   const { data: filtredProducts, isSuccess} = useGetFilteredProductsQuery(
     `categories=${product.categories}&product_type=${product.product_type}&enabled=true&perPage=8`
   );
-  
+
   if(!filtredProducts){
     return;
-  };
+  }
 
   const recommendedProducts = filtredProducts.products.filter(recommendedProduct => product._id !== recommendedProduct._id);
 
@@ -62,8 +65,31 @@ function ProductDetailLayout({ product }) {
     original: image,
     thumbnail: image,
   }));
+
+  async function handleCart() {
+    console.log(111);
+    try {
+      const data = await createCart({
+        products: [
+          {
+            product: product._id,
+            cartQuantity: 1
+          }
+        ]
+      });
+      if (data.error) {
+        throw data;
+      } else {
+        console.log(data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+
   return (
-    
+
     <div className="product-detail__card">
       <div className="product-detail__flex">
         <div className="product-detail__left">
@@ -82,7 +108,7 @@ function ProductDetailLayout({ product }) {
                 {formatCurrency(product.currentPrice)}
               </span>
             </div>
-            <Button className="button button-color--secondary">
+            <Button action={handleCart} className="button button-color--secondary">
               <LiaShoppingBagSolid />
               <span>Add to shopping cart</span>
             </Button>
@@ -114,7 +140,7 @@ function ProductDetailLayout({ product }) {
       </div>
       {isSuccess &&(
         <Recommended products={recommendedProducts} />
-      )} 
+      )}
     </div>
   );
 }

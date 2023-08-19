@@ -15,9 +15,12 @@ exports.createCart = (req, res, next) => {
 
       const newCart = new Cart(queryCreator(initialQuery));
 
+      console.log(newCart);
+
       newCart
         .populate('products.product')
         .populate('customerId')
+
         .execPopulate();
 
       newCart

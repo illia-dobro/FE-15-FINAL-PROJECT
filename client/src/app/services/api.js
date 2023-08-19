@@ -56,6 +56,15 @@ export const api = createApi({
         };
       },
     }),
+    createCart: builder.mutation({
+      query(data) {
+        return {
+          url: 'cart',
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
     categories: builder.query({
       query: () => ({
         url: 'catalog',
@@ -71,4 +80,5 @@ export const {
   useGetUserQuery,
   useUpdateUserMutation,
   useUpdatePasswordMutation,
+  useCreateCartMutation,
 } = api;
