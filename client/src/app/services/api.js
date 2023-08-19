@@ -12,7 +12,7 @@ export const api = createApi({
       return headers;
     },
   }),
-  tagTypes: ['User'],
+  tagTypes: ['User', 'Wish'],
   endpoints: (builder) => ({
     getUser: builder.query({
       query: () => ({
@@ -64,6 +64,42 @@ export const api = createApi({
           body: data,
         };
       },
+      invalidatesTags: ['Wish'],
+    }),
+    updateWishList: builder.mutation({
+      query(data) {
+        return {
+          url: 'wishlist',
+          method: 'PUT',
+          body: data,
+        };
+      },
+      invalidatesTags: ['Wish'],
+    }),
+    addWishList: builder.mutation({
+      query(id) {
+        return {
+          url: `wishlist/${id}`,
+          method: 'PUT',
+        };
+      },
+      invalidatesTags: ['Wish'],
+    }),
+    deleteProductWishList: builder.mutation({
+      query(id) {
+        return {
+          url: `wishlist/${id}`,
+          method: 'DELETE',
+        };
+      },
+      invalidatesTags: ['Wish'],
+    }),
+    getWishList: builder.query({
+      query: () => ({
+        url: 'wishlist',
+        method: 'GET',
+      }),
+      providesTags: ['Wish'],
     }),
     categories: builder.query({
       query: () => ({
@@ -81,4 +117,8 @@ export const {
   useUpdateUserMutation,
   useUpdatePasswordMutation,
   useCreateWishListMutation,
+  useGetWishListQuery,
+  useUpdateWishListMutation,
+  useDeleteProductWishListMutation,
+  useAddWishListMutation,
 } = api;
