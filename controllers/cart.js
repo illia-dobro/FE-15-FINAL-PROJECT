@@ -38,10 +38,7 @@ exports.updateCart = (req, res, next) => {
 
         const newCart = new Cart(queryCreator(initialQuery));
 
-        newCart
-          .populate("products.product")
-          .populate("customerId")
-          .execPopulate();
+        newCart.populate(["products.product", "customerId"]);
 
         newCart
           .save()
@@ -60,8 +57,7 @@ exports.updateCart = (req, res, next) => {
           { $set: updatedCart },
           { new: true }
         )
-          .populate("products.product")
-          .populate("customerId")
+          .populate(["products.product", "customerId"])
           .then((cart) => res.json(cart))
           .catch((err) =>
             res.status(400).json({
@@ -105,10 +101,7 @@ exports.addProductToCart = async (req, res, next) => {
 
           const newCart = new Cart(queryCreator(cartData));
 
-          newCart
-            .populate("products.product")
-            .populate("customerId")
-            .execPopulate();
+          newCart.populate(["products.product", "customerId"]);
 
           newCart
             .save()
@@ -147,8 +140,7 @@ exports.addProductToCart = async (req, res, next) => {
             { $set: updatedCart },
             { new: true }
           )
-            .populate("products.product")
-            .populate("customerId")
+            .populate(["products.product", "customerId"])
             .then((cart) => res.json(cart))
             .catch((err) =>
               res.status(400).json({
@@ -200,8 +192,7 @@ exports.decreaseCartProductQuantity = async (req, res, next) => {
           { $set: cartData },
           { new: true }
         )
-          .populate("products.product")
-          .populate("customerId")
+          .populate(["products.product", "customerId"])
           .then((cart) => res.json(cart))
           .catch((err) =>
             res.status(400).json({
@@ -285,8 +276,7 @@ exports.deleteProductFromCart = async (req, res, next) => {
           { $set: updatedCart },
           { new: true }
         )
-          .populate("products.product")
-          .populate("customerId")
+          .populate(["products.product", "customerId"])
           .then((cart) => res.json(cart))
           .catch((err) =>
             res.status(400).json({
@@ -304,8 +294,7 @@ exports.deleteProductFromCart = async (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
   Cart.findOne({ customerId: req.user.id })
-    .populate("products.product")
-    .populate("customerId")
+    .populate(["products.product", "customerId"])
     .then((cart) => res.json(cart))
     .catch((err) =>
       res.status(400).json({
