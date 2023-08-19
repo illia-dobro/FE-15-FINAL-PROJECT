@@ -53,47 +53,38 @@ const PriceRange = ({ className = "" }) => {
         className="my-4"
       />
 
-      <div className="flex">
+      <div className="flex justify-between">
         <div>
-          <label
-            htmlFor="minPrice"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            from
-          </label>
-          <div className="relative mt-2 rounded-md">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+          <div className="relative rounded-md">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
               <span className="text-gray-500 sm:text-sm">$</span>
             </div>
             <input
               type="number"
               value={currentMin || min || ""}
+              min={min}
+              max={max}
               onChange={handleMinChange}
               name="minPrice"
               id="minPrice"
-              className="block w-1/2 text-right rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="block w-14 text-right rounded-md border-0 py-1.5 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-[#ac8f78]-500/[.55] sm:text-sm sm:leading-6"
             />
           </div>
         </div>
-
         <div>
-          <label
-            htmlFor="maxPrice"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            to
-          </label>
-          <div className="relative mt-2 rounded-md">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+          <div className="relative rounded-md">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
               <span className="text-gray-500 sm:text-sm">$</span>
             </div>
             <input
               type="number"
               value={currentMax || max || ""}
               onChange={handleMaxChange}
+              min={min}
+              max={max}
               name="maxPrice"
               id="maxPrice"
-              className="block w-1/2 text-right rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="block w-14 text-right rounded-md border-0 py-1.5 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-[#ac8f78]-500/[.55] sm:text-sm sm:leading-6"
             />
           </div>
         </div>
