@@ -15,7 +15,7 @@ exports.createWishlist = (req, res, next) => {
 
       const newWishlist = new Wishlist(queryCreator(wishlistData));
 
-      newWishlist.populate('products').populate('customerId').execPopulate();
+      newWishlist.populate(['products', 'customerId']);
 
       newWishlist
         .save()
