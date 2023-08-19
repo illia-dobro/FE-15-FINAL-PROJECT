@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import useDeviceType from '../../helpers/getDeviceType';
 import ProductDetailSlider from '../../components/productDetailSlider';
 import { LiaShoppingBagSolid } from 'react-icons/lia';
@@ -12,9 +13,12 @@ import Unique from '../../components/unique';
 import Button from '../../components/buttons/button';
 import Tabs from '../../components/tabs';
 import { useGetFilteredProductsQuery } from '../../app/services/productApi';
+import { useSelector } from 'react-redux';
+import { isTokenUser } from '../../app/slices/authSlice';
 
 function ProductDetailLayout({ product }) {
   const { isDesktop } = useDeviceType();
+  const isUserAuth = Boolean(useSelector(isTokenUser));
 
   const { data: filtredProducts, isSuccess } = useGetFilteredProductsQuery(
     `categories=${product.categories}&product_type=${product.product_type}&enabled=true&perPage=8`
@@ -76,7 +80,7 @@ function ProductDetailLayout({ product }) {
         </div>
         <div className="product-detail__right">
           <div className="product-detail__right-content">
-            <FavoriteBtn id={product._id} />
+            {isUserAuth && <FavoriteBtn id={product._id} />}
             <h2>{product.name}</h2>
             <div className="product-detail__quantity-price">
               <QuantityBtns className="quantityBtnsLg" />
@@ -120,3 +124,8 @@ function ProductDetailLayout({ product }) {
 }
 
 export default ProductDetailLayout;
+
+
+ProductDetailLayout.propTypes = {
+  product: PropTypes.object
+};
