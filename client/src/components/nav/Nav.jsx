@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Logo from "../logo";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { GoPerson, GoSearch } from "react-icons/go";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import { TbMenu } from "react-icons/tb";
@@ -11,6 +12,7 @@ import "./nav.scss";
 
 function Nav() {
   const { isMobile} = useDeviceType();
+  const cartQuantity = useSelector((state) => state.cart.quantity);
   const [onOpenNav, setOnOpenNav] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
@@ -61,8 +63,10 @@ function Nav() {
               <NavLink
                 className="nav__icon"
                 to="/shop"
-                children={<LiaShoppingBagSolid />}
-              />
+              >
+              <LiaShoppingBagSolid/>
+              {cartQuantity > 0  && <span>{cartQuantity}</span>}
+              </NavLink>  
               <NavLink
                 className="nav__icon"
                 to="/login"
@@ -106,11 +110,13 @@ function Nav() {
               children={<GoPerson />}
             />
           )}
-          <NavLink
-            className="nav__icon"
-            to="/shop"
-            children={<LiaShoppingBagSolid />}
-          />
+           <NavLink
+                className="nav__icon"
+                to="/shop"
+              >
+              <LiaShoppingBagSolid/>
+              {cartQuantity > 0  && <span>{cartQuantity}</span>}
+              </NavLink>  
         </nav>
       )}
     </>

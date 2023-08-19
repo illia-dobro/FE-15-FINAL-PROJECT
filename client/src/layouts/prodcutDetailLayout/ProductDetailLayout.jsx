@@ -13,12 +13,12 @@ import Unique from "../../components/unique";
 import Button from "../../components/buttons/button";
 import Tabs from "../../components/tabs";
 import { useGetFilteredProductsQuery } from "../../app/services/productApi";
-import { addToCart } from "../../app/slices/cartSlice";
-
+import { addToCart} from "../../app/slices/cartSlice";
 
 function ProductDetailLayout({ product }) {
   const { isDesktop } = useDeviceType();
   const dispatch = useDispatch();
+
   const { data: filtredProducts, isSuccess } = useGetFilteredProductsQuery(
     `categories=${product.categories}&product_type=${product.product_type}&enabled=true&perPage=8`
   );
@@ -29,14 +29,10 @@ function ProductDetailLayout({ product }) {
     (recommendedProduct) => product._id !== recommendedProduct._id
   );
 
-  const handleAddToCart = async () => {
-  try {
+  const handleAddToCart = () => {
+    dispatch(addToCart({product: product}));
+  };
 
-    dispatch(addToCart(product));
-  } catch (error) {
-    console.error("Error adding product to cart:", error);
-  }
-};
   const thumbnailPosition = isDesktop ? "left" : "bottom";
   const productDetailSliderSettings = {
     showThumbnails: true,
@@ -87,7 +83,7 @@ function ProductDetailLayout({ product }) {
             <FavoriteBtn />
             <h2>{product.name}</h2>
             <div className="product-detail__quantity-price">
-              <QuantityBtns className="quantityBtnsLg" />
+              <QuantityBtns className="quantityBtnsLg"/>
               <span className="price">
                 {formatCurrency(product.currentPrice)}
               </span>

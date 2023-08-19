@@ -5,6 +5,13 @@
   
   align-items: center;
 }
+.nav__icon {
+  @include flex-justify-center;
+  align-items: center;
+  span{
+    font-size: 14px;
+  }
+}
 .nav-desc {
   padding: 4px;
   height: 120px;
@@ -16,12 +23,13 @@
   }
   .nav__icons {
     @include flex-justify-center;
+    align-items: center;
     gap: 25px;
   }
 
   .nav__links{
-     @include flex-justify-between;
-    gap: 50px;
+   @include flex-justify-between;
+  gap: 50px;
   }
   .nav__link {
     font-size: 14px;
@@ -35,9 +43,11 @@
   }
 
   .nav__icon {
+   
     font-size: 18px;
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
+   
   }
   .nav__icon:hover {
     transform: scale(1.1);

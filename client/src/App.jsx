@@ -2,7 +2,8 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate, ScrollRestoration
+  Navigate,
+  ScrollRestoration,
 } from "react-router-dom";
 import Nav from "./components/nav";
 import Home from "./pages/home";
@@ -16,13 +17,14 @@ import PageNotFound from "./pages/PageNotFound";
 import Category from "./layouts/category";
 import Footer from "./layouts/footer";
 import ProductDetail from "./pages/productDetail";
-import ProfilePage from "./pages/ProfilePage"
-import SignUp from '../src/layouts/forms/SignUp'
-
+import ProfilePage from "./pages/ProfilePage";
+import SignUp from "../src/layouts/forms/SignUp";
 import SmoothScroll from "./components/smoothScroll/SmoothScroll";
-function App() {
 
+function App() {
+   
   return (
+  
     <>
       <Router>
         <SmoothScroll>
@@ -41,10 +43,10 @@ function App() {
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/login" element={<Login />} />
-          <Route path="/sign-up" element={<SignUp />} />
+            <Route path="/sign-up" element={<SignUp />} />
             <Route path="/about" element={<About />} />
             <Route path="/product/:url" element={<ProductDetail />} />
-          <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/profile" element={<ProfilePage />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
           <Footer />

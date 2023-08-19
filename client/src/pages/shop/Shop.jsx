@@ -1,78 +1,59 @@
-
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 import FavoriteBtn from "../../components/buttons/favoriteBtn";
 import QuantityBtns from "../../components/buttons/quantityBtns/QuantityBtns";
 import Button from "../../components/buttons/button";
 import { formatCurrency } from "../../helpers/currencyFormatter";
 import { AiOutlineArrowRight } from "react-icons/ai";
-
+import { useCreateCartMutation } from "../../app/services/cartApp";
 import styles from "./shop.module.scss";
 
 function Shop() {
-  const items = useSelector((state) => state.cart.cartItems);
+  const items = useSelector((state) => state.cart.products);
+  const isAuthenticated = useSelector((state) => state.auth.token);
+  const [createCart, { isLoading, isError, isSuccess, error }] =
+    useCreateCartMutation();
 
-  /* const itemPrice = 30; // Вартість одного товару
-	const [items, setItems] = useState([]); // Масив товарів
+  const formattedItems = items.map((item) => ({
+    product: item.product._id,
+    cartQuantity: item.cartQuantity,
+  }));
+  const jsonData = JSON.stringify(formattedItems);
 
-	const handleAddItem = () => {
-		const newItem = {
-			id: Date.now(), // Унікальний ідентифікатор для кожного товару
-			quantity: 1, // Початкова кількість товару
-		};
-
-		setItems([...items, newItem]);
-	};
-
-	const handleIncrement = (itemId) => {
-		setItems(prevItems =>
-			prevItems.map(item => {
-				if (item.id === itemId) {
-					return { ...item, quantity: item.quantity + 1 };
-				}
-				return item;
-			})
-		);
-	};
-
-	const handleDecrement = (itemId) => {
-		setItems(prevItems =>
-			prevItems.map(item => {
-				if (item.id === itemId && item.quantity > 0) {
-					return { ...item, quantity: item.quantity - 1 };
-				}
-				return item;
-			})
-		);
-	};
-
-	const handleRemoveItem = (itemId) => {
-		console.log("Removing item with ID:", itemId);
-		setItems(prevItems => prevItems.filter(item => item.id !== itemId));
-	
-	};	
- */
-/*   const totalAmount = items.reduce(
-    (total, item) => total + item.quantity * item.currentPrice,
-    0
-  ); */
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log("User is authenticated. Creating cart...");
+      createCart(jsonData)
+        .unwrap()
+        .then((response) => {
+          console.log("Cart created successfully:", response);
+        })
+        .catch((error) => {
+          console.error("Error creating cart:", error);
+        });
+    } else {
+      return;
+    }
+  }, []);
 
   return (
     <>
-      {/* 	<button onClick={handleAddItem}>Add Item</button> */}
-      {console.log(items)}
+      {console.log(jsonData)}
       <div className={styles.shop}>
         <div className={styles.shop__container}>
           <h2 className={styles.shop__title}>Your cart</h2>
           <ul className={styles.shop__list}>
             {items.map((item) => (
-              <li key={item.id} className={styles.shop__item}>
+              <li key={item.product._id} className={styles.shop__item}>
                 <a className={styles.shop__item_img}>
-                  <img src={item.imageUrls[0]} alt="Image"></img>
+                  <img src={item.product.imageUrls[0]} alt="Image"></img>
                 </a>
                 <div className={styles.shop__item_info}>
                   <div className={styles.shop__item_main}>
                     <a href="#">
-                      <h3 className={styles.shop__item_title}>{item.name}</h3>
+                      <h3 className={styles.shop__item_title}>
+                        {item.product.name}
+                      </h3>
                     </a>
                     <FavoriteBtn></FavoriteBtn>
                     <QuantityBtns
@@ -94,7 +75,9 @@ function Shop() {
                         {item.cartQuantity}x
                       </small>
                       <span className={styles.shop__item_sum}>
-                        {formatCurrency(item.cartQuantity * item.currentPrice)}
+                        {formatCurrency(
+                          item.cartQuantity * item.product.currentPrice
+                        )}
                       </span>
                     </div>
                   </div>
@@ -106,7 +89,7 @@ function Shop() {
             <div className={styles.shop__total}>
               <p className={styles.shop__total_text}>Total</p>
               <p className={styles.shop__total_sum}>
-              {/*   {formatCurrency(totalAmount)} */}
+                {/* {formatCurrency(totalPrice)} */}
               </p>
             </div>
           )}
