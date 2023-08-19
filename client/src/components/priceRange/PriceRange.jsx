@@ -67,7 +67,7 @@ const PriceRange = ({ className = "" }) => {
               onChange={handleMinChange}
               name="minPrice"
               id="minPrice"
-              className="block w-14 text-right rounded-md border-0 py-1.5 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-[#ac8f78]-500/[.55] sm:text-sm sm:leading-6"
+              className="block w-14 text-right rounded-md border-0 py-1.5 ring-1 ring-inset ring-gray-300 bg-gray-100 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-[#ac8f78]-500/[.55] sm:text-sm sm:leading-6"
             />
           </div>
         </div>
@@ -84,7 +84,7 @@ const PriceRange = ({ className = "" }) => {
               max={max}
               name="maxPrice"
               id="maxPrice"
-              className="block w-14 text-right rounded-md border-0 py-1.5 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-[#ac8f78]-500/[.55] sm:text-sm sm:leading-6"
+              className="block w-14 text-right rounded-md border-0 py-1.5 ring-1 ring-inset ring-gray-300 bg-gray-100 focus:bg-white focus:ring-2 focus:ring-inset focus:ring-[#ac8f78]-500/[.55] sm:text-sm sm:leading-6"
             />
           </div>
         </div>

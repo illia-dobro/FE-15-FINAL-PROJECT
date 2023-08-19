@@ -99,12 +99,12 @@ export default function Filters({ children }) {
               leaveFrom="translate-x-0"
               leaveTo="translate-x-full"
             >
-              <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
+              <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-[#eee4da] py-4 pb-12 shadow-xl">
                 <div className="flex items-center justify-between px-4">
                   <h2 className="text-lg font-medium">Filters</h2>
                   <button
                     type="button"
-                    className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2"
+                    className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md p-2"
                     onClick={() => setMobileFiltersOpen(false)}
                   >
                     <span className="sr-only">Close menu</span>
@@ -123,7 +123,7 @@ export default function Filters({ children }) {
                       {({ open }) => (
                         <>
                           <h3 className="-mx-2 -my-3 flow-root">
-                            <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                            <Disclosure.Button className="flex w-full items-center justify-between px-2 py-3 text-gray-400 hover:text-gray-500">
                               <span className="font-medium">
                                 {section.name}
                               </span>
@@ -179,23 +179,21 @@ export default function Filters({ children }) {
                   <PriceRange
                     className={"border-t border-gray-200 px-4 py-6"}
                   />
-                  <div className="flex justify-between">
+                  <div className="flex justify-between mt-4 mx-4">
                     {" "}
                     <Button
                       action={(e) => resetFilters(e)}
                       className={
-                        "mt-4 button button-color--secondary py-2 px-4"
+                        "button text-[#ac8f78] bg-[#d6cdc4]/[0.5] py-2 px-8"
                       }
                     >
-                      Reset filters
+                      Reset
                     </Button>{" "}
                     <Button
                       action={(e) => applyFilters(e)}
-                      className={
-                        "mt-4 button button-color--secondary py-2 px-4"
-                      }
+                      className={"button bg-[#ac8f78]/[0.4] py-2 px-8"}
                     >
-                      Apply filters
+                      Apply
                     </Button>
                   </div>
                 </form>
@@ -282,9 +280,7 @@ export default function Filters({ children }) {
                     <>
                       <h3 className="-my-3 flow-root">
                         <Disclosure.Button className="flex w-full items-center justify-between  py-3 text-sm text-gray-400 hover:text-gray-500">
-                          <span className="font-medium">
-                            {section.name}
-                          </span>
+                          <span className="font-medium">{section.name}</span>
                           <span className="ml-6 flex items-center">
                             {open ? (
                               <MinusIcon
@@ -334,20 +330,22 @@ export default function Filters({ children }) {
                   )}
                 </Disclosure>
               ))}
-              <PriceRange className={"mt-4"}/>
-              <div className="flex">
+              <PriceRange className={"mt-4"} />
+              <div className="flex justify-between mt-4">
                 {" "}
                 <Button
                   action={(e) => resetFilters(e)}
-                  className={"mt-4 button button-color--secondary py-2 px-4"}
+                  className={
+                    "button text-[#ac8f78] bg-[#d6cdc4]/[0.5] py-2 px-5"
+                  }
                 >
-                  Reset filters
+                  Reset
                 </Button>{" "}
                 <Button
                   action={(e) => applyFilters(e)}
-                  className={"mt-4 button button-color--secondary py-2 px-4"}
+                  className={"button bg-[#ac8f78]/[0.4] py-2 px-5"}
                 >
-                  Apply filters
+                  Apply
                 </Button>
               </div>
             </form>
