@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   productTypes,
   setProductsAndPagesQty,
-  updateFiltersQuery,
 } from "../../app/slices/filtersSlice.js";
 import { useGetFilteredProductsQuery } from "../../app/services/productApi.js";
 import { useGetCategoriesQuery } from "../../app/services/catalogApi.js";

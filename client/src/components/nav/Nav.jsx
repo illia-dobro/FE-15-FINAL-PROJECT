@@ -8,34 +8,42 @@ import { VscChromeClose } from "react-icons/vsc";
 import { useLocation } from "react-router-dom";
 import useDeviceType from "../../helpers/getDeviceType";
 import "./nav.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleSearch } from "../../app/slices/searchSlice.js";
+import Search from "../search/Search.jsx";
 
 function Nav() {
-  const { isMobile} = useDeviceType();
+  const { isMobile } = useDeviceType();
   const [onOpenNav, setOnOpenNav] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
-
+  const dispatch = useDispatch();
   const NavLink = ({ to, children, className = "nav__link" }) => (
     <Link className={className} to={to} onClick={() => setOnOpenNav(false)}>
       {children}
     </Link>
   );
 
+  const isSearchOpened = useSelector((state) => state.search.isSearchOpened);
+  const handleSearch = () => {
+    dispatch(toggleSearch());
+  };
+
   const otherPagesNavStyles = {
     backgroundColor: "rgba(245, 236, 227, 1)",
     borderBottom: "1px solid rgba(0, 0, 0, 0.05)",
-    color: "rgba(85, 85, 85, 1)"
+    color: "rgba(85, 85, 85, 1)",
   };
   const homePageNavStyles = {
     backgroundColor: "transparent",
-    width: '100%',
-    position: 'absolute',
-    left: '50%',
-    transform: 'translate(-50%)',
-    zIndex: '10',
-    color: '#ffffff'
+    width: "100%",
+    position: "absolute",
+    left: "50%",
+    transform: "translate(-50%)",
+    zIndex: "10",
+    color: "#ffffff",
   };
-  const logoFillColor = isHomePage ? "#ffffff" : "rgba(85, 85, 85, 1)"; 
+  const logoFillColor = isHomePage ? "#ffffff" : "rgba(85, 85, 85, 1)";
 
   return (
     <>
@@ -50,13 +58,14 @@ function Nav() {
             <NavLink to="/delivery" children={"Delivery"} />
           </div>
           <div>
-            <Logo logoFillColor={logoFillColor}/>
+            <Logo logoFillColor={logoFillColor} />
           </div>
           <div className="nav__right">
             <NavLink to="/contacts" children={"Contacts"} />
             <div className="nav__icons">
-              <span className="nav__icon">
-                <GoSearch />
+              <span className="nav__icon relative">
+                <GoSearch onClick={handleSearch}/>
+                {isSearchOpened && <Search />}
               </span>
               <NavLink
                 className="nav__icon"
@@ -70,7 +79,6 @@ function Nav() {
               />
             </div>
           </div>
-          
         </nav>
       ) : (
         <nav
@@ -98,7 +106,7 @@ function Nav() {
               {/* Social Btns and signature; slider*/}
             </div>
           )}
-          <Logo logoFillColor={logoFillColor}/>
+          <Logo logoFillColor={logoFillColor} />
           {onOpenNav && (
             <NavLink
               className="nav__icon"

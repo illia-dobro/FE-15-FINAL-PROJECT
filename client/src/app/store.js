@@ -4,10 +4,12 @@ import filtersReducer from "./slices/filtersSlice";
 import { api } from "./services/api";
 import productApi from "./services/productApi";
 import catalogApi from "./services/catalogApi";
+import searchReducer from "./slices/searchSlice.js";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     filters: filtersReducer,
+    search: searchReducer,
     [api.reducerPath]: api.reducer,
     [catalogApi.reducerPath]: catalogApi.reducer,
     [productApi.reducerPath]: productApi.reducer,
