@@ -330,8 +330,8 @@ export default function Filters({ children }) {
                   )}
                 </Disclosure>
               ))}
-              <PriceRange className={"mt-4"} />
-              <div className="flex justify-between mt-4">
+              <PriceRange className={"mt-4 mb-4"} />
+              <div className="flex justify-between pt-4 border-t">
                 {" "}
                 <Button
                   action={(e) => resetFilters(e)}
