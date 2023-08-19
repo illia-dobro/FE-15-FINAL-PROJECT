@@ -1,7 +1,7 @@
-const Cart = require('../models/Cart');
-const Product = require('../models/Product');
-const queryCreator = require('../commonHelpers/queryCreator');
-const _ = require('lodash');
+const Cart = require("../models/Cart");
+const Product = require("../models/Product");
+const queryCreator = require("../commonHelpers/queryCreator");
+const _ = require("lodash");
 
 exports.createCart = (req, res, next) => {
   Cart.findOne({ customerId: req.user.id }).then((cart) => {
@@ -15,10 +15,7 @@ exports.createCart = (req, res, next) => {
 
       const newCart = new Cart(queryCreator(initialQuery));
 
-      newCart
-        .populate('products.product')
-        .populate('customerId')
-        .execPopulate();
+      newCart.populate(["products.product", "customerId"]);
 
       newCart
         .save()
@@ -42,8 +39,8 @@ exports.updateCart = (req, res, next) => {
         const newCart = new Cart(queryCreator(initialQuery));
 
         newCart
-          .populate('products.product')
-          .populate('customerId')
+          .populate("products.product")
+          .populate("customerId")
           .execPopulate();
 
         newCart
@@ -63,8 +60,8 @@ exports.updateCart = (req, res, next) => {
           { $set: updatedCart },
           { new: true }
         )
-          .populate('products.product')
-          .populate('customerId')
+          .populate("products.product")
+          .populate("customerId")
           .then((cart) => res.json(cart))
           .catch((err) =>
             res.status(400).json({
@@ -109,8 +106,8 @@ exports.addProductToCart = async (req, res, next) => {
           const newCart = new Cart(queryCreator(cartData));
 
           newCart
-            .populate('products.product')
-            .populate('customerId')
+            .populate("products.product")
+            .populate("customerId")
             .execPopulate();
 
           newCart
@@ -150,8 +147,8 @@ exports.addProductToCart = async (req, res, next) => {
             { $set: updatedCart },
             { new: true }
           )
-            .populate('products.product')
-            .populate('customerId')
+            .populate("products.product")
+            .populate("customerId")
             .then((cart) => res.json(cart))
             .catch((err) =>
               res.status(400).json({
@@ -172,7 +169,7 @@ exports.decreaseCartProductQuantity = async (req, res, next) => {
   Cart.findOne({ customerId: req.user.id })
     .then((cart) => {
       if (!cart) {
-        res.status(400).json({ message: 'Cart does not exists' });
+        res.status(400).json({ message: "Cart does not exists" });
       } else {
         const cartData = {};
 
@@ -194,7 +191,7 @@ exports.decreaseCartProductQuantity = async (req, res, next) => {
           );
         } else {
           res.status(400).json({
-            message: 'Product ${} does not exists in cart to decrease quantity',
+            message: "Product ${} does not exists in cart to decrease quantity",
           });
         }
 
@@ -203,8 +200,8 @@ exports.decreaseCartProductQuantity = async (req, res, next) => {
           { $set: cartData },
           { new: true }
         )
-          .populate('products.product')
-          .populate('customerId')
+          .populate("products.product")
+          .populate("customerId")
           .then((cart) => res.json(cart))
           .catch((err) =>
             res.status(400).json({
@@ -288,8 +285,8 @@ exports.deleteProductFromCart = async (req, res, next) => {
           { $set: updatedCart },
           { new: true }
         )
-          .populate('products.product')
-          .populate('customerId')
+          .populate("products.product")
+          .populate("customerId")
           .then((cart) => res.json(cart))
           .catch((err) =>
             res.status(400).json({
@@ -307,8 +304,8 @@ exports.deleteProductFromCart = async (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
   Cart.findOne({ customerId: req.user.id })
-    .populate('products.product')
-    .populate('customerId')
+    .populate("products.product")
+    .populate("customerId")
     .then((cart) => res.json(cart))
     .catch((err) =>
       res.status(400).json({
