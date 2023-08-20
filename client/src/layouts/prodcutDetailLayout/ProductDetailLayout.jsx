@@ -1,3 +1,7 @@
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../app/slices/cartSlice";
+import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import useDeviceType from '../../helpers/getDeviceType';
 import ProductDetailSlider from '../../components/productDetailSlider';
@@ -17,13 +21,15 @@ import { useSelector } from 'react-redux';
 import { isTokenUser } from '../../app/slices/authSlice';
 
 function ProductDetailLayout({ product }) {
+	const navigate = useNavigate() // Отримання історії перегляду для переходу на іншу сторінку
+	const [quantity, setQuantity] = useState(1);
 	const { isDesktop } = useDeviceType();
 	const isUserAuth = Boolean(useSelector(isTokenUser));
+	const dispatch = useDispatch();
 
 	const { data: filtredProducts, isSuccess } = useGetFilteredProductsQuery(
 		`categories=${product.categories}&product_type=${product.product_type}&enabled=true&perPage=8`
 	);
-
 	if (!filtredProducts) {
 		return;
 	}
@@ -69,6 +75,33 @@ function ProductDetailLayout({ product }) {
 		thumbnail: image,
 	}));
 
+	const handleAddToCart = async () => {
+		console.log("Add to cart clicked")
+		try {
+			const productWithQuantity = {
+				...product,
+				cartQuantity: quantity,
+			};
+			dispatch(addToCart(productWithQuantity));
+			// Після успішного додавання товару до кошика, перейдіть на іншу сторінку
+			navigate("/shop"); // Замініть "/shop" на URL вашої сторінки
+		} catch (error) {
+			console.error("Error adding product to cart:", error);
+		}
+	};
+
+	const handleIncrement = () => {
+		// Збільшуємо кількість на 1
+		setQuantity(quantity + 1);
+	};
+
+	const handleDecrement = () => {
+		// Зменшуємо кількість на 1, але не менше 1
+		if (quantity > 1) {
+			setQuantity(quantity - 1);
+		}
+	};
+
 	return (
 		<div className="product-detail__card">
 			<div className="product-detail__flex">
@@ -83,12 +116,20 @@ function ProductDetailLayout({ product }) {
 						{isUserAuth && <FavoriteBtn id={product._id} />}
 						<h2>{product.name}</h2>
 						<div className="product-detail__quantity-price">
-							<QuantityBtns className="quantityBtnsLg" />
+							<QuantityBtns
+								handleIncrement={handleIncrement}
+								handleDecrement={handleDecrement}
+								count={quantity}
+								className="quantityBtnsLg"
+							/>
 							<span className="price">
-								{formatCurrency(product.currentPrice)}
+								{formatCurrency(product.currentPrice * quantity)}
 							</span>
 						</div>
-						<Button className="button button-color--secondary">
+						<Button
+							className="button button-color--secondary"
+							action={handleAddToCart}
+						>
 							<LiaShoppingBagSolid />
 							<span>Add to shopping cart</span>
 						</Button>

@@ -1,6 +1,6 @@
 
 import { useSelector, useDispatch } from 'react-redux';
-import { removeFromCart } from '../../app/slices/cartSlice';
+import { addToCart, removeFromCart } from '../../app/slices/cartSlice';
 import FavoriteBtn from "../../components/buttons/favoriteBtn";
 import QuantityBtns from "../../components/buttons/quantityBtns/QuantityBtns";
 import Button from "../../components/buttons/button";
@@ -10,8 +10,20 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import styles from "./shop.module.scss";
 
 function Shop() {
-	const dispatch = useDispatch();
 	const items = useSelector((state) => state.cart.cartItems);
+	const handleIncrement = (itemId) => {
+		// Збільшити кількість товару в корзині за заданим ID
+		// Викличте Redux дію для збільшення кількості товару
+		dispatch(addToCart({ itemId, cartQuantity: 1 }));
+	};
+
+	const handleDecrement = (itemId) => {
+		// Зменшити кількість товару в корзині за заданим ID
+		// Викличте Redux дію для зменшення кількості товару
+		dispatch(removeFromCart(itemId));
+	};
+	const dispatch = useDispatch();
+
 
 	const handleRemoveItem = (itemId) => {
 		dispatch(removeFromCart(itemId));
@@ -30,7 +42,7 @@ function Shop() {
 					{items.map((item) => (
 						<li key={item._id} className={styles.shop__item}>
 							<a className={styles.shop__item_img}>
-								<img src={item.imageUrls[0]} alt="Image" />
+								<img src={item.imageUrls} alt="Image" />
 							</a>
 							<div className={styles.shop__item_info}>
 								<div className={styles.shop__item_main}>
@@ -39,8 +51,8 @@ function Shop() {
 									</a>
 									<FavoriteBtn />
 									<QuantityBtns
-										handleIncrement={() => { }}
-										handleDecrement={() => { }}
+										handleIncrement={() => handleIncrement(item._id)}
+										handleDecrement={() => handleDecrement(item._id)}
 										count={item.cartQuantity}
 										className={styles.shop__item_quantityBtn}
 									/>
