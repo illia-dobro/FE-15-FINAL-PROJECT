@@ -11,20 +11,15 @@ const Search = () => {
   const dispatch = useDispatch();
   const searchQuery = useSelector((state) => state.search.searchQuery);
 
-  const [
-    search,
-    {
-      data: searchResults,
-      isLoading: isSearchLoading,
-      isSuccess: isSearchSuccess,
-    },
-  ] = useSearchProductMutation();
+  const [search, { data: searchResults, isLoading: isSearchLoading }] =
+    useSearchProductMutation();
 
   const handleSearchInput = async (e) => {
     dispatch(setSearchQuery(e.target.value));
   };
+  const handleBlur = (e) => {
 
-  console.log(isSearchSuccess, searchResults);
+  };
 
   useEffect(() => {
     if (searchQuery.query) {
@@ -33,14 +28,14 @@ const Search = () => {
   }, [search, searchQuery]);
 
   return (
-    <div className="absolute left-1/2 transform -translate-x-1/2 w-64 bg-white shadow-xl">
+    <div className="absolute right-0 top-10 w-[60vw] lg:w-[70vw] z-10 bg-gray-50 text-[#555555] shadow-xl">
       <div className="container mx-auto pb-4 text-black">
         <input
           id="searchfield"
           type="search"
           placeholder="Search..."
           autoFocus="autofocus"
-          className="w-full text-grey-800 transition focus:outline-none focus:border-transparent p-2 appearance-none leading-normal text-xl lg:text-2xl"
+          className="w-full text-[#555555] transition focus:outline-none focus:border-transparent p-2 appearance-none leading-normal text-lg lg:text-xl"
           onChange={(e) => handleSearchInput(e)}
         />
       </div>
@@ -48,15 +43,29 @@ const Search = () => {
         {isSearchLoading && (
           <HeartsLoader wrapperClass="flex justify-center align-middle" />
         )}
-        {searchResults?.length ? (
+        {searchQuery.query?.length && searchResults?.length ? (
           <>
             <ProductsList products={searchResults.slice(0, 4)} />
-            <NavLink to="/catalog" className="text-center">
-              {"Open full catalog"}
-            </NavLink>
+            {searchResults.length >= 4 && (
+              <>
+                <p className="text-center">
+                  and {searchResults.length - 4} more...
+                </p>
+                <NavLink
+                  to="/catalog"
+                  className={
+                    "mt-4 button button-color--secondary py-2 px-4 mx-6"
+                  }
+                >
+                  {"Open full catalog"}
+                </NavLink>
+              </>
+            )}
           </>
         ) : (
-          <span className="text-center">{"No results"}</span>
+          <span className="text-center">
+            {searchQuery.query?.length ? "No results" : "Enter your request"}
+          </span>
         )}
       </div>
     </div>

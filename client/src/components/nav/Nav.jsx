@@ -60,12 +60,11 @@ function Nav() {
           <div>
             <Logo logoFillColor={logoFillColor} />
           </div>
-          <div className="nav__right">
+          <div className="nav__right relative">
             <NavLink to="/contacts" children={"Contacts"} />
             <div className="nav__icons">
-              <span className="nav__icon relative">
-                <GoSearch onClick={handleSearch}/>
-                {isSearchOpened && <Search />}
+              <span className="nav__icon">
+                <GoSearch onClick={handleSearch} />
               </span>
               <NavLink
                 className="nav__icon"
@@ -78,6 +77,7 @@ function Nav() {
                 children={<GoPerson />}
               />
             </div>
+            {isSearchOpened && <Search />}
           </div>
         </nav>
       ) : (
