@@ -9,8 +9,6 @@ import { NavLink } from "react-router-dom";
 const Search = () => {
   const newRef = useRef(null);
   const handleOutsideClick = (e) => {
-    console.log();
-    console.log(e.target.parentElement);
     if (
       newRef.current &&
       !newRef.current.contains(e.target) &&
