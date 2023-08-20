@@ -1,45 +1,50 @@
-import useDeviceType from "../../helpers/getDeviceType";
+import PropTypes from 'prop-types';
+import useDeviceType from '../../helpers/getDeviceType';
 import { useDispatch , useSelector} from "react-redux";
-import ProductDetailSlider from "../../components/productDetailSlider";
-import { LiaShoppingBagSolid } from "react-icons/lia";
-import Recommended from "../../components/recommended";
-import QuantityBtns from "../../components/buttons/quantityBtns/QuantityBtns";
-import FavoriteBtn from "../../components/buttons/favoriteBtn";
-import { formatCurrency } from "../../helpers/currencyFormatter";
-import uniqueMainImgUrl from "../../assets/unique_main.png";
-import uniqueMainImgUrl2 from "../../assets/unique_main2.jpg";
-import DeliveryInfo from "../../components/static/DeliveryInfo";
-import Unique from "../../components/unique";
-import Button from "../../components/buttons/button";
-import Tabs from "../../components/tabs";
-import { useGetFilteredProductsQuery } from "../../app/services/productApi";
+import ProductDetailSlider from '../../components/productDetailSlider';
+import { LiaShoppingBagSolid } from 'react-icons/lia';
+import Recommended from '../../components/recommended';
+import QuantityBtns from '../../components/buttons/quantityBtns/QuantityBtns';
+import FavoriteBtn from '../../components/buttons/favoriteBtn';
+import { formatCurrency } from '../../helpers/currencyFormatter';
+import uniqueMainImgUrl from '../../assets/unique_main.png';
+import uniqueMainImgUrl2 from '../../assets/unique_main2.jpg';
+import DeliveryInfo from '../../components/static/DeliveryInfo';
+import Unique from '../../components/unique';
+import Button from '../../components/buttons/button';
+import Tabs from '../../components/tabs';
+import { useGetFilteredProductsQuery } from '../../app/services/productApi';
+import { isTokenUser } from '../../app/slices/authSlice';
 import { addToCart, removeFromCart , calculateTotal} from "../../app/slices/cartSlice";
 import { useEffect } from "react";
 
 function ProductDetailLayout({ product }) {
   const cartState = useSelector((state) => state.cart);
   const { isDesktop } = useDeviceType();
+  const isUserAuth = Boolean(useSelector(isTokenUser));
   const dispatch = useDispatch();
   
 	const items = useSelector((state) => state.cart.products);
-  
+
 	const cartProduct = items.find(item => item.product._id === product._id);
  
   useEffect(() => {
     dispatch(calculateTotal());
   }, [cartState]);
 
-  const { data: filtredProducts, isSuccess } = useGetFilteredProductsQuery(
+  const { data: filtredProducts, isSuccess  } = useGetFilteredProductsQuery(
     `categories=${product.categories}&product_type=${product.product_type}&enabled=true&perPage=8`
   );
+
   if (!filtredProducts) {
     return;
   }
+
   const recommendedProducts = filtredProducts.products.filter(
     (recommendedProduct) => product._id !== recommendedProduct._id
   );
 
-  const thumbnailPosition = isDesktop ? "left" : "bottom";
+  const thumbnailPosition = isDesktop ? 'left' : 'bottom';
   const productDetailSliderSettings = {
     showThumbnails: true,
     showPlayButton: true,
@@ -66,14 +71,15 @@ function ProductDetailLayout({ product }) {
     </ul>
   );
   const productTabs = [
-    { label: "Product", content: product.description },
-    { label: "Specifications", content: spesificationTabsContent },
-    { label: "Delivery", content: <DeliveryInfo /> },
+    { label: 'Product', content: product.description },
+    { label: 'Specifications', content: spesificationTabsContent },
+    { label: 'Delivery', content: <DeliveryInfo /> },
   ];
   const productPictures = product.imageUrls.map((image) => ({
     original: image,
     thumbnail: image,
   }));
+
 
   return (
 
@@ -87,7 +93,7 @@ function ProductDetailLayout({ product }) {
         </div>
         <div className="product-detail__right">
           <div className="product-detail__right-content">
-            <FavoriteBtn />
+            {isUserAuth && <FavoriteBtn id={product._id} />}
             <h2>{product.name}</h2>
             <div className="product-detail__quantity-price">
               <QuantityBtns
@@ -143,3 +149,8 @@ function ProductDetailLayout({ product }) {
 }
 
 export default ProductDetailLayout;
+
+
+ProductDetailLayout.propTypes = {
+  product: PropTypes.object
+};
