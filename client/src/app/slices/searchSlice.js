@@ -11,6 +11,7 @@ const searchSlice = createSlice({
   reducers: {
     toggleSearch: (state) => {
       state.isSearchOpened = !state.isSearchOpened;
+      if (state.searchQuery.query) state.searchQuery.query = "";
     },
     setSearchQuery: (state, action) => {
       state.searchQuery.query = action.payload;

@@ -64,7 +64,7 @@ function Nav() {
             <NavLink to="/contacts" children={"Contacts"} />
             <div className="nav__icons">
               <span className="nav__icon">
-                <GoSearch onClick={handleSearch} />
+                <GoSearch data-name="search" onClick={handleSearch} />
               </span>
               <NavLink
                 className="nav__icon"

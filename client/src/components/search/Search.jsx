@@ -1,34 +1,51 @@
 import { useSearchProductMutation } from "../../app/services/productApi.js";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchQuery } from "../../app/slices/searchSlice.js";
+import { setSearchQuery, toggleSearch } from "../../app/slices/searchSlice.js";
 import ProductsList from "../../layouts/productsList/ProductsList.jsx";
-import { useEffect } from "react";
-import ProductCard from "../productCard/ProductCard.jsx";
+import { useEffect, useRef } from "react";
 import HeartsLoader from "../heartsLoader/heartsLoader.jsx";
 import { NavLink } from "react-router-dom";
 
 const Search = () => {
+  const newRef = useRef(null);
+  const handleOutsideClick = (e) => {
+    console.log();
+    console.log(e.target.parentElement);
+    if (
+      newRef.current &&
+      !newRef.current.contains(e.target) &&
+      e.target.getAttribute("data-name") !== "search"
+    ) {
+      dispatch(toggleSearch());
+    }
+  };
+
   const dispatch = useDispatch();
   const searchQuery = useSelector((state) => state.search.searchQuery);
-
   const [search, { data: searchResults, isLoading: isSearchLoading }] =
     useSearchProductMutation();
 
   const handleSearchInput = async (e) => {
     dispatch(setSearchQuery(e.target.value));
   };
-  const handleBlur = (e) => {
-
-  };
 
   useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+
     if (searchQuery.query) {
       search(searchQuery);
     }
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
   }, [search, searchQuery]);
 
   return (
-    <div className="absolute right-0 top-10 w-[60vw] lg:w-[70vw] z-10 bg-gray-50 text-[#555555] shadow-xl">
+    <div
+      ref={newRef}
+      className="absolute right-0 top-10 w-[70vw] xl:w-[65vw] z-10 bg-gray-50 text-[#555555] rounded-md overflow-hidden"
+    >
       <div className="container mx-auto pb-4 text-black">
         <input
           id="searchfield"
@@ -64,7 +81,9 @@ const Search = () => {
           </>
         ) : (
           <span className="text-center">
-            {searchQuery.query?.length ? "No results" : "Enter your request"}
+            {searchQuery.query?.length
+              ? "No results"
+              : "Please, enter your request"}
           </span>
         )}
       </div>
