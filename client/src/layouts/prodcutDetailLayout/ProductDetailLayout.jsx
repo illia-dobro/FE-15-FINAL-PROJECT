@@ -1,5 +1,5 @@
 import useDeviceType from "../../helpers/getDeviceType";
-import { useDispatch } from "react-redux";
+import { useDispatch , useSelector} from "react-redux";
 import ProductDetailSlider from "../../components/productDetailSlider";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import Recommended from "../../components/recommended";
@@ -13,11 +13,17 @@ import Unique from "../../components/unique";
 import Button from "../../components/buttons/button";
 import Tabs from "../../components/tabs";
 import { useGetFilteredProductsQuery } from "../../app/services/productApi";
-import { addToCart} from "../../app/slices/cartSlice";
+import { addToCart, removeFromCart , calculateTotal} from "../../app/slices/cartSlice";
+import { useEffect } from "react";
 
 function ProductDetailLayout({ product }) {
-  const { isDesktop } = useDeviceType();
   const dispatch = useDispatch();
+  const { isDesktop } = useDeviceType();
+  const cartState = useSelector((state) => state.cart);
+  
+  useEffect(() => {
+    dispatch(calculateTotal());
+  }, [cartState]);
 
   const { data: filtredProducts, isSuccess } = useGetFilteredProductsQuery(
     `categories=${product.categories}&product_type=${product.product_type}&enabled=true&perPage=8`
@@ -28,10 +34,6 @@ function ProductDetailLayout({ product }) {
   const recommendedProducts = filtredProducts.products.filter(
     (recommendedProduct) => product._id !== recommendedProduct._id
   );
-
-  const handleAddToCart = () => {
-    dispatch(addToCart({product: product}));
-  };
 
   const thumbnailPosition = isDesktop ? "left" : "bottom";
   const productDetailSliderSettings = {
@@ -71,6 +73,7 @@ function ProductDetailLayout({ product }) {
 
   return (
     <div className="product-detail__card">
+      {console.log(calculateTotal)}
       <div className="product-detail__flex">
         <div className="product-detail__left">
           <ProductDetailSlider
@@ -83,14 +86,22 @@ function ProductDetailLayout({ product }) {
             <FavoriteBtn />
             <h2>{product.name}</h2>
             <div className="product-detail__quantity-price">
-              <QuantityBtns className="quantityBtnsLg"/>
+              <QuantityBtns
+                className="quantityBtnsLg"
+                handleDecrement={() =>
+                  dispatch(removeFromCart({ product: product }))
+                }
+                handleIncrement={() =>
+                  dispatch(addToCart({ product: product }))
+                }
+              />
               <span className="price">
                 {formatCurrency(product.currentPrice)}
               </span>
             </div>
             <Button
               className="button button-color--secondary"
-              action={handleAddToCart}
+              action={() => dispatch(addToCart({ product: product }))}
             >
               <LiaShoppingBagSolid />
               <span>Add to shopping cart</span>

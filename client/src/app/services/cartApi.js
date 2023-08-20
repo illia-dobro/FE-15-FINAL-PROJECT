@@ -14,9 +14,9 @@ const cartApi = createApi({
           },
         }),
     endpoints: (builder) => ({
-        createCart: builder.mutation({
+        createAndUpdateCart: builder.mutation({
             query: (cartData) => ({
-                method: 'POST',
+                method: 'PUT',
                 body: cartData,
             }),
         }),
@@ -29,7 +29,7 @@ const cartApi = createApi({
                 method: 'PUT'
             }),
         }),
-        deleteProductFromCart: builder.mutation({
+        deleteProductFromTheCart: builder.mutation({
             query: (productId) => ({
                 url: `/${productId}`,
                 method: 'DELETE'
@@ -39,8 +39,8 @@ const cartApi = createApi({
 });
 
 export const {
-    useCreateCartMutation,
-    useDeleteProductFromCartMutation,
+    useCreateAndUpdateCartMutation,
+    useDeleteProductFromTheCartMutation,
     useAddProductToCartMutation,
     useGetCartQuery
 } = cartApi;

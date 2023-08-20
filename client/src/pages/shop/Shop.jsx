@@ -1,18 +1,31 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import FavoriteBtn from "../../components/buttons/favoriteBtn";
 import QuantityBtns from "../../components/buttons/quantityBtns/QuantityBtns";
 import Button from "../../components/buttons/button";
 import { formatCurrency } from "../../helpers/currencyFormatter";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { useCreateCartMutation } from "../../app/services/cartApp";
+import { useCreateAndUpdateCartMutation } from "../../app/services/cartApi";
+import {
+  updateCart,
+  removeFromCart,
+  addToCart,
+  calculateTotal
+} from "../../app/slices/cartSlice";
+
 import styles from "./shop.module.scss";
 
-function Shop() {
-  const items = useSelector((state) => state.cart.products);
+function Shop() {  
+  const [createCart, { isLoading, isError, isSuccess }] =useCreateAndUpdateCartMutation();
   const isAuthenticated = useSelector((state) => state.auth.token);
-  const [createCart, { isLoading, isError, isSuccess, error }] = useCreateCartMutation();
+  const items = useSelector((state) => state.cart.products);
+  const totalPrice = useSelector((state) => state.cart.total);
+  const cartState = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(calculateTotal());
+  }, [cartState]);
 
   const formattedItems = items.map((item) => ({
     product: item.product._id,
@@ -21,17 +34,19 @@ function Shop() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      console.log("User is authenticated. Creating cart...");
+      console.log("User is authenticated. Update/Create...");
       createCart({ products: formattedItems })
         .unwrap()
         .then((response) => {
-          console.log("Cart created successfully:", response);
+          console.log("Cart Update/Create successfully:", response);
+          dispatch(updateCart(response));
         })
         .catch((error) => {
-          console.error("Error creating cart:", error);
+          console.error("Error Update/Create cart:", error);
         });
     }
   }, []);
+
   return (
     <>
       <div className={styles.shop}>
@@ -52,8 +67,12 @@ function Shop() {
                     </a>
                     <FavoriteBtn></FavoriteBtn>
                     <QuantityBtns
-                      /* 	handleIncrement={() => handleIncrement(item.id)}
-											handleDecrement={() => handleDecrement(item.id)} */
+                      handleIncrement={() =>
+                        dispatch(addToCart({ product: item.product }))
+                      }
+                      handleDecrement={() =>
+                        dispatch(removeFromCart({ product: item.product }))
+                      }
                       count={item.cartQuantity}
                       className={styles.shop__item_quantityBtn}
                     />
@@ -61,7 +80,9 @@ function Shop() {
                   <div className={styles.shop__item_adidional}>
                     <button
                       className={styles.shop__item_close}
-                      /* 	onClick={() => handleRemoveItem(item.id)} */
+                      onClick={() =>
+                        dispatch(removeFromCart({ product: item.product }))
+                      }
                     >
                       x
                     </button>
@@ -84,7 +105,7 @@ function Shop() {
             <div className={styles.shop__total}>
               <p className={styles.shop__total_text}>Total</p>
               <p className={styles.shop__total_sum}>
-                {/* {formatCurrency(totalPrice)} */}
+                {formatCurrency(totalPrice)}
               </p>
             </div>
           )}

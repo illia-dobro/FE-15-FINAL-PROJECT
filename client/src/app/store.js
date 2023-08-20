@@ -4,7 +4,7 @@ import filtersReducer from "./slices/filtersSlice";
 import { api } from "./services/api";
 import productApi from "./services/productApi";
 import catalogApi from "./services/catalogApi";
-import cartApi from "./services/cartApp";
+import cartApi from "./services/cartApi";
 import cartReducer from "./slices/cartSlice";
 export const store = configureStore({
   reducer: {

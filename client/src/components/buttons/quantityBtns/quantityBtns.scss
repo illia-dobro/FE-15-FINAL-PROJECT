@@ -13,9 +13,13 @@
   width: 163px;
   height: 46px;
   font-weight: 400;
+
   button {
     font-size: 24px;
     line-height: 29px;
+    &:active {
+      color: darken($secondary, 4%);
+    }
   }
   span {
     font-size: 20px;
