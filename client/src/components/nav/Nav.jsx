@@ -91,11 +91,12 @@ function Nav() {
 
           {onOpenNav && (
             <span className="nav__icon">
-              <GoSearch />
+              <GoSearch data-name="search" onClick={handleSearch} />
             </span>
           )}
           {onOpenNav && (
             <div className="nav__mobile__dropdown">
+              {isSearchOpened && <Search />}
               <div className="nav-mobile__links">
                 <NavLink to="/">Main Page</NavLink>
                 <NavLink to="/catalog">Catalog</NavLink>

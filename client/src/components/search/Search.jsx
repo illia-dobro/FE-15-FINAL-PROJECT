@@ -42,15 +42,15 @@ const Search = () => {
   return (
     <div
       ref={newRef}
-      className="absolute right-0 top-10 w-[70vw] xl:w-[65vw] z-10 bg-gray-50 text-[#555555] rounded-md overflow-hidden"
+      className="absolute right-0 sm:top-0 md:top-10 sm:w-full md:w-[70vw] xl:w-[65vw] sm:h-screen md:h-auto z-10 bg-gray-50 text-[#555555] rounded-md overflow-hidden"
     >
-      <div className="container mx-auto pb-4 text-black">
+      <div className="container w-full mx-auto border-b-2">
         <input
           id="searchfield"
           type="search"
           placeholder="Search..."
           autoFocus="autofocus"
-          className="w-full text-[#555555] transition focus:outline-none focus:border-transparent p-2 appearance-none leading-normal text-lg lg:text-xl"
+          className="w-full text-[#555555] transition focus:outline-none focus:border-transparent p-4 appearance-none leading-normal text-lg lg:text-xl bg-gray-50"
           onChange={(e) => handleSearchInput(e)}
         />
       </div>
@@ -78,7 +78,7 @@ const Search = () => {
             )}
           </>
         ) : (
-          <span className="text-center">
+          <span className="mt-4 text-center">
             {searchQuery.query?.length
               ? "No results"
               : "Please, enter your request"}
