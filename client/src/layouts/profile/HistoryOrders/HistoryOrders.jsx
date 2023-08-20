@@ -3,6 +3,8 @@ import {
   ArrowSmallRightIcon,
   ArrowSmallLeftIcon,
 } from '@heroicons/react/24/outline';
+import { useGetWishListQuery } from '../../../app/services/api';
+import ProductList from '../../productsList'
 
 const orders = [
   {
@@ -34,14 +36,26 @@ const orders = [
   // More orders...
 ];
 
-function historyOrders() {
+function HistoryOrders() {
+
+  const {data, isError, isLoading, isSuccess} = useGetWishListQuery();
+
+  let wishlist;
+
+  if (isError) {
+    return null
+  } else if(isLoading){
+    wishlist = "isloading"
+  } else if (isSuccess){
+    wishlist = <ProductList products={data.products}/>
+
   return (
     <div className="flex-1 basis-5/6 lg:basis-3/4 rounded drop-shadow-lg">
       <div className="mx-auto max-w-4xl py-16 sm:px-6 sm:py-24">
         <div>
-          <h1 className="text-3xl tracking-tight text-gray-700">
+          <h2 className="text-3xl tracking-tight text-gray-700">
             History of orders
-          </h1>
+          </h2>
         </div>
 
         <div className="mt-16">
@@ -85,8 +99,14 @@ function historyOrders() {
           </div>
         </div>
       </div>
+      <div className="mx-auto max-w-4xl py-16 sm:px-6 sm:py-24">
+        <h2 className="text-3xl tracking-tight text-gray-700 px-4 sm:px-6 lg:px-8">Wish list</h2>
+        {wishlist}
+      </div>
+
     </div>
   );
 }
+}
 
-export default historyOrders;
+export default HistoryOrders;

@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   productTypes,
   setProductsAndPagesQty,
-  updateFiltersQuery,
 } from "../../app/slices/filtersSlice.js";
 import { useGetFilteredProductsQuery } from "../../app/services/productApi.js";
 import { useGetCategoriesQuery } from "../../app/services/catalogApi.js";
 import Pagination from "../../components/pagination/index.js";
+import HeartsLoader from "../../components/heartsLoader/heartsLoader.jsx";
+import styles from "./Category.module.scss";
 
 const Category = () => {
   const { categoryName } = useParams();
@@ -39,7 +40,7 @@ const Category = () => {
     isCategoriesSuccess &&
     categories.find((category) => category.name === categoryName);
 
-  return (
+  return isPaginatedProductsSuccess ? (
     <>
       <h2 className="text-center text-7xl mx-auto my-4">{category.name}</h2>
 
@@ -52,12 +53,16 @@ const Category = () => {
       </div>
 
       <Filters>
-        {isPaginatedProductsSuccess && (
+        {isPaginatedProductsSuccess ? (
           <ProductsList products={paginatedProductsData.products} />
+        ) : (
+          <HeartsLoader wrapperClass="hearts" />
         )}
         <Pagination />
       </Filters>
     </>
+  ) : (
+    <HeartsLoader wrapperClass="hearts" />
   );
 };
 

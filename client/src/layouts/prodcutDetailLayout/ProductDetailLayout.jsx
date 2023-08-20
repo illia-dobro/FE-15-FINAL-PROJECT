@@ -1,74 +1,38 @@
-import useDeviceType from "../../helpers/getDeviceType";
-import { useNavigate } from "react-router-dom";
-
-import { useDispatch } from "react-redux";
-import ProductDetailSlider from "../../components/productDetailSlider";
-import { LiaShoppingBagSolid } from "react-icons/lia";
-import Recommended from "../../components/recommended";
-import QuantityBtns from "../../components/buttons/quantityBtns/QuantityBtns";
-import FavoriteBtn from "../../components/buttons/favoriteBtn";
-import { formatCurrency } from "../../helpers/currencyFormatter";
-import uniqueMainImgUrl from "../../assets/unique_main.png";
-import uniqueMainImgUrl2 from "../../assets/unique_main2.jpg";
-import DeliveryInfo from "../../components/static/DeliveryInfo";
-import Unique from "../../components/unique";
-import Button from "../../components/buttons/button";
-import Tabs from "../../components/tabs";
-import { useGetFilteredProductsQuery } from "../../app/services/productApi";
-import { addToCart } from "../../app/slices/cartSlice";
-import { useState } from "react";
-;
-
+import PropTypes from 'prop-types';
+import useDeviceType from '../../helpers/getDeviceType';
+import ProductDetailSlider from '../../components/productDetailSlider';
+import { LiaShoppingBagSolid } from 'react-icons/lia';
+import Recommended from '../../components/recommended';
+import QuantityBtns from '../../components/buttons/quantityBtns/QuantityBtns';
+import FavoriteBtn from '../../components/buttons/favoriteBtn';
+import { formatCurrency } from '../../helpers/currencyFormatter';
+import uniqueMainImgUrl from '../../assets/unique_main.png';
+import uniqueMainImgUrl2 from '../../assets/unique_main2.jpg';
+import DeliveryInfo from '../../components/static/DeliveryInfo';
+import Unique from '../../components/unique';
+import Button from '../../components/buttons/button';
+import Tabs from '../../components/tabs';
+import { useGetFilteredProductsQuery } from '../../app/services/productApi';
+import { useSelector } from 'react-redux';
+import { isTokenUser } from '../../app/slices/authSlice';
 
 function ProductDetailLayout({ product }) {
-	const navigate = useNavigate() // Отримання історії перегляду для переходу на іншу сторінку
-
-	const [quantity, setQuantity] = useState(1);
-
 	const { isDesktop } = useDeviceType();
-	const dispatch = useDispatch();
+	const isUserAuth = Boolean(useSelector(isTokenUser));
+
 	const { data: filtredProducts, isSuccess } = useGetFilteredProductsQuery(
 		`categories=${product.categories}&product_type=${product.product_type}&enabled=true&perPage=8`
 	);
+
 	if (!filtredProducts) {
 		return;
 	}
+
 	const recommendedProducts = filtredProducts.products.filter(
 		(recommendedProduct) => product._id !== recommendedProduct._id
 	);
 
-	// const handleAddToCart = async () => {
-	// 	try {
-
-	// 		dispatch(addToCart(product));
-	// 	} catch (error) {
-	// 		console.error("Error adding product to cart:", error);
-	// 	}
-	// };
-
-
-	const calculateTotalPrice = (price, quantity) => {
-		return price * quantity;
-	};
-	const handleAddToCart = async () => {
-		console.log("Add to cart clicked")
-		try {
-			const productWithQuantity = {
-				...product,
-				cartQuantity: quantity,
-			};
-			dispatch(addToCart(productWithQuantity));
-			// Після успішного додавання товару до кошика, перейдіть на іншу сторінку
-			navigate("/shop"); // Замініть "/shop" на URL вашої сторінки
-		} catch (error) {
-			console.error("Error adding product to cart:", error);
-		}
-	};
-	// Розраховуємо загальну ціну з урахуванням кількості
-	const totalPrice = calculateTotalPrice(product.currentPrice, quantity);
-
-
-	const thumbnailPosition = isDesktop ? "left" : "bottom";
+	const thumbnailPosition = isDesktop ? 'left' : 'bottom';
 	const productDetailSliderSettings = {
 		showThumbnails: true,
 		showPlayButton: true,
@@ -80,6 +44,7 @@ function ProductDetailLayout({ product }) {
 		showGalleryThumbnails: true,
 		thumbnailPosition: thumbnailPosition,
 	};
+
 	const spesificationTabsContent = (
 		<ul>
 			<li>
@@ -95,9 +60,9 @@ function ProductDetailLayout({ product }) {
 		</ul>
 	);
 	const productTabs = [
-		{ label: "Product", content: product.description },
-		{ label: "Specifications", content: spesificationTabsContent },
-		{ label: "Delivery", content: <DeliveryInfo /> },
+		{ label: 'Product', content: product.description },
+		{ label: 'Specifications', content: spesificationTabsContent },
+		{ label: 'Delivery', content: <DeliveryInfo /> },
 	];
 	const productPictures = product.imageUrls.map((image) => ({
 		original: image,
@@ -115,27 +80,15 @@ function ProductDetailLayout({ product }) {
 				</div>
 				<div className="product-detail__right">
 					<div className="product-detail__right-content">
-						<FavoriteBtn />
+						{isUserAuth && <FavoriteBtn id={product._id} />}
 						<h2>{product.name}</h2>
 						<div className="product-detail__quantity-price">
-							<QuantityBtns
-								handleIncrement={() => setQuantity(quantity + 1)}
-								handleDecrement={() => {
-									if (quantity > 1) {
-										setQuantity(quantity - 1);
-									}
-								}}
-								count={quantity}
-								className="quantityBtnsLg"
-							/>
+							<QuantityBtns className="quantityBtnsLg" />
 							<span className="price">
-								<span className="price">{formatCurrency(totalPrice)}</span>
+								{formatCurrency(product.currentPrice)}
 							</span>
 						</div>
-						<Button
-							className="button button-color--secondary"
-							action={handleAddToCart}
-						>
+						<Button className="button button-color--secondary">
 							<LiaShoppingBagSolid />
 							<span>Add to shopping cart</span>
 						</Button>
@@ -171,3 +124,8 @@ function ProductDetailLayout({ product }) {
 }
 
 export default ProductDetailLayout;
+
+
+ProductDetailLayout.propTypes = {
+	product: PropTypes.object
+};

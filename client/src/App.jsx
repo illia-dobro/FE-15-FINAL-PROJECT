@@ -10,7 +10,7 @@ import About from "./pages/about/About";
 import Catalog from "./pages/catalog";
 import Delivery from "./pages/Delivery";
 import Contacts from "./pages/contacts";
-import Shop from "./pages/Shop";
+import Shop from "./pages/shop";
 import Login from "./pages/Client";
 import PageNotFound from "./pages/PageNotFound";
 import Category from "./layouts/category";
