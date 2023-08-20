@@ -12,8 +12,8 @@ import "./nav.scss";
 
 function Nav() {
   const productsInCart = useSelector((state) => state.cart.products);
-  const [onOpenNav, setOnOpenNav] = useState(false);
   const { isMobile } = useDeviceType();
+  const [onOpenNav, setOnOpenNav] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
@@ -27,7 +27,7 @@ function Nav() {
     (total, product) => total + product.cartQuantity,
     0
   );
-
+  
   const otherPagesNavStyles = {
     backgroundColor: "rgba(245, 236, 227, 1)",
     borderBottom: "1px solid rgba(0, 0, 0, 0.05)",

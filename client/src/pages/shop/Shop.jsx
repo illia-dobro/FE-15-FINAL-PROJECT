@@ -6,27 +6,25 @@ import Button from "../../components/buttons/button";
 import { formatCurrency } from "../../helpers/currencyFormatter";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useCreateAndUpdateCartMutation } from "../../app/services/cartApi";
+
 import {
   updateCart,
   removeFromCart,
   addToCart,
   calculateTotal,
-  removeAllOfProduct
+  removeAllOfProduct,
 } from "../../app/slices/cartSlice";
 
 import styles from "./shop.module.scss";
 
-function Shop() {  
-  const [createCart, { isLoading, isError, isSuccess }] =useCreateAndUpdateCartMutation();
+function Shop() {
+  const [createOrUpdateCart] = useCreateAndUpdateCartMutation();
   const isAuthenticated = useSelector((state) => state.auth.token);
   const items = useSelector((state) => state.cart.products);
   const totalPrice = useSelector((state) => state.cart.total);
   const cartState = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(calculateTotal());
-  }, [cartState]);
 
   const formattedItems = items.map((item) => ({
     product: item.product._id,
@@ -34,9 +32,14 @@ function Shop() {
   }));
 
   useEffect(() => {
-    if (isAuthenticated) {
-      console.log("User is authenticated. Update/Create...");
-      createCart({ products: formattedItems })
+    dispatch(calculateTotal());
+  }, [cartState]);
+
+  
+    useEffect(() => {
+      if (isAuthenticated) {
+      console.log("User is authenticated. Update/Create Cart...");
+      createOrUpdateCart({ products: formattedItems })
         .unwrap()
         .then((response) => {
           console.log("Cart Update/Create successfully:", response);
@@ -44,9 +47,10 @@ function Shop() {
         })
         .catch((error) => {
           console.error("Error Update/Create cart:", error);
-        });
-    }
-  }, []);
+        }); 
+      }
+    },[]);
+  
 
   return (
     <>
