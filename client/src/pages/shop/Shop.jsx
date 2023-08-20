@@ -10,7 +10,8 @@ import {
   updateCart,
   removeFromCart,
   addToCart,
-  calculateTotal
+  calculateTotal,
+  removeAllOfProduct
 } from "../../app/slices/cartSlice";
 
 import styles from "./shop.module.scss";
@@ -78,14 +79,14 @@ function Shop() {
                     />
                   </div>
                   <div className={styles.shop__item_adidional}>
-                    <button
+                    <Button
                       className={styles.shop__item_close}
-                      onClick={() =>
-                        dispatch(removeFromCart({ product: item.product }))
+                      action={() =>
+                        dispatch(removeAllOfProduct({ product: item.product }))
                       }
                     >
                       x
-                    </button>
+                    </Button>
                     <div className={styles.shop__item_price}>
                       <small className={styles.shop__item_count}>
                         {item.cartQuantity}x
@@ -115,9 +116,6 @@ function Shop() {
               <AiOutlineArrowRight className={styles.shop__order_arrow} />
             </Button>
           )}
-          <div className="product-recommended__slider">
-            {/* Додайте вміст вашого слайдера тут */}
-          </div>
         </div>
       </div>
     </>

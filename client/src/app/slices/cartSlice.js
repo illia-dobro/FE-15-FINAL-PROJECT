@@ -23,27 +23,36 @@ const cartSlice = createSlice({
 
     },
     updateCart: (state, action) => {
-      state.products = action.payload.products;
       
+      state.products = action.payload.products;
       localStorage.setItem('products', JSON.stringify(state.products));
   
     },
     removeFromCart: (state, action) => {
       const productIdToRemove = action.payload.product._id;
       const itemToRemove = state.products.find((product) => product.product._id === productIdToRemove);
+      
       if (itemToRemove && itemToRemove.cartQuantity > 1) {
-        itemToRemove.cartQuantity -= 1;
-        state.total -= itemToRemove.product.currentPrice;
-      } else {
-        state.products = state.products.filter((product) => product.product._id !== productIdToRemove);
+      itemToRemove.cartQuantity -= 1;
+      } 
+      else {
+      state.products = state.products.filter((product) => product.product._id !== productIdToRemove);
       }
 
       localStorage.setItem('products', JSON.stringify(state.products)); 
-      
+    },
+    removeAllOfProduct: (state, action) => {
+      const productIdToRemove = action.payload.product._id;
+      const removedProduct = state.products.find((product) => product.product._id === productIdToRemove);
+
+      if (removedProduct) {
+      state.products = state.products.filter((product) => product.product._id !== productIdToRemove);
+      localStorage.setItem('products', JSON.stringify(state.products));
+      }
     },
     calculateTotal: (state) => {
       state.total = state.products.reduce((total, product) => {
-        return total + product.product.currentPrice * product.cartQuantity;
+      return total + product.product.currentPrice * product.cartQuantity;
       }, 0);
     }
   }
@@ -53,7 +62,8 @@ export const {
   addToCart,
   updateCart,
   removeFromCart,
-  calculateTotal
+  calculateTotal,
+  removeAllOfProduct
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

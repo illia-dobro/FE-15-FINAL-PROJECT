@@ -17,10 +17,14 @@ import { addToCart, removeFromCart , calculateTotal} from "../../app/slices/cart
 import { useEffect } from "react";
 
 function ProductDetailLayout({ product }) {
-  const dispatch = useDispatch();
-  const { isDesktop } = useDeviceType();
   const cartState = useSelector((state) => state.cart);
+  const { isDesktop } = useDeviceType();
+  const dispatch = useDispatch();
   
+	const items = useSelector((state) => state.cart.products);
+  
+	const cartProduct = items.find(item => item.product._id === product._id);
+ 
   useEffect(() => {
     dispatch(calculateTotal());
   }, [cartState]);
@@ -72,8 +76,8 @@ function ProductDetailLayout({ product }) {
   }));
 
   return (
+
     <div className="product-detail__card">
-      {console.log(calculateTotal)}
       <div className="product-detail__flex">
         <div className="product-detail__left">
           <ProductDetailSlider
@@ -94,6 +98,7 @@ function ProductDetailLayout({ product }) {
                 handleIncrement={() =>
                   dispatch(addToCart({ product: product }))
                 }
+                count={product.cartQuantity}
               />
               <span className="price">
                 {formatCurrency(product.currentPrice)}
