@@ -27,7 +27,7 @@ function Shop() {
   const [addProductToDb] = useAddProductToCartMutation();
   const [removeProductFromDb] = useDeleteProductFromTheCartMutation();
   const [decreaseProductFromDb] = useDecreaseProductQuantityMutation();
-  const {getCartFromDb} = useGetCartQuery();
+  const { data: cardFromDb, isSuccess} = useGetCartQuery();
   const [createAndUpdateCartMutation] = useCreateAndUpdateCartMutation();
   const isAuthenticated = useSelector((state) => state.auth.token);
   const items = useSelector((state) => state.cart.products);
@@ -38,17 +38,26 @@ function Shop() {
   const formattedItems = items.map((item) => ({
     product: item.product._id,
     cartQuantity: item.cartQuantity,
-  }));
+  })); 
 
-  useEffect(() => {
-    if (isAuthenticated && items.length > 0 ) {
-     createAndUpdateCartMutation(formattedItems)
-        .unwrap()
-        .then((response) => {
-          console.log("Cart Update Successfully:", response);
-        });
-    } 
-  }, []); 
+/*    useEffect(() => {
+    if (isAuthenticated) {
+      if (items.length > 0) {
+        createAndUpdateCartMutation(formattedItems)
+          .unwrap()
+          .then((response) => {
+            console.log("Cart Update Successfully:", response);
+          });
+      }
+    
+    }
+  }, []);  */
+
+  /*   if (isSuccess){
+        cardFromDb.products.map((item)=>{
+          dispatch(updateCart(item))
+        })
+      } */
 
   const handleRemoveFromCart = (product) => {
     dispatch(removeFromCart({ product: product }));
@@ -57,7 +66,7 @@ function Shop() {
       decreaseProductFromDb(product._id)
         .unwrap()
         .then((response) => {
-          console.log("Cart Update Successfully:", response);
+          console.log("Cart Removed Successfully:", response);
         });
     }
   };
@@ -79,7 +88,7 @@ function Shop() {
       removeProductFromDb(product._id)
         .unwrap()
         .then((response) => {
-          console.log("Cart Update Successfully:", response);
+          console.log("Cart Removed Successfully:", response);
         })
         .catch((error) => {
           console.log("Cart Failure:", error);
@@ -89,7 +98,6 @@ function Shop() {
 
   return (
     <>
-    {items & console.log(items)}
       <div className={styles.shop}>
         <div className={styles.shop__container}>
           <h2 className={styles.shop__title}>Your cart</h2>

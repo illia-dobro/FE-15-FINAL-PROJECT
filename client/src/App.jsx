@@ -5,7 +5,7 @@ import {
   Navigate,
   ScrollRestoration,
 } from "react-router-dom";
-import Nav from "./components/nav";
+import Nav from "./layouts/nav";
 import Home from "./pages/home";
 import About from "./pages/about/About";
 import Catalog from "./pages/catalog";
