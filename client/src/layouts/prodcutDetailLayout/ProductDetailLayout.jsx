@@ -15,12 +15,8 @@ import Button from "../../components/buttons/button";
 import Tabs from "../../components/tabs";
 import { useGetFilteredProductsQuery } from "../../app/services/productApi";
 import { isTokenUser } from "../../app/slices/authSlice";
-import { useAddProductToCartMutation, useDecreaseProductQuantityMutation} from "../../app/services/cartApi";
-import {
-  addToCart,
-  removeFromCart,
-  calculateTotal,
-} from "../../app/slices/cartSlice";
+import { useAddProductToCartMutation } from "../../app/services/cartApi";
+import { addToCart, calculateTotal } from "../../app/slices/cartSlice";
 
 function ProductDetailLayout({ product }) {
   const { isDesktop } = useDeviceType();
@@ -102,9 +98,7 @@ function ProductDetailLayout({ product }) {
             {isUserAuth && <FavoriteBtn id={product._id} />}
             <h2>{product.name}</h2>
             <div className="product-detail__quantity-price">
-              <QuantityBtns
-                className="quantityBtnsLg"
-              />
+              <QuantityBtns className="quantityBtnsLg" />
               <span className="price">
                 {formatCurrency(product.currentPrice)}
               </span>

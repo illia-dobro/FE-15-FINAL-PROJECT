@@ -5,13 +5,20 @@ import QuantityBtns from "../../components/buttons/quantityBtns/QuantityBtns";
 import Button from "../../components/buttons/button";
 import { formatCurrency } from "../../helpers/currencyFormatter";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { useAddProductToCartMutation , useDeleteProductFromTheCartMutation , useDecreaseProductQuantityMutation} from "../../app/services/cartApi";
+import {
+  useGetCartQuery,
+  useAddProductToCartMutation,
+  useDeleteProductFromTheCartMutation,
+  useDecreaseProductQuantityMutation,
+  useCreateAndUpdateCartMutation,
+} from "../../app/services/cartApi";
 
 import {
   removeFromCart,
   addToCart,
   calculateTotal,
   removeAllOfProduct,
+  updateCart,
 } from "../../app/slices/cartSlice";
 
 import styles from "./shop.module.scss";
@@ -20,10 +27,28 @@ function Shop() {
   const [addProductToDb] = useAddProductToCartMutation();
   const [removeProductFromDb] = useDeleteProductFromTheCartMutation();
   const [decreaseProductFromDb] = useDecreaseProductQuantityMutation();
+  const {getCartFromDb} = useGetCartQuery();
+  const [createAndUpdateCartMutation] = useCreateAndUpdateCartMutation();
   const isAuthenticated = useSelector((state) => state.auth.token);
   const items = useSelector((state) => state.cart.products);
   const totalPrice = useSelector((state) => state.cart.total);
+
   const dispatch = useDispatch();
+
+  const formattedItems = items.map((item) => ({
+    product: item.product._id,
+    cartQuantity: item.cartQuantity,
+  }));
+
+  useEffect(() => {
+    if (isAuthenticated && items.length > 0 ) {
+     createAndUpdateCartMutation(formattedItems)
+        .unwrap()
+        .then((response) => {
+          console.log("Cart Update Successfully:", response);
+        });
+    } 
+  }, []); 
 
   const handleRemoveFromCart = (product) => {
     dispatch(removeFromCart({ product: product }));
@@ -56,18 +81,15 @@ function Shop() {
         .then((response) => {
           console.log("Cart Update Successfully:", response);
         })
-        .catch((error)=>{
+        .catch((error) => {
           console.log("Cart Failure:", error);
-        })
+        });
     }
   };
-/*   const formattedItems = items.map((item) => ({
-    product: item.product._id,
-    cartQuantity: item.cartQuantity,
-  }));
- */
+
   return (
     <>
+    {items & console.log(items)}
       <div className={styles.shop}>
         <div className={styles.shop__container}>
           <h2 className={styles.shop__title}>Your cart</h2>
