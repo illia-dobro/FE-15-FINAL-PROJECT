@@ -15,6 +15,7 @@ import Button from "../../components/buttons/button";
 import Tabs from "../../components/tabs";
 import { useGetFilteredProductsQuery } from "../../app/services/productApi";
 import { isTokenUser } from "../../app/slices/authSlice";
+import { useAddProductToCartMutation, useDecreaseProductQuantityMutation} from "../../app/services/cartApi";
 import {
   addToCart,
   removeFromCart,
@@ -25,6 +26,8 @@ function ProductDetailLayout({ product }) {
   const { isDesktop } = useDeviceType();
   const isUserAuth = Boolean(useSelector(isTokenUser));
   const isAuthenticated = useSelector((state) => state.auth.token);
+  const [addProductToDb] = useAddProductToCartMutation();
+  const [decreaseProductFromDb] = useDecreaseProductQuantityMutation();
   const dispatch = useDispatch();
   
   const handleRemoveFromCart = (product) => {
