@@ -7,8 +7,8 @@ function Button({children, action, className}) {
   )
 };
 Button.propTypes = {
-  children: PropTypes.node.isRequired,
-  action: PropTypes.func.isRequired,
+  children: PropTypes.node,
+  action: PropTypes.func,
   className: PropTypes.string,
 };
 export default Button;

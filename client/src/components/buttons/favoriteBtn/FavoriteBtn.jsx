@@ -66,5 +66,5 @@ export default FavoriteBtn;
 
 
 FavoriteBtn.propTypes = {
-  id: PropTypes.string.isRequired
+  id: PropTypes.string
 };

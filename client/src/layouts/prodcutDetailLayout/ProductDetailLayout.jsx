@@ -27,20 +27,8 @@ function ProductDetailLayout({ product }) {
   const isUserAuth = Boolean(useSelector(isTokenUser));
   const isAuthenticated = useSelector((state) => state.auth.token);
   const [addProductToDb] = useAddProductToCartMutation();
-  const [decreaseProductFromDb] = useDecreaseProductQuantityMutation();
   const dispatch = useDispatch();
-  
-  const handleRemoveFromCart = (product) => {
-    dispatch(removeFromCart({ product: product }));
-    dispatch(calculateTotal());
-    if (isAuthenticated) {
-      decreaseProductFromDb(product._id)
-        .unwrap()
-        .then((response) => {
-          console.log("Cart Update Successfully:", response);
-        });
-    }
-  };
+
   const handleAddTocart = (product) => {
     dispatch(addToCart({ product: product }));
     dispatch(calculateTotal());
@@ -52,7 +40,6 @@ function ProductDetailLayout({ product }) {
         });
     }
   };
-
   const { data: filtredProducts, isSuccess } = useGetFilteredProductsQuery(
     `categories=${product.categories}&product_type=${product.product_type}&enabled=true&perPage=8`
   );
@@ -100,8 +87,6 @@ function ProductDetailLayout({ product }) {
     original: image,
     thumbnail: image,
   }));
-    
-  
 
   return (
     <div className="product-detail__card">
@@ -119,9 +104,6 @@ function ProductDetailLayout({ product }) {
             <div className="product-detail__quantity-price">
               <QuantityBtns
                 className="quantityBtnsLg"
-                handleDecrement={() => handleRemoveFromCart(product)}
-                handleIncrement={() => handleAddTocart(product)}
-                count={product.cartQuantity}
               />
               <span className="price">
                 {formatCurrency(product.currentPrice)}
