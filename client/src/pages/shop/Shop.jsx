@@ -5,10 +5,9 @@ import QuantityBtns from "../../components/buttons/quantityBtns/QuantityBtns";
 import Button from "../../components/buttons/button";
 import { formatCurrency } from "../../helpers/currencyFormatter";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { useCreateAndUpdateCartMutation } from "../../app/services/cartApi";
+import { useAddProductToCartMutation , useDeleteProductFromTheCartMutation , useDecreaseProductQuantityMutation} from "../../app/services/cartApi";
 
 import {
-  updateCart,
   removeFromCart,
   addToCart,
   calculateTotal,
@@ -18,40 +17,55 @@ import {
 import styles from "./shop.module.scss";
 
 function Shop() {
-  const [createOrUpdateCart] = useCreateAndUpdateCartMutation();
+  const [addProductToDb] = useAddProductToCartMutation();
+  const [removeProductFromDb] = useDeleteProductFromTheCartMutation();
+  const [decreaseProductFromDb] = useDecreaseProductQuantityMutation();
   const isAuthenticated = useSelector((state) => state.auth.token);
   const items = useSelector((state) => state.cart.products);
   const totalPrice = useSelector((state) => state.cart.total);
-  const cartState = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
-
-  const formattedItems = items.map((item) => ({
+  const handleRemoveFromCart = (product) => {
+    dispatch(removeFromCart({ product: product }));
+    dispatch(calculateTotal());
+    if (isAuthenticated) {
+      decreaseProductFromDb(product._id)
+        .unwrap()
+        .then((response) => {
+          console.log("Cart Update Successfully:", response);
+        });
+    }
+  };
+  const handleAddTocart = (product) => {
+    dispatch(addToCart({ product: product }));
+    dispatch(calculateTotal());
+    if (isAuthenticated) {
+      addProductToDb(product._id)
+        .unwrap()
+        .then((response) => {
+          console.log("Cart Update Successfully:", response);
+        });
+    }
+  };
+  const handleRemoveAllOfProduct = (product) => {
+    dispatch(removeAllOfProduct({ product: product }));
+    dispatch(calculateTotal());
+    if (isAuthenticated) {
+      removeProductFromDb(product._id)
+        .unwrap()
+        .then((response) => {
+          console.log("Cart Update Successfully:", response);
+        })
+        .catch((error)=>{
+          console.log("Cart Failure:", error);
+        })
+    }
+  };
+/*   const formattedItems = items.map((item) => ({
     product: item.product._id,
     cartQuantity: item.cartQuantity,
   }));
-
-  useEffect(() => {
-    dispatch(calculateTotal());
-  }, [cartState]);
-
-  
-    useEffect(() => {
-      if (isAuthenticated) {
-      console.log("User is authenticated. Update/Create Cart...");
-      createOrUpdateCart({ products: formattedItems })
-        .unwrap()
-        .then((response) => {
-          console.log("Cart Update/Create successfully:", response);
-          dispatch(updateCart(response));
-        })
-        .catch((error) => {
-          console.error("Error Update/Create cart:", error);
-        }); 
-      }
-    },[]);
-  
-
+ */
   return (
     <>
       <div className={styles.shop}>
@@ -72,12 +86,8 @@ function Shop() {
                     </a>
                     <FavoriteBtn></FavoriteBtn>
                     <QuantityBtns
-                      handleIncrement={() =>
-                        dispatch(addToCart({ product: item.product }))
-                      }
-                      handleDecrement={() =>
-                        dispatch(removeFromCart({ product: item.product }))
-                      }
+                      handleIncrement={() => handleAddTocart(item.product)}
+                      handleDecrement={() => handleRemoveFromCart(item.product)}
                       count={item.cartQuantity}
                       className={styles.shop__item_quantityBtn}
                     />
@@ -85,9 +95,7 @@ function Shop() {
                   <div className={styles.shop__item_adidional}>
                     <Button
                       className={styles.shop__item_close}
-                      action={() =>
-                        dispatch(removeAllOfProduct({ product: item.product }))
-                      }
+                      action={() => handleRemoveAllOfProduct(item.product)}
                     >
                       x
                     </Button>

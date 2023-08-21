@@ -1,38 +1,56 @@
-import PropTypes from 'prop-types';
-import useDeviceType from '../../helpers/getDeviceType';
-import { useDispatch , useSelector} from "react-redux";
-import ProductDetailSlider from '../../components/productDetailSlider';
-import { LiaShoppingBagSolid } from 'react-icons/lia';
-import Recommended from '../../components/recommended';
-import QuantityBtns from '../../components/buttons/quantityBtns/QuantityBtns';
-import FavoriteBtn from '../../components/buttons/favoriteBtn';
-import { formatCurrency } from '../../helpers/currencyFormatter';
-import uniqueMainImgUrl from '../../assets/unique_main.png';
-import uniqueMainImgUrl2 from '../../assets/unique_main2.jpg';
-import DeliveryInfo from '../../components/static/DeliveryInfo';
-import Unique from '../../components/unique';
-import Button from '../../components/buttons/button';
-import Tabs from '../../components/tabs';
-import { useGetFilteredProductsQuery } from '../../app/services/productApi';
-import { isTokenUser } from '../../app/slices/authSlice';
-import { addToCart, removeFromCart , calculateTotal} from "../../app/slices/cartSlice";
-import { useEffect } from "react";
+import PropTypes from "prop-types";
+import useDeviceType from "../../helpers/getDeviceType";
+import { useDispatch, useSelector } from "react-redux";
+import ProductDetailSlider from "../../components/productDetailSlider";
+import { LiaShoppingBagSolid } from "react-icons/lia";
+import Recommended from "../../components/recommended";
+import QuantityBtns from "../../components/buttons/quantityBtns/QuantityBtns";
+import FavoriteBtn from "../../components/buttons/favoriteBtn";
+import { formatCurrency } from "../../helpers/currencyFormatter";
+import uniqueMainImgUrl from "../../assets/unique_main.png";
+import uniqueMainImgUrl2 from "../../assets/unique_main2.jpg";
+import DeliveryInfo from "../../components/static/DeliveryInfo";
+import Unique from "../../components/unique";
+import Button from "../../components/buttons/button";
+import Tabs from "../../components/tabs";
+import { useGetFilteredProductsQuery } from "../../app/services/productApi";
+import { isTokenUser } from "../../app/slices/authSlice";
+import {
+  addToCart,
+  removeFromCart,
+  calculateTotal,
+} from "../../app/slices/cartSlice";
 
 function ProductDetailLayout({ product }) {
-  const cartState = useSelector((state) => state.cart);
   const { isDesktop } = useDeviceType();
   const isUserAuth = Boolean(useSelector(isTokenUser));
+  const isAuthenticated = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
   
-	const items = useSelector((state) => state.cart.products);
-
-	const cartProduct = items.find(item => item.product._id === product._id);
- 
-  useEffect(() => {
+  const handleRemoveFromCart = (product) => {
+    dispatch(removeFromCart({ product: product }));
     dispatch(calculateTotal());
-  }, [cartState]);
+    if (isAuthenticated) {
+      decreaseProductFromDb(product._id)
+        .unwrap()
+        .then((response) => {
+          console.log("Cart Update Successfully:", response);
+        });
+    }
+  };
+  const handleAddTocart = (product) => {
+    dispatch(addToCart({ product: product }));
+    dispatch(calculateTotal());
+    if (isAuthenticated) {
+      addProductToDb(product._id)
+        .unwrap()
+        .then((response) => {
+          console.log("Cart Update Successfully:", response);
+        });
+    }
+  };
 
-  const { data: filtredProducts, isSuccess  } = useGetFilteredProductsQuery(
+  const { data: filtredProducts, isSuccess } = useGetFilteredProductsQuery(
     `categories=${product.categories}&product_type=${product.product_type}&enabled=true&perPage=8`
   );
 
@@ -44,7 +62,7 @@ function ProductDetailLayout({ product }) {
     (recommendedProduct) => product._id !== recommendedProduct._id
   );
 
-  const thumbnailPosition = isDesktop ? 'left' : 'bottom';
+  const thumbnailPosition = isDesktop ? "left" : "bottom";
   const productDetailSliderSettings = {
     showThumbnails: true,
     showPlayButton: true,
@@ -71,18 +89,18 @@ function ProductDetailLayout({ product }) {
     </ul>
   );
   const productTabs = [
-    { label: 'Product', content: product.description },
-    { label: 'Specifications', content: spesificationTabsContent },
-    { label: 'Delivery', content: <DeliveryInfo /> },
+    { label: "Product", content: product.description },
+    { label: "Specifications", content: spesificationTabsContent },
+    { label: "Delivery", content: <DeliveryInfo /> },
   ];
   const productPictures = product.imageUrls.map((image) => ({
     original: image,
     thumbnail: image,
   }));
-
+    
+  
 
   return (
-
     <div className="product-detail__card">
       <div className="product-detail__flex">
         <div className="product-detail__left">
@@ -98,12 +116,8 @@ function ProductDetailLayout({ product }) {
             <div className="product-detail__quantity-price">
               <QuantityBtns
                 className="quantityBtnsLg"
-                handleDecrement={() =>
-                  dispatch(removeFromCart({ product: product }))
-                }
-                handleIncrement={() =>
-                  dispatch(addToCart({ product: product }))
-                }
+                handleDecrement={() => handleRemoveFromCart(product)}
+                handleIncrement={() => handleAddTocart(product)}
                 count={product.cartQuantity}
               />
               <span className="price">
@@ -112,7 +126,7 @@ function ProductDetailLayout({ product }) {
             </div>
             <Button
               className="button button-color--secondary"
-              action={() => dispatch(addToCart({ product: product }))}
+              action={() => handleAddTocart(product)}
             >
               <LiaShoppingBagSolid />
               <span>Add to shopping cart</span>
@@ -150,7 +164,6 @@ function ProductDetailLayout({ product }) {
 
 export default ProductDetailLayout;
 
-
 ProductDetailLayout.propTypes = {
-  product: PropTypes.object
+  product: PropTypes.object,
 };
