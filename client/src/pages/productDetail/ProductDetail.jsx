@@ -6,19 +6,19 @@ import PageNotFound from "../PageNotFound";
 import "./productDetail.scss";
 
 function ProductDetail() {
-  const { url } = useParams();
-  const { data: product, isLoading, isError } = useGetProductByNumberQuery(url);
+	const { url } = useParams();
+	const { data: product, isLoading, isError } = useGetProductByNumberQuery(url);
 
-  if (isLoading) {
-    return <HeartsLoader wrapperClass="hearts" />;
-  }
-  if (isError) {
-    return <PageNotFound />;
-  }
-  return (
-    <section className="product-detail">
-      {product ? <ProductDetailLayout product={product} /> : <PageNotFound />}
-    </section>
-  );
+	if (isLoading) {
+		return <HeartsLoader wrapperClass="hearts" />;
+	}
+	if (isError) {
+		return <PageNotFound />;
+	}
+	return (
+		<section className="product-detail">
+			{product ? <ProductDetailLayout product={product} /> : <PageNotFound />}
+		</section>
+	);
 }
 export default ProductDetail;

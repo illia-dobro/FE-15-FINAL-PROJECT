@@ -1,35 +1,45 @@
+// cartSlice.js
+
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-	cartItems: localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems"))
-		: [],
-};
-
-const cartSlice = createSlice({
+export const cartSlice = createSlice({
 	name: 'cart',
-	initialState,
+	initialState: {
+		cartItems: [], // Список товарів у корзині
+	},
 	reducers: {
 		addToCart: (state, action) => {
-			const itemIndex = state.cartItems.findIndex((item) => item._id === action.payload._id);
-			if (itemIndex >= 0) {
-				state.cartItems[itemIndex].cartQuantity += action.payload.cartQuantity;
+			const { itemId, cartQuantity } = action.payload;
+			// Перевіряємо, чи товар вже є в корзині
+			const existingItem = state.cartItems.find((item) => item._id === itemId);
+
+			if (existingItem) {
+				// Якщо товар вже є, збільшуємо кількість
+				existingItem.cartQuantity += cartQuantity;
 			} else {
-				const tempProduct = { ...action.payload };
-				state.cartItems.push(tempProduct);
+				// Якщо товару немає, додаємо його до корзини
+				state.cartItems.push({ _id: itemId, cartQuantity });
 			}
-			localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
 		},
 		removeFromCart: (state, action) => {
-			const itemId = action.payload;
-			state.cartItems = state.cartItems.filter((item) => item.id !== itemId);
-			localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+			const itemIdToRemove = action.payload;
+			state.cartItems = state.cartItems.filter(
+				(item) => item._id !== itemIdToRemove
+			);
+		},
+		updateCartItemQuantity: (state, action) => {
+			const { itemId, quantity } = action.payload;
+			const itemToUpdate = state.cartItems.find((item) => item._id === itemId);
+			if (itemToUpdate) {
+				// Перевірка, чи кількість не від'ємна
+				if (quantity >= 0) {
+					itemToUpdate.cartQuantity = quantity;
+				}
+			}
 		},
 	},
 });
 
-export const {
-	addToCart,
-	removeFromCart
-} = cartSlice.actions;
+export const { addToCart, removeFromCart, updateCartItemQuantity } = cartSlice.actions;
 
 export default cartSlice.reducer;

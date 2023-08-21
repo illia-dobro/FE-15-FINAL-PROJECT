@@ -21,17 +21,23 @@ import { useSelector } from 'react-redux';
 import { isTokenUser } from '../../app/slices/authSlice';
 
 function ProductDetailLayout({ product }) {
-	const navigate = useNavigate() // Отримання історії перегляду для переходу на іншу сторінку
+	const navigate = useNavigate();
 	const [quantity, setQuantity] = useState(1);
 	const { isDesktop } = useDeviceType();
 	const isUserAuth = Boolean(useSelector(isTokenUser));
 	const dispatch = useDispatch();
 
-	const { data: filtredProducts, isSuccess } = useGetFilteredProductsQuery(
+	const { data: filtredProducts, isSuccess, isLoading, isError } = useGetFilteredProductsQuery(
 		`categories=${product.categories}&product_type=${product.product_type}&enabled=true&perPage=8`
 	);
-	if (!filtredProducts) {
-		return;
+
+	// Виправлено: Додано обробку помилок та відображення індикатора завантаження
+	if (isLoading) {
+		return <p>Loading...</p>;
+	}
+
+	if (isError || !isSuccess || !filtredProducts) {
+		return <p>Error loading data.</p>;
 	}
 
 	const recommendedProducts = filtredProducts.products.filter(
@@ -76,12 +82,14 @@ function ProductDetailLayout({ product }) {
 	}));
 
 	const handleAddToCart = async () => {
-		console.log("Add to cart clicked")
+		console.log("Add to cart clicked");
+		console.log("Product Data:", product); // Вивести дані продукту в консоль
 		try {
 			const productWithQuantity = {
 				...product,
 				cartQuantity: quantity,
 			};
+			console.log("Product with Quantity:", productWithQuantity); // Вивести об'єкт продукту з кількістю в консоль
 			dispatch(addToCart(productWithQuantity));
 			// Після успішного додавання товару до кошика, перейдіть на іншу сторінку
 			navigate("/shop"); // Замініть "/shop" на URL вашої сторінки
@@ -89,6 +97,7 @@ function ProductDetailLayout({ product }) {
 			console.error("Error adding product to cart:", error);
 		}
 	};
+
 
 	const handleIncrement = () => {
 		// Збільшуємо кількість на 1
