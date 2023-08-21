@@ -1,3 +1,11 @@
+/* Need to be completed: /
+
+/1. Send Cart to the database if the user had items in the cart before logging in. /
+/2. If the user logs in, retrieve the Cart from the database. /
+/3. Product Detail Page, quantity buttons . /
+/4. For the Server only: Fix the issue where buttons send more quantities than available in the product's quantity. */
+/*5. Fix styles */
+
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import FavoriteBtn from "../../components/buttons/favoriteBtn";
@@ -10,7 +18,7 @@ import {
   useAddProductToCartMutation,
   useDeleteProductFromTheCartMutation,
   useDecreaseProductQuantityMutation,
-  useCreateAndUpdateCartMutation,
+  useCreateAndUpdateCartMutation
 } from "../../app/services/cartApi";
 
 import {
@@ -27,41 +35,26 @@ function Shop() {
   const [addProductToDb] = useAddProductToCartMutation();
   const [removeProductFromDb] = useDeleteProductFromTheCartMutation();
   const [decreaseProductFromDb] = useDecreaseProductQuantityMutation();
-  const { data: cardFromDb, isSuccess} = useGetCartQuery();
-  const [createAndUpdateCartMutation] = useCreateAndUpdateCartMutation();
   const isAuthenticated = useSelector((state) => state.auth.token);
   const items = useSelector((state) => state.cart.products);
   const totalPrice = useSelector((state) => state.cart.total);
-
   const dispatch = useDispatch();
+  const stateCart = useSelector((state) => state.cart);
+/* 
+  const [createAndUpdateCartMutation] = useCreateAndUpdateCartMutation();
+  const { data: cardFromDb, isSuccess } = useGetCartQuery();  */
 
-  const formattedItems = items.map((item) => ({
+  /*const formattedItems = items.map((item) => ({
     product: item.product._id,
     cartQuantity: item.cartQuantity,
-  })); 
+  }));  */
 
-/*    useEffect(() => {
-    if (isAuthenticated) {
-      if (items.length > 0) {
-        createAndUpdateCartMutation(formattedItems)
-          .unwrap()
-          .then((response) => {
-            console.log("Cart Update Successfully:", response);
-          });
-      }
-    
-    }
-  }, []);  */
-
-  /*   if (isSuccess){
-        cardFromDb.products.map((item)=>{
-          dispatch(updateCart(item))
-        })
-      } */
+ useEffect(()=>{
+    dispatch(calculateTotal());
+  },  [stateCart])
 
   const handleRemoveFromCart = (product) => {
     dispatch(removeFromCart({ product: product }));
-    dispatch(calculateTotal());
     if (isAuthenticated) {
       decreaseProductFromDb(product._id)
         .unwrap()
@@ -72,7 +65,6 @@ function Shop() {
   };
   const handleAddTocart = (product) => {
     dispatch(addToCart({ product: product }));
-    dispatch(calculateTotal());
     if (isAuthenticated) {
       addProductToDb(product._id)
         .unwrap()
@@ -83,7 +75,6 @@ function Shop() {
   };
   const handleRemoveAllOfProduct = (product) => {
     dispatch(removeAllOfProduct({ product: product }));
-    dispatch(calculateTotal());
     if (isAuthenticated) {
       removeProductFromDb(product._id)
         .unwrap()

@@ -21,15 +21,14 @@ const cartSlice = createSlice({
       }
 
       localStorage.setItem('products', JSON.stringify(state.products));
-
     },
-    updateCart: (state, action) => {
+ /*    updateCart: (state, action) => {
 
       state.products = [action.payload];
 
       localStorage.setItem('products', JSON.stringify(state.products));
 
-    },
+    }, */
     removeFromCart: (state, action) => {
       const productIdToRemove = action.payload.product._id;
       const itemToRemove = state.products.find((product) => product.product._id === productIdToRemove);
