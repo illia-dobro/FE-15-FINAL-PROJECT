@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import cartApi from "../services/cartApi.js";
 
 const initialState = {
   products: [],
+  // cartQty: null,
   total: 0,
 };
 
@@ -73,6 +75,18 @@ const cartSlice = createSlice({
       }, 0);
     },
   },
+  // extraReducers: (builder) => {
+  //   builder.addMatcher(
+  //     cartApi.endpoints.getCart.matchFulfilled,
+  //     (state, action) => {
+  //       const products = action.payload.products;
+  //       state.cartQty = products.reduce(
+  //         (total, product) => total + product.cartQuantity,
+  //         0
+  //       );
+  //     }
+  //   );
+  // },
 });
 
 export const {
