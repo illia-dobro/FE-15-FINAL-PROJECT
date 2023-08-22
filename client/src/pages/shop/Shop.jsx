@@ -18,7 +18,7 @@ import {
   useAddProductToCartMutation,
   useDeleteProductFromTheCartMutation,
   useDecreaseProductQuantityMutation,
-  useCreateAndUpdateCartMutation
+  useCreateAndUpdateCartMutation,
 } from "../../app/services/cartApi";
 
 import {
@@ -36,11 +36,14 @@ function Shop() {
   const [removeProductFromDb] = useDeleteProductFromTheCartMutation();
   const [decreaseProductFromDb] = useDecreaseProductQuantityMutation();
   const isAuthenticated = useSelector((state) => state.auth.token);
-  const items = useSelector((state) => state.cart.products);
+  // const items = useSelector((state) => state.cart.products);
+  const { data: cartProducts, isSuccess: isServerCartSuccess } =
+    useGetCartQuery();
+  const items = isServerCartSuccess && cartProducts.products;
   const totalPrice = useSelector((state) => state.cart.total);
   const dispatch = useDispatch();
   const stateCart = useSelector((state) => state.cart);
-/* 
+  /*
   const [createAndUpdateCartMutation] = useCreateAndUpdateCartMutation();
   const { data: cardFromDb, isSuccess } = useGetCartQuery();  */
 
@@ -49,9 +52,9 @@ function Shop() {
     cartQuantity: item.cartQuantity,
   }));  */
 
- useEffect(()=>{
+  useEffect(() => {
     dispatch(calculateTotal());
-  },  [stateCart])
+  }, [stateCart]);
 
   const handleRemoveFromCart = (product) => {
     dispatch(removeFromCart({ product: product }));
@@ -88,70 +91,74 @@ function Shop() {
   };
 
   return (
-    <>
-      <div className={styles.shop}>
-        <div className={styles.shop__container}>
-          <h2 className={styles.shop__title}>Your cart</h2>
-          <ul className={styles.shop__list}>
-            {items.map((item) => (
-              <li key={item.product._id} className={styles.shop__item}>
-                <a className={styles.shop__item_img}>
-                  <img src={item.product.imageUrls[0]} alt="Image"></img>
-                </a>
-                <div className={styles.shop__item_info}>
-                  <div className={styles.shop__item_main}>
-                    <a href="#">
-                      <h3 className={styles.shop__item_title}>
-                        {item.product.name}
-                      </h3>
-                    </a>
-                    <FavoriteBtn></FavoriteBtn>
-                    <QuantityBtns
-                      handleIncrement={() => handleAddTocart(item.product)}
-                      handleDecrement={() => handleRemoveFromCart(item.product)}
-                      count={item.cartQuantity}
-                      className={styles.shop__item_quantityBtn}
-                    />
-                  </div>
-                  <div className={styles.shop__item_adidional}>
-                    <Button
-                      className={styles.shop__item_close}
-                      action={() => handleRemoveAllOfProduct(item.product)}
-                    >
-                      x
-                    </Button>
-                    <div className={styles.shop__item_price}>
-                      <small className={styles.shop__item_count}>
-                        {item.cartQuantity}x
-                      </small>
-                      <span className={styles.shop__item_sum}>
-                        {formatCurrency(
-                          item.cartQuantity * item.product.currentPrice
-                        )}
-                      </span>
+    isServerCartSuccess && (
+      <>
+        <div className={styles.shop}>
+          <div className={styles.shop__container}>
+            <h2 className={styles.shop__title}>Your cart</h2>
+            <ul className={styles.shop__list}>
+              {items.map((item) => (
+                <li key={item.product._id} className={styles.shop__item}>
+                  <a className={styles.shop__item_img}>
+                    <img src={item.product.imageUrls[0]} alt="Image"></img>
+                  </a>
+                  <div className={styles.shop__item_info}>
+                    <div className={styles.shop__item_main}>
+                      <a href="#">
+                        <h3 className={styles.shop__item_title}>
+                          {item.product.name}
+                        </h3>
+                      </a>
+                      <FavoriteBtn></FavoriteBtn>
+                      <QuantityBtns
+                        handleIncrement={() => handleAddTocart(item.product)}
+                        handleDecrement={() =>
+                          handleRemoveFromCart(item.product)
+                        }
+                        count={item.cartQuantity}
+                        className={styles.shop__item_quantityBtn}
+                      />
+                    </div>
+                    <div className={styles.shop__item_adidional}>
+                      <Button
+                        className={styles.shop__item_close}
+                        action={() => handleRemoveAllOfProduct(item.product)}
+                      >
+                        x
+                      </Button>
+                      <div className={styles.shop__item_price}>
+                        <small className={styles.shop__item_count}>
+                          {item.cartQuantity}x
+                        </small>
+                        <span className={styles.shop__item_sum}>
+                          {formatCurrency(
+                            item.cartQuantity * item.product.currentPrice
+                          )}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-          {items.length > 0 && (
-            <div className={styles.shop__total}>
-              <p className={styles.shop__total_text}>Total</p>
-              <p className={styles.shop__total_sum}>
-                {formatCurrency(totalPrice)}
-              </p>
-            </div>
-          )}
-          {items.length > 0 && (
-            <Button className={styles.shop__order}>
-              <span className={styles.shop__order_text}>Place an order</span>
-              <AiOutlineArrowRight className={styles.shop__order_arrow} />
-            </Button>
-          )}
+                </li>
+              ))}
+            </ul>
+            {items.length > 0 && (
+              <div className={styles.shop__total}>
+                <p className={styles.shop__total_text}>Total</p>
+                <p className={styles.shop__total_sum}>
+                  {formatCurrency(totalPrice)}
+                </p>
+              </div>
+            )}
+            {items.length > 0 && (
+              <Button className={styles.shop__order}>
+                <span className={styles.shop__order_text}>Place an order</span>
+                <AiOutlineArrowRight className={styles.shop__order_arrow} />
+              </Button>
+            )}
+          </div>
         </div>
-      </div>
-    </>
+      </>
+    )
   );
 }
 export default Shop;
