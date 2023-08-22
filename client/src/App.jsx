@@ -3,7 +3,6 @@ import {
   Routes,
   Route,
   Navigate,
-  ScrollRestoration,
 } from "react-router-dom";
 import Nav from "./layouts/nav";
 import Home from "./pages/home";
@@ -20,11 +19,42 @@ import ProductDetail from "./pages/productDetail";
 import ProfilePage from "./pages/ProfilePage";
 import SignUp from "../src/layouts/forms/SignUp";
 import SmoothScroll from "./components/smoothScroll/SmoothScroll";
+import { useEffect, useRef } from "react";
+import { initializeCart } from "./app/slices/cartSlice.js";
+import { useDispatch, useSelector } from "react-redux";
+import { useGetUserQuery } from "./app/services/api.js";
+import { useGetCartQuery } from "./app/services/cartApi.js";
 
 function App() {
-   
+  const dispatch = useDispatch();
+  const stateCart = useSelector((state) => state.cart.products);
+  const { isSuccess: isUserSignedIn } = useGetUserQuery();
+  const { data: serverCartData, isSuccess: isServerCartSuccess } =
+    useGetCartQuery();
+
+  const localCartData = JSON.parse(localStorage.getItem("products"));
+
+  useEffect(() => {
+    if (isUserSignedIn && isServerCartSuccess) {
+      dispatch(initializeCart(serverCartData?.products || []));
+    } else if (!isUserSignedIn) {
+      dispatch(initializeCart(localCartData || []));
+      localStorage.removeItem("products");
+    }
+  }, [dispatch, isUserSignedIn, isServerCartSuccess, serverCartData]);
+
+  useEffect(() => {
+    const saveData = () => {
+      if (!isUserSignedIn && stateCart.length)
+        localStorage.setItem("products", JSON.stringify(stateCart));
+    };
+    window.addEventListener("beforeunload", saveData);
+    return () => {
+      window.removeEventListener("beforeunload", saveData);
+    };
+  }, [isUserSignedIn, stateCart]);
+
   return (
-  
     <>
       <Router>
         <SmoothScroll>

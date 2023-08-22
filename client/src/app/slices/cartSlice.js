@@ -1,28 +1,36 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  products: localStorage.getItem("products") ? JSON.parse(localStorage.getItem("products")) : [],
-  total: 0
+  products: [],
+  total: 0,
 };
 
 const cartSlice = createSlice({
-  name: 'cart',
+  name: "cart",
   initialState,
   reducers: {
+    initializeCart: (state, action) => {
+      state.products = action.payload;
+    },
+
     addToCart: (state, action) => {
-      const filtredExistingProduct = state.products.find((product) => product.product._id === action.payload.product._id);
-      if (filtredExistingProduct) {
-        if (filtredExistingProduct.cartQuantity < filtredExistingProduct.product.quantity) {
-          filtredExistingProduct.cartQuantity += 1;
+      const filteredExistingProduct = state.products.find(
+        (product) => product.product._id === action.payload.product._id
+      );
+      if (filteredExistingProduct) {
+        if (
+          filteredExistingProduct.cartQuantity <
+          filteredExistingProduct.product.quantity
+        ) {
+          filteredExistingProduct.cartQuantity += 1;
         }
-      } 
-      else {
+      } else {
         state.products.push({ ...action.payload, cartQuantity: 1 });
       }
 
-      localStorage.setItem('products', JSON.stringify(state.products));
+      // localStorage.setItem("products", JSON.stringify(state.products));
     },
- /*    updateCart: (state, action) => {
+    /*    updateCart: (state, action) => {
 
       state.products = [action.payload];
 
@@ -31,41 +39,49 @@ const cartSlice = createSlice({
     }, */
     removeFromCart: (state, action) => {
       const productIdToRemove = action.payload.product._id;
-      const itemToRemove = state.products.find((product) => product.product._id === productIdToRemove);
+      const itemToRemove = state.products.find(
+        (product) => product.product._id === productIdToRemove
+      );
 
       if (itemToRemove && itemToRemove.cartQuantity > 1) {
         itemToRemove.cartQuantity -= 1;
-      }
-      else {
-        state.products = state.products.filter((product) => product.product._id !== productIdToRemove);
+      } else {
+        state.products = state.products.filter(
+          (product) => product.product._id !== productIdToRemove
+        );
       }
 
-      localStorage.setItem('products', JSON.stringify(state.products));
+      localStorage.setItem("products", JSON.stringify(state.products));
     },
     removeAllOfProduct: (state, action) => {
       const productIdToRemove = action.payload.product._id;
-      const removedProduct = state.products.find((product) => product.product._id === productIdToRemove);
+      const removedProduct = state.products.find(
+        (product) => product.product._id === productIdToRemove
+      );
 
       if (removedProduct) {
-        state.products = state.products.filter((product) => product.product._id !== productIdToRemove);
+        state.products = state.products.filter(
+          (product) => product.product._id !== productIdToRemove
+        );
       }
 
-      localStorage.setItem('products', JSON.stringify(state.products));
+      localStorage.setItem("products", JSON.stringify(state.products));
     },
     calculateTotal: (state) => {
       state.total = state.products.reduce((total, product) => {
         return total + product.product.currentPrice * product.cartQuantity;
       }, 0);
-    }
-  }
+    },
+  },
 });
 
 export const {
+  initializeCart,
   addToCart,
   updateCart,
   removeFromCart,
   calculateTotal,
-  removeAllOfProduct
+  removeAllOfProduct,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
