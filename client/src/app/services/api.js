@@ -101,11 +101,48 @@ export const api = createApi({
       }),
       providesTags: ['Wish'],
     }),
-    categories: builder.query({
+    getOrders: builder.query({
       query: () => ({
-        url: 'catalog',
+        url: 'orders',
         method: 'GET',
       }),
+      providesTags: ['Orders'],
+    }),
+    getOrderById: builder.query({
+      query: (id) => ({
+        url: `orders/${id}`,
+        method: 'GET',
+      }),
+    }),
+    placeOrder: builder.mutation({
+      query: (data) => ({
+        url: 'orders',
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Orders'],
+    }),
+    updateOrder: builder.mutation({
+      query: (id, data) => ({
+        url: `orders/${id}`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['Orders'],
+    }),
+    cancelOrder: builder.mutation({
+      query: (id) => ({
+        url: `orders/cancel/${id}`,
+        method: 'PUT',
+      }),
+      invalidatesTags: ['Orders'],
+    }),
+    deleteOrder: builder.mutation({
+      query: (id) => ({
+        url: `orders/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Orders'],
     }),
   }),
 });
@@ -121,4 +158,10 @@ export const {
   useUpdateWishListMutation,
   useDeleteProductWishListMutation,
   useAddWishListMutation,
+  useGetOrdersQuery,
+  useDeleteOrderMutation,
+  useGetOrderByIdQuery,
+  useCancelOrderMutation,
+  useUpdateOrderMutation,
+  usePlaceOrderMutation,
 } = api;
