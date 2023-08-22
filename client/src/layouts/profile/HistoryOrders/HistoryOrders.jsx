@@ -2,33 +2,33 @@ import {
   ClockIcon,
   ArrowSmallRightIcon,
   ArrowSmallLeftIcon,
-} from '@heroicons/react/24/outline';
-import { useGetWishListQuery } from '../../../app/services/api';
-import ProductList from '../../productsList';
+} from "@heroicons/react/24/outline";
+import { useGetWishListQuery } from "../../../app/services/api";
+import ProductList from "../../productsList";
 
 const orders = [
   {
-    number: '233',
-    date: 'January 22, 2021',
-    datetime: '2021-01-22',
-    href: '#',
-    invoiceHref: '#',
-    total: '$302.00',
+    number: "233",
+    date: "January 22, 2021",
+    datetime: "2021-01-22",
+    href: "#",
+    invoiceHref: "#",
+    total: "$302.00",
     products: [
       {
         id: 1,
-        name: 'Nomad Tumbler',
+        name: "Nomad Tumbler",
         description:
           "This durable double-walled insulated tumbler keeps your beverages at the perfect temperature all day long. Hot, cold, or even lukewarm if you're weird like that, this bottle is ready for your next adventure.",
-        href: '#',
-        price: '$35.00',
-        status: 'out-for-delivery',
-        date: 'January 5, 2021',
-        datetime: '2021-01-05',
+        href: "#",
+        price: "$35.00",
+        status: "out-for-delivery",
+        date: "January 5, 2021",
+        datetime: "2021-01-05",
         imageSrc:
-          'https://tailwindui.com/img/ecommerce-images/order-history-page-06-product-01.jpg',
+          "https://tailwindui.com/img/ecommerce-images/order-history-page-06-product-01.jpg",
         imageAlt:
-          'Olive drab green insulated bottle with flared screw lid and flat top.',
+          "Olive drab green insulated bottle with flared screw lid and flat top.",
       },
       // More products...
     ],
@@ -41,12 +41,10 @@ function HistoryOrders() {
 
   let wishlist;
 
-  console.log(isSuccess);
-
   if (isError || !data) {
-    wishlist = '';
+    wishlist = "";
   } else if (isLoading) {
-    wishlist = 'is loading';
+    wishlist = "is loading";
   } else if (isSuccess) {
     wishlist = <ProductList products={data.products} />;
   }
@@ -67,7 +65,7 @@ function HistoryOrders() {
             {orders.map((order) => (
               <div key={order.number}>
                 <h3 className="sr-only">
-                  Order placed on{' '}
+                  Order placed on{" "}
                   <time dateTime={order.datetime}>{order.date}</time>
                 </h3>
 
