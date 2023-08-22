@@ -18,6 +18,8 @@ function Nav() {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
+  const isLoggedIn = useSelector((state) => state.auth.user);
+
   const NavLink = ({ to, children, className = "nav__link" }) => (
     <Link className={className} to={to} onClick={() => setOnOpenNav(false)}>
       {children}
@@ -26,13 +28,15 @@ function Nav() {
 
   const { data: serverCart, isSuccess: isSuccessServerCart } =
     useGetCartQuery();
+  const stateCart = useSelector((state) => state.cart.products);
 
-  const totalProductsQuantityInCart =
-    isSuccessServerCart &&
-    serverCart.products.reduce(
-      (total, product) => total + product.cartQuantity,
-      0
-    );
+  const totalProductsQuantityInCart = isLoggedIn
+    ? isSuccessServerCart &&
+      serverCart.products.reduce(
+        (total, product) => total + product.cartQuantity,
+        0
+      )
+    : stateCart.reduce((total, product) => total + product.cartQuantity, 0);
 
   const otherPagesNavStyles = {
     backgroundColor: "rgba(245, 236, 227, 1)",
