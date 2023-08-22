@@ -36,13 +36,9 @@ function Shop() {
   const [removeProductFromDb] = useDeleteProductFromTheCartMutation();
   const [decreaseProductFromDb] = useDecreaseProductQuantityMutation();
   const isAuthenticated = useSelector((state) => state.auth.token);
-  // const items = useSelector((state) => state.cart.products);
-  const { data: cartProducts, isSuccess: isServerCartSuccess } =
-    useGetCartQuery();
-  const items = isServerCartSuccess && cartProducts.products;
   const totalPrice = useSelector((state) => state.cart.total);
   const dispatch = useDispatch();
-  const stateCart = useSelector((state) => state.cart);
+
   /*
   const [createAndUpdateCartMutation] = useCreateAndUpdateCartMutation();
   const { data: cardFromDb, isSuccess } = useGetCartQuery();  */
@@ -51,6 +47,15 @@ function Shop() {
     product: item.product._id,
     cartQuantity: item.cartQuantity,
   }));  */
+  const isLoggedIn = useSelector((state) => state.auth.token);
+  const { data: serverCart, isSuccess: isSuccessServerCart } =
+    useGetCartQuery();
+  const stateCart = useSelector((state) => state.cart.products);
+
+  const items = isLoggedIn
+    ? isSuccessServerCart && serverCart.products
+    : stateCart;
+  console.log(isLoggedIn);
 
   useEffect(() => {
     dispatch(calculateTotal());
@@ -91,7 +96,7 @@ function Shop() {
   };
 
   return (
-    isServerCartSuccess && (
+    (!isLoggedIn || isSuccessServerCart) && (
       <>
         <div className={styles.shop}>
           <div className={styles.shop__container}>

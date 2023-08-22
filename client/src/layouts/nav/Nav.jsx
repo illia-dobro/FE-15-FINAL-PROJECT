@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Logo from "../../components/logo";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { GoPerson, GoSearch } from "react-icons/go";
 import { LiaShoppingBagSolid } from "react-icons/lia";
@@ -12,13 +12,23 @@ import "./nav.scss";
 import { useGetCartQuery } from "../../app/services/cartApi.js";
 
 function Nav() {
-  const productsInCart = useSelector((state) => state.cart.products);
   const { isMobile } = useDeviceType();
   const [onOpenNav, setOnOpenNav] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
-  const isLoggedIn = useSelector((state) => state.auth.user);
+  const isLoggedIn = useSelector((state) => state.auth.token);
+  const { data: serverCart, isSuccess: isSuccessServerCart } =
+    useGetCartQuery();
+  const stateCart = useSelector((state) => state.cart.products);
+
+  const cartQty = isLoggedIn
+    ? isSuccessServerCart &&
+      serverCart.products.reduce(
+        (total, product) => total + product.cartQuantity,
+        0
+      )
+    : stateCart.reduce((total, product) => total + product.cartQuantity, 0);
 
   const NavLink = ({ to, children, className = "nav__link" }) => (
     <Link className={className} to={to} onClick={() => setOnOpenNav(false)}>
@@ -26,17 +36,7 @@ function Nav() {
     </Link>
   );
 
-  const { data: serverCart, isSuccess: isSuccessServerCart } =
-    useGetCartQuery();
-  const stateCart = useSelector((state) => state.cart.products);
-
-  const totalProductsQuantityInCart = isLoggedIn
-    ? isSuccessServerCart &&
-      serverCart.products.reduce(
-        (total, product) => total + product.cartQuantity,
-        0
-      )
-    : stateCart.reduce((total, product) => total + product.cartQuantity, 0);
+  useEffect(() => {}, []);
 
   const otherPagesNavStyles = {
     backgroundColor: "rgba(245, 236, 227, 1)",
@@ -78,9 +78,7 @@ function Nav() {
               </span>
               <NavLink className="nav__icon" to="/shop">
                 <LiaShoppingBagSolid />
-                {totalProductsQuantityInCart > 0 && (
-                  <span>{totalProductsQuantityInCart}</span>
-                )}
+                {cartQty || null}
               </NavLink>
               <NavLink
                 className="nav__icon"
@@ -126,9 +124,7 @@ function Nav() {
           )}
           <NavLink className="nav__icon" to="/shop">
             <LiaShoppingBagSolid />
-            {totalProductsQuantityInCart > 0 && (
-              <span>{totalProductsQuantityInCart}</span>
-            )}
+            <span>{cartQty || null}</span>)
           </NavLink>
         </nav>
       )}
