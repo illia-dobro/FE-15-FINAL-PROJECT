@@ -55,7 +55,6 @@ function Shop() {
   const items = isLoggedIn
     ? isSuccessServerCart && serverCart.products
     : stateCart;
-  console.log(isLoggedIn);
 
   useEffect(() => {
     dispatch(calculateTotal());
