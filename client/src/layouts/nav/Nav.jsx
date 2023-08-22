@@ -9,6 +9,7 @@ import { VscChromeClose } from "react-icons/vsc";
 import { useLocation } from "react-router-dom";
 import useDeviceType from "../../helpers/getDeviceType";
 import "./nav.scss";
+import { useGetCartQuery } from "../../app/services/cartApi.js";
 
 function Nav() {
   const productsInCart = useSelector((state) => state.cart.products);
@@ -23,11 +24,16 @@ function Nav() {
     </Link>
   );
 
-  const totalProductsQuantityInCart = productsInCart.reduce(
-    (total, product) => total + product.cartQuantity,
-    0
-  );
-  
+  const { data: serverCart, isSuccess: isSuccessServerCart } =
+    useGetCartQuery();
+
+  const totalProductsQuantityInCart =
+    isSuccessServerCart &&
+    serverCart.products.reduce(
+      (total, product) => total + product.cartQuantity,
+      0
+    );
+
   const otherPagesNavStyles = {
     backgroundColor: "rgba(245, 236, 227, 1)",
     borderBottom: "1px solid rgba(0, 0, 0, 0.05)",
