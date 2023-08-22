@@ -158,4 +158,10 @@ export const {
   useUpdateWishListMutation,
   useDeleteProductWishListMutation,
   useAddWishListMutation,
+  useGetOrdersQuery,
+  useDeleteOrderMutation,
+  useGetOrderByIdQuery,
+  useCancelOrderMutation,
+  useUpdateOrderMutation,
+  usePlaceOrderMutation,
 } = api;
