@@ -19,40 +19,56 @@ import ProductDetail from "./pages/productDetail";
 import ProfilePage from "./pages/ProfilePage";
 import SignUp from "../src/layouts/forms/SignUp";
 import SmoothScroll from "./components/smoothScroll/SmoothScroll";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { initializeCart } from "./app/slices/cartSlice.js";
 import { useDispatch, useSelector } from "react-redux";
-import { useGetUserQuery } from "./app/services/api.js";
-import { useGetCartQuery } from "./app/services/cartApi.js";
+import {
+  useCreateAndUpdateCartMutation,
+  useGetCartQuery,
+} from "./app/services/cartApi.js";
+import { combineUniqueProducts } from "./helpers/combineUniqueProducts.js";
 
 function App() {
   const dispatch = useDispatch();
   const stateCart = useSelector((state) => state.cart.products);
-  const { isSuccess: isUserSignedIn } = useGetUserQuery();
-  const { data: serverCartData, isSuccess: isServerCartSuccess } =
+  const isLoggedIn = useSelector((state) => state.auth.token);
+  const { data: serverCart, isSuccess: isServerCartSuccess } =
     useGetCartQuery();
-
   const localCartData = JSON.parse(localStorage.getItem("products"));
+  const [updateCart] = useCreateAndUpdateCartMutation();
 
   useEffect(() => {
-    if (isUserSignedIn && isServerCartSuccess) {
-      dispatch(initializeCart(serverCartData?.products || []));
-    } else if (!isUserSignedIn) {
+    if (!isLoggedIn) {
       dispatch(initializeCart(localCartData || []));
       localStorage.removeItem("products");
     }
-  }, [dispatch, isUserSignedIn, isServerCartSuccess, serverCartData]);
+    if (isLoggedIn && isServerCartSuccess && stateCart.length) {
+      const updateCartOnLogin = async () => {
+        // @TODO add products quantity counter
+        const mergedCart = combineUniqueProducts(
+          serverCart?.products,
+          stateCart
+        );
+        // console.log("serverCart:", serverCart?.products);
+        // console.log("stateCart:", stateCart);
+        // console.log("merged:", mergedCart);
+        const updatedCart = await updateCart({ products: mergedCart });
+        console.log("updated:", updatedCart);
+      };
+      updateCartOnLogin().then(dispatch(initializeCart([])));
+    }
+  }, [dispatch, isLoggedIn, serverCart, isServerCartSuccess]);
 
   useEffect(() => {
     const saveData = () => {
-      if (!isUserSignedIn && stateCart.length)
+      if (!isLoggedIn && stateCart.length)
         localStorage.setItem("products", JSON.stringify(stateCart));
     };
     window.addEventListener("beforeunload", saveData);
     return () => {
       window.removeEventListener("beforeunload", saveData);
     };
-  }, [isUserSignedIn, stateCart]);
+  }, [isLoggedIn, stateCart]);
 
   return (
     <>

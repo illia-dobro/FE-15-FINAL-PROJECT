@@ -53,7 +53,7 @@ function Shop() {
   const stateCart = useSelector((state) => state.cart.products);
 
   const items = isLoggedIn
-    ? isSuccessServerCart && serverCart.products
+    ? (isSuccessServerCart && serverCart?.products) || []
     : stateCart;
 
   useEffect(() => {
@@ -71,7 +71,7 @@ function Shop() {
     }
   };
   const handleAddTocart = (product) => {
-    dispatch(addToCart({ product: product }));
+    if (!isAuthenticated) dispatch(addToCart({ product: product }));
     if (isAuthenticated) {
       addProductToDb(product._id)
         .unwrap()

@@ -4,12 +4,6 @@ import { useNavigate, Link, Navigate } from "react-router-dom";
 import { useLoginMutation, useGetUserQuery } from "../../../app/services/api";
 import { saveState } from "../../../helpers/localStorage";
 import { glass } from "../forms.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  useCreateAndUpdateCartMutation,
-  useGetCartQuery,
-} from "../../../app/services/cartApi.js";
-import { combineUniqueProducts } from "../../../helpers/combineUniqueProducts.js";
 
 function SignIn() {
   const [email, setEmail] = React.useState("");
@@ -21,13 +15,6 @@ function SignIn() {
   const navigate = useNavigate();
 
   const { isSuccess } = useGetUserQuery();
-
-  const { data: serverCart, isSuccess: isServerCartSuccess } =
-    useGetCartQuery();
-
-  // Used to get products from the cart in the state
-  const stateCart = useSelector((state) => state.cart.products);
-  const [updateCartOnLogin] = useCreateAndUpdateCartMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,13 +39,6 @@ function SignIn() {
       }
     }
   };
-
-  useEffect(() => {
-    if (isServerCartSuccess) {
-      console.log("waaaaw");
-      updateCartOnLogin(combineUniqueProducts(serverCart.products, stateCart));
-    }
-  }, [isServerCartSuccess, isSuccess]);
 
   if (isSuccess) {
     return <Navigate to="/profile" replace={true} />;

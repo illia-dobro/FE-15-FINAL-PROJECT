@@ -24,7 +24,7 @@ function Nav() {
 
   const cartQty = isLoggedIn
     ? isSuccessServerCart &&
-      serverCart.products.reduce(
+      serverCart?.products.reduce(
         (total, product) => total + product.cartQuantity,
         0
       )

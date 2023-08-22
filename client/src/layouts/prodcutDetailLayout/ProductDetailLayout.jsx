@@ -26,9 +26,10 @@ function ProductDetailLayout({ product }) {
   const dispatch = useDispatch();
 
   const handleAddTocart = (product) => {
-    dispatch(addToCart({ product: product }));
-    dispatch(calculateTotal());
-    if (isAuthenticated) {
+    if (!isAuthenticated) {
+      dispatch(addToCart({ product: product }));
+      dispatch(calculateTotal());
+    } else {
       addProductToDb(product._id)
         .unwrap()
         .then((response) => {
