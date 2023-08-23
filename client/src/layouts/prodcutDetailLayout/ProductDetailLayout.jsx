@@ -21,7 +21,7 @@ import { addToCart, calculateTotal } from "../../app/slices/cartSlice";
 function ProductDetailLayout({ product }) {
   const { isDesktop } = useDeviceType();
   const isUserAuth = Boolean(useSelector(isTokenUser));
-  const isAuthenticated = useSelector((state) => state.auth.token);
+  const isAuthenticated = useSelector((state) => state.auth.user);
   const [addProductToDb] = useAddProductToCartMutation();
   const dispatch = useDispatch();
 

@@ -35,7 +35,7 @@ function Shop() {
   const [addProductToDb] = useAddProductToCartMutation();
   const [removeProductFromDb] = useDeleteProductFromTheCartMutation();
   const [decreaseProductFromDb] = useDecreaseProductQuantityMutation();
-  const isAuthenticated = useSelector((state) => state.auth.token);
+  const isAuthenticated = useSelector((state) => state.auth.user);
   const totalPrice = useSelector((state) => state.cart.total);
   const dispatch = useDispatch();
 
@@ -47,7 +47,7 @@ function Shop() {
     product: item.product._id,
     cartQuantity: item.cartQuantity,
   }));  */
-  const isLoggedIn = useSelector((state) => state.auth.token);
+  const isLoggedIn = useSelector((state) => state.auth.user);
   const { data: serverCart, isSuccess: isSuccessServerCart } =
     useGetCartQuery();
   const stateCart = useSelector((state) => state.cart.products);

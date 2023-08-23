@@ -31,15 +31,15 @@ import { combineUniqueProducts } from "./helpers/combineUniqueProducts.js";
 function App() {
   const dispatch = useDispatch();
   const stateCart = useSelector((state) => state.cart.products);
-  const isLoggedIn = useSelector((state) => state.auth.token);
+  const isLoggedIn = useSelector((state) => state.auth.user);
   const { data: serverCart, isSuccess: isServerCartSuccess } =
     useGetCartQuery();
   const localCartData = JSON.parse(localStorage.getItem("products"));
   const [updateCart] = useCreateAndUpdateCartMutation();
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      dispatch(initializeCart(localCartData || []));
+    if (!isLoggedIn && localCartData) {
+      dispatch(initializeCart(localCartData));
       localStorage.removeItem("products");
     }
     if (isLoggedIn && isServerCartSuccess && stateCart.length) {
@@ -49,9 +49,9 @@ function App() {
           serverCart?.products,
           stateCart
         );
-        // console.log("serverCart:", serverCart?.products);
-        // console.log("stateCart:", stateCart);
-        // console.log("merged:", mergedCart);
+        console.log("serverCart:", serverCart?.products);
+        console.log("stateCart:", stateCart);
+        console.log("merged:", mergedCart);
         const updatedCart = await updateCart({ products: mergedCart });
         console.log("updated:", updatedCart);
       };
@@ -63,6 +63,7 @@ function App() {
     const saveData = () => {
       if (!isLoggedIn && stateCart.length)
         localStorage.setItem("products", JSON.stringify(stateCart));
+      console.log(!isLoggedIn);
     };
     window.addEventListener("beforeunload", saveData);
     return () => {
