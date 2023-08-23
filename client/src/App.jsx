@@ -64,7 +64,7 @@ function App() {
           console.log("state", stateCart);
           console.log("merged", mergedCart);
           const updatedCart = await updateCart({ products: mergedCart });
-          console.log(updatedCart.data.products);
+          console.log("updated from server", updatedCart.data.products);
           dispatch(initializeCart(updatedCart.data.products));
         };
         updateCartOnLogin();

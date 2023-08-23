@@ -7,7 +7,6 @@
 /*5. Fix styles */
 
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
 import FavoriteBtn from "../../components/buttons/favoriteBtn";
 import QuantityBtns from "../../components/buttons/quantityBtns/QuantityBtns";
 import Button from "../../components/buttons/button";

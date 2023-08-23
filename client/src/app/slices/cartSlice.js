@@ -3,8 +3,6 @@ import cartApi from "../services/cartApi.js";
 
 const initialState = {
   products: [],
-  // cartQty: null,
-  total: 0,
 };
 
 const cartSlice = createSlice({
@@ -75,7 +73,12 @@ const cartSlice = createSlice({
   // },
 });
 
-export const { initializeCart, addToCart, decreaseQty, removeProduct } =
-  cartSlice.actions;
+export const {
+  initializeCart,
+  findInCart,
+  addToCart,
+  decreaseQty,
+  removeProduct,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;
