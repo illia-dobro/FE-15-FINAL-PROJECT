@@ -36,7 +36,9 @@ function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   const { isSuccess: isUserSuccess } = useGetUserQuery();
-  if (isUserSuccess) dispatch(setLoggedIn());
+  if (isUserSuccess && !isLoggedIn) {
+    dispatch(setLoggedIn());
+  }
 
   const {
     data: serverCart,
