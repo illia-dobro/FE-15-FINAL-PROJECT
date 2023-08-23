@@ -1,0 +1,47 @@
+@import "../../../assets/styles/common.scss";
+
+.form {
+
+    &__field {
+        @include flex-col;
+        margin-bottom: 44px;
+    
+        &:last-child {
+            margin-bottom: 0;
+        }
+    
+        &_label {
+            font-size: 13px;
+            line-height: 110%;
+            opacity: 30%;
+            margin-bottom: 16px;
+            color: #000000;
+    
+            &:active {
+                color: #AC8F78;
+            }
+        }
+    
+        &_input {
+            background-color: $primary;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(0,0,0,0.2)
+        }
+    }
+
+    &__button {
+        width: 100%;
+        background-color: $secondary;
+        @include flex-justify-center;
+        align-items: center;
+        border-radius: 66px;
+        padding: 28px 0;
+    
+        &_text {
+            font-size: 20px;
+            line-height: 120%;
+            color: $dark;
+            margin-right: 12px;
+        }
+    }
+}

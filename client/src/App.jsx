@@ -12,6 +12,8 @@ import Category from "./layouts/category";
 import Footer from './layouts/footer'
 import Modal from "./components/Modal";
 import ProductDetail from "./pages/productDetail";
+import Checkout from "./pages/checkout/Checkout";
+
 function App() {
   return (
     <>
@@ -27,6 +29,7 @@ function App() {
           <Route path="/delivery" element={<Delivery/>}/>
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/shop" element={<Shop />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/login" element={<Login />} />
           <Route path="/about" element={<About />} />
           <Route path="/product/:url" element={<ProductDetail />} />

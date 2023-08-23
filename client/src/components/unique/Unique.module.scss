@@ -2,6 +2,7 @@
 
 .unique {
     max-width: 1440px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     color: $dark;
@@ -50,7 +51,6 @@
 @media screen and (max-width: 1024px) {
     .unique {
         max-width: 780px;
-        margin: 0 auto;
 
         &__description {
             width: 100%;
