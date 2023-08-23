@@ -38,8 +38,11 @@ function App() {
   const { isSuccess: isUserSuccess } = useGetUserQuery();
   if (isUserSuccess) dispatch(setLoggedIn());
 
-  const { data: serverCart, isSuccess: isServerCartSuccess } =
-    useGetCartQuery();
+  const {
+    data: serverCart,
+    isSuccess: isServerCartSuccess,
+    refetch,
+  } = useGetCartQuery();
 
   const localCartData = JSON.parse(localStorage.getItem("products"));
   const [updateCart] = useCreateAndUpdateCartMutation();
@@ -49,23 +52,24 @@ function App() {
       dispatch(initializeCart(localCartData));
       localStorage.removeItem("products");
     }
-    if (isLoggedIn && isServerCartSuccess && stateCart.length) {
-      const updateCartOnLogin = async () => {
-        // @TODO add products quantity counter
-        const mergedCart = combineUniqueProducts(
-          serverCart?.products,
-          stateCart
-        );
-        console.log("serverCart:", serverCart?.products);
-        console.log("stateCart:", stateCart);
-        console.log("merged:", mergedCart);
-        const updatedCart = await updateCart({ products: mergedCart });
-        console.log("updated:", updatedCart);
-      };
-      updateCartOnLogin().then(dispatch(initializeCart([])));
+    if (isLoggedIn) {
+      refetch();
+      console.log("refe", isLoggedIn);
+      if (isServerCartSuccess && stateCart.length) {
+        const updateCartOnLogin = async () => {
+          const mergedCart = combineUniqueProducts(
+            serverCart?.products,
+            stateCart
+          );
+          const updatedCart = await updateCart({ products: mergedCart });
+          console.log("updated:", updatedCart);
+        };
+        updateCartOnLogin().then(dispatch(initializeCart([])));
+      }
     }
   }, [dispatch, isLoggedIn, serverCart, isServerCartSuccess]);
 
+  // Using for saving state cart data to local storage before unload
   useEffect(() => {
     const saveData = () => {
       if (!isLoggedIn && stateCart.length)

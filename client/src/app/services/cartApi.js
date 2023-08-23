@@ -14,40 +14,53 @@ const cartApi = createApi({
     },
   }),
 
+  tagTypes: ["Cart"],
+
   endpoints: (builder) => ({
     createCart: builder.mutation({
       query: (cartData) => ({
         method: "POST",
         body: cartData,
       }),
+      invalidatesTags: ["Cart"],
     }),
+
     /* Update (edit) cart. will create cart if not exist;  */
     createAndUpdateCart: builder.mutation({
       query: (cartData) => ({
         method: "PUT",
         body: cartData,
       }),
+      invalidatesTags: ["Cart"],
     }),
+
     getCart: builder.query({
       query: () => ({}),
+      providesTags: ["Cart"],
     }),
+
     addProductToCart: builder.mutation({
       query: (productId) => ({
         url: `/${productId}`,
         method: "PUT",
       }),
+      invalidatesTags: ["Cart"],
     }),
+
     deleteProductFromTheCart: builder.mutation({
       query: (productId) => ({
         url: `/${productId}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Cart"],
     }),
+
     decreaseProductQuantity: builder.mutation({
       query: (productId) => ({
         url: `product/${productId}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Cart"],
     }),
   }),
 });

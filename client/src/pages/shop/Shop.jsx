@@ -1,6 +1,6 @@
 /* Need to be completed: /
 
-/1. Send Cart to the database if the user had items in the cart before logging in. /
+/1. +++Send Cart to the database if the user had items in the cart before logging in. /
 /2. If the user logs in, retrieve the Cart from the database. /
 /3. Product Detail Page, quantity buttons . /
 /4. For the Server only: Fix the issue where buttons send more quantities than available in the product's quantity. */
@@ -35,7 +35,7 @@ function Shop() {
   const [addProductToDb] = useAddProductToCartMutation();
   const [removeProductFromDb] = useDeleteProductFromTheCartMutation();
   const [decreaseProductFromDb] = useDecreaseProductQuantityMutation();
-  const isAuthenticated = useSelector((state) => state.auth.user);
+  const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
   const totalPrice = useSelector((state) => state.cart.total);
   const dispatch = useDispatch();
 
@@ -47,14 +47,12 @@ function Shop() {
     product: item.product._id,
     cartQuantity: item.cartQuantity,
   }));  */
-  const isLoggedIn = useSelector((state) => state.auth.user);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const { data: serverCart, isSuccess: isSuccessServerCart } =
     useGetCartQuery();
   const stateCart = useSelector((state) => state.cart.products);
 
-  const items = isLoggedIn
-    ? (isSuccessServerCart && serverCart?.products) || []
-    : stateCart;
+  const items = isLoggedIn ? serverCart?.products : stateCart;
 
   useEffect(() => {
     dispatch(calculateTotal());
@@ -95,7 +93,7 @@ function Shop() {
   };
 
   return (
-    (!isLoggedIn || isSuccessServerCart) && (
+    items && (
       <>
         <div className={styles.shop}>
           <div className={styles.shop__container}>

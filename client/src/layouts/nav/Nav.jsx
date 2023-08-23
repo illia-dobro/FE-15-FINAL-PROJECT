@@ -22,13 +22,19 @@ function Nav() {
     useGetCartQuery();
   const stateCart = useSelector((state) => state.cart.products);
 
-  const cartQty = isLoggedIn
-    ? isSuccessServerCart &&
-      serverCart?.products.reduce(
+  const calculateCartQty = () => {
+    if (isLoggedIn && isSuccessServerCart && serverCart) {
+      return serverCart.products.reduce(
         (total, product) => total + product.cartQuantity,
         0
-      )
-    : stateCart.reduce((total, product) => total + product.cartQuantity, 0);
+      );
+    }
+
+    return stateCart.reduce(
+      (total, product) => total + product.cartQuantity,
+      0
+    );
+  };
 
   const NavLink = ({ to, children, className = "nav__link" }) => (
     <Link className={className} to={to} onClick={() => setOnOpenNav(false)}>
@@ -78,7 +84,7 @@ function Nav() {
               </span>
               <NavLink className="nav__icon" to="/shop">
                 <LiaShoppingBagSolid />
-                {cartQty || null}
+                {calculateCartQty() || null}
               </NavLink>
               <NavLink
                 className="nav__icon"
@@ -124,7 +130,7 @@ function Nav() {
           )}
           <NavLink className="nav__icon" to="/shop">
             <LiaShoppingBagSolid />
-            <span>{cartQty || null}</span>)
+            <span>{calculateCartQty() || null}</span>)
           </NavLink>
         </nav>
       )}
