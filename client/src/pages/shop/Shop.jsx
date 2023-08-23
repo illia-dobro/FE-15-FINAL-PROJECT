@@ -2,7 +2,7 @@
 
 /1. +++Send Cart to the database if the user had items in the cart before logging in. /
 /2. +++If the user logs in, retrieve the Cart from the database. /
-/3. Product Detail Page, quantity buttons . /
+/3. +++Product Detail Page, quantity buttons . /
 /4. For the Server only: Fix the issue where buttons send more quantities than available in the product's quantity. */
 /*5. Fix styles */
 

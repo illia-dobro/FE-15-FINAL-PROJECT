@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import cartApi from "../services/cartApi.js";
+import { act } from "react-dom/test-utils";
 
 const initialState = {
   products: [],
@@ -22,10 +22,13 @@ const cartSlice = createSlice({
           filteredExistingProduct.cartQuantity <
           filteredExistingProduct.product.quantity
         ) {
-          filteredExistingProduct.cartQuantity += 1;
+          filteredExistingProduct.cartQuantity += action.payload.cartQuantity;
         }
       } else {
-        state.products.push({ ...action.payload, cartQuantity: 1 });
+        state.products.push({
+          ...action.payload,
+          cartQuantity: action.payload.cartQuantity,
+        });
       }
     },
 
@@ -59,26 +62,9 @@ const cartSlice = createSlice({
       localStorage.setItem("products", JSON.stringify(state.products));
     },
   },
-  // extraReducers: (builder) => {
-  //   builder.addMatcher(
-  //     cartApi.endpoints.getCart.matchFulfilled,
-  //     (state, action) => {
-  //       const products = action.payload.products;
-  //       state.cartQty = products.reduce(
-  //         (total, product) => total + product.cartQuantity,
-  //         0
-  //       );
-  //     }
-  //   );
-  // },
 });
 
-export const {
-  initializeCart,
-  findInCart,
-  addToCart,
-  decreaseQty,
-  removeProduct,
-} = cartSlice.actions;
+export const { initializeCart, addToCart, decreaseQty, removeProduct } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

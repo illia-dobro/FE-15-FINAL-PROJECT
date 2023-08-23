@@ -17,6 +17,7 @@ import { useGetFilteredProductsQuery } from "../../app/services/productApi";
 import { isTokenUser } from "../../app/slices/authSlice";
 import {
   useAddProductToCartMutation,
+  useCreateAndUpdateCartMutation,
   useDecreaseProductQuantityMutation,
 } from "../../app/services/cartApi";
 import {
@@ -37,6 +38,7 @@ function ProductDetailLayout({ product }) {
 
   const [addProductToDb] = useAddProductToCartMutation();
   const [decreaseProductFromDb] = useDecreaseProductQuantityMutation();
+  const [updateCart] = useCreateAndUpdateCartMutation();
 
   const dispatch = useDispatch();
 
@@ -71,12 +73,26 @@ function ProductDetailLayout({ product }) {
   };
 
   const handleAddToCart = async (product) => {
-    if (isLoggedIn) {
-      const { data: responseCart } = await addProductToDb(product._id);
-      dispatch(initializeCart(responseCart.products));
-      return;
+    if (counter === 1) {
+      if (isLoggedIn) {
+        const { data: responseCart } = await addProductToDb(product._id);
+        dispatch(initializeCart(responseCart.products));
+        return;
+      }
+      dispatch(addToCart({ product: product }));
     }
-    dispatch(addToCart({ product: product }));
+    if (counter > 1) {
+      const multipleQtyProduct = { product: product, cartQuantity: counter };
+      console.log(multipleQtyProduct);
+      if (isLoggedIn) {
+        const { data: responseCart } = await updateCart({
+          products: [multipleQtyProduct, ...cart],
+        });
+        dispatch(initializeCart(responseCart.products));
+        return;
+      }
+      dispatch(addToCart({ product: product, cartQuantity: counter }));
+    }
   };
 
   const { data: filteredProducts, isSuccess } = useGetFilteredProductsQuery(

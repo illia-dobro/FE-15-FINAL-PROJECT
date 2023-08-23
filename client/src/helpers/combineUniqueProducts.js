@@ -10,9 +10,10 @@ export const combineUniqueProducts = (...arrays) => {
     );
 
     if (existingItemIndex !== -1) {
+      const existingCartItem = result[existingItemIndex];
       result[existingItemIndex] = {
-        ...result[existingItemIndex],
-        cartQuantity: result[existingItemIndex].cartQuantity + 1
+        ...existingCartItem,
+        cartQuantity: existingCartItem.cartQuantity + currentItem.cartQuantity
       };
     } else {
       result.push(currentItem);
