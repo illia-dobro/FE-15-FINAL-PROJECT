@@ -17,7 +17,7 @@ function Nav() {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
-  const isLoggedIn = useSelector((state) => state.auth.user);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const { data: serverCart, isSuccess: isSuccessServerCart } =
     useGetCartQuery();
   const stateCart = useSelector((state) => state.cart.products);

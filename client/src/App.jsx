@@ -27,13 +27,20 @@ import {
   useGetCartQuery,
 } from "./app/services/cartApi.js";
 import { combineUniqueProducts } from "./helpers/combineUniqueProducts.js";
+import { useGetUserQuery } from "./app/services/api.js";
+import { setLoggedIn } from "./app/slices/authSlice.js";
 
 function App() {
   const dispatch = useDispatch();
   const stateCart = useSelector((state) => state.cart.products);
-  const isLoggedIn = useSelector((state) => state.auth.user);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+  const { isSuccess: isUserSuccess } = useGetUserQuery();
+  if (isUserSuccess) dispatch(setLoggedIn());
+
   const { data: serverCart, isSuccess: isServerCartSuccess } =
     useGetCartQuery();
+
   const localCartData = JSON.parse(localStorage.getItem("products"));
   const [updateCart] = useCreateAndUpdateCartMutation();
 
