@@ -66,7 +66,7 @@ function ProductDetailLayout({ product }) {
         dispatch(initializeCart(responseCart.products));
         return;
       }
-      dispatch(addToCart({ product: product }));
+      dispatch(addToCart({ product: product, cartQuantity: counter }));
     } else {
       setCounter(counter + 1);
     }
@@ -79,7 +79,7 @@ function ProductDetailLayout({ product }) {
         dispatch(initializeCart(responseCart.products));
         return;
       }
-      dispatch(addToCart({ product: product }));
+      dispatch(addToCart({ product: product, cartQuantity: counter }));
     }
     if (counter > 1) {
       const multipleQtyProduct = { product: product, cartQuantity: counter };
@@ -89,9 +89,11 @@ function ProductDetailLayout({ product }) {
           products: [multipleQtyProduct, ...cart],
         });
         dispatch(initializeCart(responseCart.products));
+        setCounter(1);
         return;
       }
       dispatch(addToCart({ product: product, cartQuantity: counter }));
+      setCounter(1);
     }
   };
 

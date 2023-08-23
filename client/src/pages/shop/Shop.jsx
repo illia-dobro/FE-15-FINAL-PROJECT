@@ -55,7 +55,7 @@ function Shop() {
       dispatch(initializeCart(responseCart.products));
       return;
     }
-    dispatch(addToCart({ product: product }));
+    dispatch(addToCart({ product: product, cartQuantity: counter }));
   };
   const handleRemove = async (product) => {
     if (isLoggedIn) {
