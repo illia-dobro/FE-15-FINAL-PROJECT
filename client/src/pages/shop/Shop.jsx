@@ -16,6 +16,7 @@ import {
   useAddProductToCartMutation,
   useDeleteProductFromTheCartMutation,
   useDecreaseProductQuantityMutation,
+  useGetCartQuery,
 } from "../../app/services/cartApi";
 
 import {
@@ -26,6 +27,7 @@ import {
 } from "../../app/slices/cartSlice";
 
 import styles from "./shop.module.scss";
+import { useEffect } from "react";
 
 function Shop() {
   const [addProductToDb] = useAddProductToCartMutation();
@@ -35,11 +37,26 @@ function Shop() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
+  const {
+    data: serverCart,
+    isSuccess: isServerCartSuccess,
+    refetch: refetchServerCart,
+  } = useGetCartQuery();
+
   const stateCart = useSelector((state) => state.cart);
   const items = stateCart.products;
   const totalPrice = items.reduce((total, product) => {
-   return  total + product.product.currentPrice * product.cartQuantity;
+    return total + product.product.currentPrice * product.cartQuantity;
   }, 0);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      refetchServerCart();
+      if (isServerCartSuccess) {
+        dispatch(initializeCart(serverCart.products));
+      }
+    }
+  },[]);
 
   const handleDecreaseQty = async (product) => {
     if (isLoggedIn) {
