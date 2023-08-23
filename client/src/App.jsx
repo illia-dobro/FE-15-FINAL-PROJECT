@@ -60,6 +60,9 @@ function App() {
             serverCart?.products,
             stateCart
           );
+          console.log("server", serverCart?.products);
+          console.log("state", stateCart);
+          console.log("merged", mergedCart);
           const updatedCart = await updateCart({ products: mergedCart });
           console.log(updatedCart.data.products);
           dispatch(initializeCart(updatedCart.data.products));
