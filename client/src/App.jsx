@@ -54,7 +54,7 @@ function App() {
     }
     if (isLoggedIn) {
       refetch();
-      console.log("refe", isLoggedIn);
+      console.log("refetched");
       if (isServerCartSuccess && stateCart.length) {
         const updateCartOnLogin = async () => {
           const mergedCart = combineUniqueProducts(
@@ -67,7 +67,7 @@ function App() {
         updateCartOnLogin().then(dispatch(initializeCart([])));
       }
     }
-  }, [dispatch, isLoggedIn, serverCart, isServerCartSuccess]);
+  }, [isLoggedIn, isServerCartSuccess]);
 
   // Using for saving state cart data to local storage before unload
   useEffect(() => {
