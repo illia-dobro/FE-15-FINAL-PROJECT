@@ -1,7 +1,7 @@
 /* Need to be completed: /
 
 /1. +++Send Cart to the database if the user had items in the cart before logging in. /
-/2. If the user logs in, retrieve the Cart from the database. /
+/2. +++If the user logs in, retrieve the Cart from the database. /
 /3. Product Detail Page, quantity buttons . /
 /4. For the Server only: Fix the issue where buttons send more quantities than available in the product's quantity. */
 /*5. Fix styles */
@@ -18,7 +18,6 @@ import {
   useAddProductToCartMutation,
   useDeleteProductFromTheCartMutation,
   useDecreaseProductQuantityMutation,
-  useCreateAndUpdateCartMutation,
 } from "../../app/services/cartApi";
 
 import {
@@ -26,7 +25,6 @@ import {
   addToCart,
   calculateTotal,
   removeAllOfProduct,
-  updateCart,
 } from "../../app/slices/cartSlice";
 
 import styles from "./shop.module.scss";
@@ -35,24 +33,14 @@ function Shop() {
   const [addProductToDb] = useAddProductToCartMutation();
   const [removeProductFromDb] = useDeleteProductFromTheCartMutation();
   const [decreaseProductFromDb] = useDecreaseProductQuantityMutation();
-  const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
   const totalPrice = useSelector((state) => state.cart.total);
   const dispatch = useDispatch();
 
-  /*
-  const [createAndUpdateCartMutation] = useCreateAndUpdateCartMutation();
-  const { data: cardFromDb, isSuccess } = useGetCartQuery();  */
-
-  /*const formattedItems = items.map((item) => ({
-    product: item.product._id,
-    cartQuantity: item.cartQuantity,
-  }));  */
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const { data: serverCart, isSuccess: isSuccessServerCart } =
-    useGetCartQuery();
-  const stateCart = useSelector((state) => state.cart.products);
+  const { data: serverCart } = useGetCartQuery();
+  const stateCart = useSelector((state) => state.cart);
 
-  const items = isLoggedIn ? serverCart?.products : stateCart;
+  const items = isLoggedIn ? serverCart?.products : stateCart.products;
 
   useEffect(() => {
     dispatch(calculateTotal());
@@ -60,7 +48,7 @@ function Shop() {
 
   const handleRemoveFromCart = (product) => {
     dispatch(removeFromCart({ product: product }));
-    if (isAuthenticated) {
+    if (isLoggedIn) {
       decreaseProductFromDb(product._id)
         .unwrap()
         .then((response) => {
@@ -68,9 +56,9 @@ function Shop() {
         });
     }
   };
-  const handleAddTocart = (product) => {
-    if (!isAuthenticated) dispatch(addToCart({ product: product }));
-    if (isAuthenticated) {
+  const handleAddToCart = (product) => {
+    if (!isLoggedIn) dispatch(addToCart({ product: product }));
+    if (isLoggedIn) {
       addProductToDb(product._id)
         .unwrap()
         .then((response) => {
@@ -80,7 +68,7 @@ function Shop() {
   };
   const handleRemoveAllOfProduct = (product) => {
     dispatch(removeAllOfProduct({ product: product }));
-    if (isAuthenticated) {
+    if (isLoggedIn) {
       removeProductFromDb(product._id)
         .unwrap()
         .then((response) => {
@@ -113,7 +101,7 @@ function Shop() {
                       </a>
                       <FavoriteBtn></FavoriteBtn>
                       <QuantityBtns
-                        handleIncrement={() => handleAddTocart(item.product)}
+                        handleIncrement={() => handleAddToCart(item.product)}
                         handleDecrement={() =>
                           handleRemoveFromCart(item.product)
                         }
