@@ -38,8 +38,11 @@ function App() {
   const { isSuccess: isUserSuccess } = useGetUserQuery();
   if (isUserSuccess) dispatch(setLoggedIn());
 
-  const { data: serverCart, isSuccess: isServerCartSuccess } =
-    useGetCartQuery();
+  const {
+    data: serverCart,
+    isSuccess: isServerCartSuccess,
+    refetch: refetchServerCart,
+  } = useGetCartQuery();
 
   const localCartData = JSON.parse(localStorage.getItem("products"));
   const [updateCart] = useCreateAndUpdateCartMutation();
@@ -50,13 +53,15 @@ function App() {
       localStorage.removeItem("products");
     }
     if (isLoggedIn) {
-      if (isServerCartSuccess && stateCart.length) {
+      refetchServerCart();
+      if (isServerCartSuccess) {
         const updateCartOnLogin = async () => {
           const mergedCart = combineUniqueProducts(
             serverCart?.products,
             stateCart
           );
           const updatedCart = await updateCart({ products: mergedCart });
+          console.log(updatedCart.data.products);
           dispatch(initializeCart(updatedCart.data.products));
         };
         updateCartOnLogin();

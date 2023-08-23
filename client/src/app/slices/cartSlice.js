@@ -29,17 +29,9 @@ const cartSlice = createSlice({
       } else {
         state.products.push({ ...action.payload, cartQuantity: 1 });
       }
-
-      // localStorage.setItem("products", JSON.stringify(state.products));
     },
-    /*    updateCart: (state, action) => {
 
-      state.products = [action.payload];
-
-      localStorage.setItem('products', JSON.stringify(state.products));
-
-    }, */
-    removeFromCart: (state, action) => {
+    decreaseQty: (state, action) => {
       const productIdToRemove = action.payload.product._id;
       const itemToRemove = state.products.find(
         (product) => product.product._id === productIdToRemove
@@ -52,10 +44,9 @@ const cartSlice = createSlice({
           (product) => product.product._id !== productIdToRemove
         );
       }
-
-      localStorage.setItem("products", JSON.stringify(state.products));
     },
-    removeAllOfProduct: (state, action) => {
+
+    removeProduct: (state, action) => {
       const productIdToRemove = action.payload.product._id;
       const removedProduct = state.products.find(
         (product) => product.product._id === productIdToRemove
@@ -68,11 +59,6 @@ const cartSlice = createSlice({
       }
 
       localStorage.setItem("products", JSON.stringify(state.products));
-    },
-    calculateTotal: (state) => {
-      state.total = state.products.reduce((total, product) => {
-        return total + product.product.currentPrice * product.cartQuantity;
-      }, 0);
     },
   },
   // extraReducers: (builder) => {
@@ -89,13 +75,7 @@ const cartSlice = createSlice({
   // },
 });
 
-export const {
-  initializeCart,
-  addToCart,
-  updateCart,
-  removeFromCart,
-  calculateTotal,
-  removeAllOfProduct,
-} = cartSlice.actions;
+export const { initializeCart, addToCart, decreaseQty, removeProduct } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

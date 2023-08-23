@@ -16,27 +16,25 @@ import Tabs from "../../components/tabs";
 import { useGetFilteredProductsQuery } from "../../app/services/productApi";
 import { isTokenUser } from "../../app/slices/authSlice";
 import { useAddProductToCartMutation } from "../../app/services/cartApi";
-import { addToCart, calculateTotal } from "../../app/slices/cartSlice";
+import { addToCart, initializeCart } from "../../app/slices/cartSlice";
 
 function ProductDetailLayout({ product }) {
   const { isDesktop } = useDeviceType();
   const isUserAuth = Boolean(useSelector(isTokenUser));
-  const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [addProductToDb] = useAddProductToCartMutation();
   const dispatch = useDispatch();
 
-  const handleAddTocart = (product) => {
-    if (!isAuthenticated) {
-      dispatch(addToCart({ product: product }));
-      dispatch(calculateTotal());
-    } else {
-      addProductToDb(product._id)
-        .unwrap()
-        .then((response) => {
-          console.log("Cart Update Successfully:", response);
-        });
+  const handleAddToCart = async (product) => {
+    if (isLoggedIn) {
+      const { data: responseCart } = await addProductToDb(product._id);
+      dispatch(initializeCart(responseCart.products));
+      return;
     }
+    dispatch(addToCart({ product: product }));
   };
+
+
   const { data: filtredProducts, isSuccess } = useGetFilteredProductsQuery(
     `categories=${product.categories}&product_type=${product.product_type}&enabled=true&perPage=8`
   );
@@ -106,7 +104,7 @@ function ProductDetailLayout({ product }) {
             </div>
             <Button
               className="button button-color--secondary"
-              action={() => handleAddTocart(product)}
+              action={() => handleAddToCart(product)}
             >
               <LiaShoppingBagSolid />
               <span>Add to shopping cart</span>

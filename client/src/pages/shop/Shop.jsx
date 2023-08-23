@@ -14,17 +14,16 @@ import Button from "../../components/buttons/button";
 import { formatCurrency } from "../../helpers/currencyFormatter";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import {
-  useGetCartQuery,
   useAddProductToCartMutation,
   useDeleteProductFromTheCartMutation,
   useDecreaseProductQuantityMutation,
 } from "../../app/services/cartApi";
 
 import {
-  removeFromCart,
+  decreaseQty,
   addToCart,
-  calculateTotal,
-  removeAllOfProduct,
+  removeProduct,
+  initializeCart,
 } from "../../app/slices/cartSlice";
 
 import styles from "./shop.module.scss";
@@ -33,51 +32,39 @@ function Shop() {
   const [addProductToDb] = useAddProductToCartMutation();
   const [removeProductFromDb] = useDeleteProductFromTheCartMutation();
   const [decreaseProductFromDb] = useDecreaseProductQuantityMutation();
-  const totalPrice = useSelector((state) => state.cart.total);
+
   const dispatch = useDispatch();
-
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const { data: serverCart } = useGetCartQuery();
+
   const stateCart = useSelector((state) => state.cart);
+  const items = stateCart.products;
+  const totalPrice = items.reduce((total, product) => {
+   return  total + product.product.currentPrice * product.cartQuantity;
+  }, 0);
 
-  const items = isLoggedIn ? serverCart?.products : stateCart.products;
-
-  useEffect(() => {
-    dispatch(calculateTotal());
-  }, [stateCart]);
-
-  const handleRemoveFromCart = (product) => {
-    dispatch(removeFromCart({ product: product }));
+  const handleDecreaseQty = async (product) => {
     if (isLoggedIn) {
-      decreaseProductFromDb(product._id)
-        .unwrap()
-        .then((response) => {
-          console.log("Cart Removed Successfully:", response);
-        });
+      const { data: responseCart } = await decreaseProductFromDb(product._id);
+      dispatch(initializeCart(responseCart.products));
+      return;
     }
+    dispatch(decreaseQty({ product: product }));
   };
-  const handleAddToCart = (product) => {
-    if (!isLoggedIn) dispatch(addToCart({ product: product }));
+  const handleIncreaseQty = async (product) => {
     if (isLoggedIn) {
-      addProductToDb(product._id)
-        .unwrap()
-        .then((response) => {
-          console.log("Cart Update Successfully:", response);
-        });
+      const { data: responseCart } = await addProductToDb(product._id);
+      dispatch(initializeCart(responseCart.products));
+      return;
     }
+    dispatch(addToCart({ product: product }));
   };
-  const handleRemoveAllOfProduct = (product) => {
-    dispatch(removeAllOfProduct({ product: product }));
+  const handleRemove = async (product) => {
     if (isLoggedIn) {
-      removeProductFromDb(product._id)
-        .unwrap()
-        .then((response) => {
-          console.log("Cart Removed Successfully:", response);
-        })
-        .catch((error) => {
-          console.log("Cart Failure:", error);
-        });
+      const { data: responseCart } = await removeProductFromDb(product._id);
+      dispatch(initializeCart(responseCart.products));
+      return;
     }
+    dispatch(removeProduct({ product: product }));
   };
 
   return (
@@ -101,10 +88,8 @@ function Shop() {
                       </a>
                       <FavoriteBtn></FavoriteBtn>
                       <QuantityBtns
-                        handleIncrement={() => handleAddToCart(item.product)}
-                        handleDecrement={() =>
-                          handleRemoveFromCart(item.product)
-                        }
+                        handleIncrement={() => handleIncreaseQty(item.product)}
+                        handleDecrement={() => handleDecreaseQty(item.product)}
                         count={item.cartQuantity}
                         className={styles.shop__item_quantityBtn}
                       />
@@ -112,7 +97,7 @@ function Shop() {
                     <div className={styles.shop__item_adidional}>
                       <Button
                         className={styles.shop__item_close}
-                        action={() => handleRemoveAllOfProduct(item.product)}
+                        action={() => handleRemove(item.product)}
                       >
                         x
                       </Button>

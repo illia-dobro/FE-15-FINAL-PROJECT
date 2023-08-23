@@ -9,7 +9,6 @@ import { VscChromeClose } from "react-icons/vsc";
 import { useLocation } from "react-router-dom";
 import useDeviceType from "../../helpers/getDeviceType";
 import "./nav.scss";
-import { useGetCartQuery } from "../../app/services/cartApi.js";
 
 function Nav() {
   const { isMobile } = useDeviceType();
@@ -17,24 +16,10 @@ function Nav() {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const { data: serverCart, isSuccess: isSuccessServerCart } =
-    useGetCartQuery();
   const stateCart = useSelector((state) => state.cart.products);
 
-  const calculateCartQty = () => {
-    if (isLoggedIn && isSuccessServerCart && serverCart) {
-      return serverCart.products.reduce(
-        (total, product) => total + product.cartQuantity,
-        0
-      );
-    }
-
-    return stateCart.reduce(
-      (total, product) => total + product.cartQuantity,
-      0
-    );
-  };
+  const calculateCartQty = () =>
+    stateCart.reduce((total, product) => total + product.cartQuantity, 0);
 
   const NavLink = ({ to, children, className = "nav__link" }) => (
     <Link className={className} to={to} onClick={() => setOnOpenNav(false)}>
@@ -130,7 +115,7 @@ function Nav() {
           )}
           <NavLink className="nav__icon" to="/shop">
             <LiaShoppingBagSolid />
-            <span>{calculateCartQty() || null}</span>)
+            <span>{calculateCartQty() || null}</span>
           </NavLink>
         </nav>
       )}
