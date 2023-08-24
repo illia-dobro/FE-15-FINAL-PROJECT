@@ -50,13 +50,16 @@ function Shop() {
   }, 0);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      refetchServerCart();
-      if (isServerCartSuccess) {
-        dispatch(initializeCart(serverCart.products));
+    const refetchOnMount = async () => {
+      if (isLoggedIn) {
+        const data = await refetchServerCart();
+        if (isServerCartSuccess) {
+          dispatch(initializeCart(data.products));
+        }
       }
-    }
-  },[]);
+    };
+    refetchOnMount();
+  }, []);
 
   const handleDecreaseQty = async (product) => {
     if (isLoggedIn) {
