@@ -1,31 +1,68 @@
 import ProductsList from "../productsList/index.js";
 import { useParams } from "react-router-dom";
-import { categories } from "../../pages/catalog/Catalog.jsx";
 import Filters from "../../components/filters/index.js";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  productTypes,
+  setProductsAndPagesQty,
+} from "../../app/slices/filtersSlice.js";
+import { useGetFilteredProductsQuery } from "../../app/services/productApi.js";
+import { useGetCategoriesQuery } from "../../app/services/catalogApi.js";
+import Pagination from "../../components/pagination/index.js";
+import HeartsLoader from "../../components/heartsLoader/heartsLoader.jsx";
+import styles from "./Category.module.scss";
 
 const Category = () => {
   const { categoryName } = useParams();
+  const dispatch = useDispatch();
+  dispatch(productTypes(categoryName));
 
-  const category = categories.find(
-    (category) => category.path === categoryName
-  );
+  const { data: categories, isSuccess: isCategoriesSuccess } =
+    useGetCategoriesQuery();
 
-  return (
+  const filtersQuery = useSelector((state) => state.filters.filtersQuery);
+  const { data: productsData, isSuccess: isProductsSuccess } =
+    useGetFilteredProductsQuery(`categories=${categoryName}${filtersQuery}`);
+
+  if (isProductsSuccess) {
+    dispatch(setProductsAndPagesQty(productsData.productsQuantity));
+  }
+
+  const perPage = useSelector((state) => state.filters.pagination.perPage);
+  const startPage = useSelector((state) => state.filters.pagination.startPage);
+
+  const { data: paginatedProductsData, isSuccess: isPaginatedProductsSuccess } =
+    useGetFilteredProductsQuery(
+      `categories=${categoryName}${filtersQuery}&perPage=${perPage}&startPage=${startPage}`
+    );
+
+  const category =
+    isCategoriesSuccess &&
+    categories.find((category) => category.name === categoryName);
+
+  return isPaginatedProductsSuccess ? (
     <>
       <h2 className="text-center text-7xl mx-auto my-4">{category.name}</h2>
 
       <div className="mx-auto max-w-2xl px-4 py-2 sm:px-6 sm:py-6 lg:max-w-7xl lg:px-8">
         <img
-            src={category.img}
-            alt={"banner"}
-            className="w-full h-80 object-cover overflow-hidden rounded-md"
+          src={category.imgUrl}
+          alt={"banner"}
+          className="w-full h-80 object-cover overflow-hidden rounded-md"
         />
       </div>
 
       <Filters>
-        <ProductsList category={category.path} />
+        {isPaginatedProductsSuccess ? (
+          <ProductsList products={paginatedProductsData.products} />
+        ) : (
+          <HeartsLoader wrapperClass="hearts" />
+        )}
+        <Pagination />
       </Filters>
     </>
+  ) : (
+    <HeartsLoader wrapperClass="hearts" />
   );
 };
 

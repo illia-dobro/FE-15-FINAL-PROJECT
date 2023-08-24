@@ -1,8 +1,13 @@
 import ProductSlider from "../productSlider";
 import CustomBtnGroup from "../recommended/customBtnGroup/CustomBtnGroup";
+import PropTypes from 'prop-types';
+
 import "./recommended.scss";
 
-function Recommended() {
+function Recommended({products}) {
+  if (products.length === 0) {
+    return null; 
+  }
   return (
     <div className="product-recommended">
       <div className="product-recommended__descr">
@@ -18,10 +23,14 @@ function Recommended() {
             arrows: false,
             itemClass: "recommended-slide",
           }}
+          products={products}
         />
       </div>
     </div>
   );
 }
-
 export default Recommended;
+
+Recommended.propTypes = {
+  products: PropTypes.arrayOf(PropTypes.object).isRequired,
+};

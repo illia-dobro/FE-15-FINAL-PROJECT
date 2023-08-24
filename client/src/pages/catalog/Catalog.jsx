@@ -1,36 +1,46 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 import styles from "./Catalog.module.scss";
-import Unique from "../../components/unique/Unique.jsx";
+import Unique from "../../components/unique";
 
-export const categories = [
-  {
-    id: "1",
-    path: "care",
-    name: "Care cosmetics",
-    img: "https://e0.pxfuel.com/wallpapers/951/581/desktop-wallpaper-mountains-river-valley-landscape-iceland-dual-wide-background-iceland-dual-monitor.jpg",
-  },
-  {
-    id: "2",
-    path: "decorative",
-    name: "Decorative cosmetics ",
-    img: "https://e0.pxfuel.com/wallpapers/647/161/desktop-wallpaper-aurora-borealis-nature-iceland-dual-wide-widescreen-16-9-widescreen.jpg",
-  },
-  {
-    id: "3",
-    path: "eyebrow",
-    name: "Eyebrow cosmetics",
-    img: "https://e1.pxfuel.com/desktop-wallpaper/46/973/desktop-wallpaper-aldeyjarfoss-waterfall-iceland-winter-ultra-backgrounds-for-u-tv-widescreen-ultrawide-laptop-tablet-smartphone-ultra-wide-winter.jpg",
-  },
-  {
-    id: "4",
-    path: "accessories",
-    name: "Accessories",
-    img: "https://e0.pxfuel.com/wallpapers/776/168/desktop-wallpaper-shore-iceland-%E2%9D%A4-for-ultra-tv-%E2%80%A2-wide.jpg",
-  },
-];
+import { useGetCategoriesQuery } from "../../app/services/catalogApi.js";
+import uniqueMainImgUrl2 from "../../assets/unique_main2.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import {
+  clearFilters,
+  setPriceRangeBounds,
+} from "../../app/slices/filtersSlice.js";
+import { useGetAllProductsQuery } from "../../app/services/productApi.js";
+import { findMinAndMax } from "../../helpers/findMinAndMax.js";
+import HeartsLoader from "../../components/heartsLoader/heartsLoader.jsx";
 
 const Catalog = () => {
+  const { data: categories, isSuccess: isCategoriesSuccess } = useGetCategoriesQuery();
+  const { data: allProducts, isSuccess: isAllProductsSuccess } =
+    useGetAllProductsQuery();
+
+  const dispatch = useDispatch();
+
+  const activeCategory = useLocation().pathname.split("/").pop();
+
+  useEffect(() => {
+    if (isAllProductsSuccess) {
+      const priceRange = findMinAndMax(allProducts);
+
+      dispatch(
+        setPriceRangeBounds({
+          min: Math.trunc(priceRange.min),
+          max: Math.ceil(priceRange.max),
+        })
+      );
+    }
+
+    return () => {
+      dispatch(clearFilters());
+    };
+  }, [allProducts, dispatch, isAllProductsSuccess]);
+
   return (
     <div className={styles.catalog_page}>
       <ul
@@ -39,22 +49,28 @@ const Catalog = () => {
           " mx-auto flex grow justify-center text-center"
         }
       >
-        {categories.map((category) => (
-          <li key={category.name} className="grow-[0.1]">
-            <Link
-              to={category.path}
-              className="flex justify-center text-[#555555] opacity-40 hover:opacity-100 transition-all py-4 px-2"
-            >
-              {category.name}
-            </Link>
-          </li>
-        ))}
+        {isCategoriesSuccess &&
+          categories.map((category) => (
+            <li key={category.name} className="grow-[0.1]">
+              {/*@TODO add 'active' status*/}
+              <Link
+                to={category.name}
+                className={activeCategory === category.name ?"flex justify-center text-[#555555] opacity-90 hover:opacity-100 transition-all py-4 px-2" : "flex justify-center text-[#555555] opacity-40 hover:opacity-100 transition-all py-4 px-2"
+                }>
+                {category.name}
+              </Link>
+            </li>
+          ))}
       </ul>
 
       <Outlet />
 
-      {/*<Unique image={{src: 'https://w.forfun.com/fetch/61/6157e4be3da6483d461345e990a47026.jpeg'}}/>*/}
-      <Unique />
+      <Unique
+        className={styles.unique}
+        imageUrl={uniqueMainImgUrl2}
+        flexDirection="row-reverse"
+        content="Each Boltaeva brand product is truly unique - everything is thought out to the smallest detail."
+      />
     </div>
   );
 };

@@ -6,45 +6,71 @@ import {
   FunnelIcon,
   MinusIcon,
   PlusIcon,
-  Squares2X2Icon,
 } from "@heroicons/react/20/solid";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changeActiveFilter,
+  changeActiveSingleFilter,
+  clearFilters,
+  updateFiltersQuery,
+} from "../../app/slices/filtersSlice.js";
+import PriceRange from "../priceRange/PriceRange.jsx";
+import Button from "../buttons/button/Button.jsx";
+import { joinClassNames } from "../../helpers/joinClassNames.js";
 
 const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
+  { name: "Newest", link: "-date", current: false },
+  { name: "Price: Low to High", link: "+currentPrice", current: false },
+  { name: "Price: High to Low", link: "-currentPrice", current: false },
 ];
-
-const filters = [
-  {
-    id: "skin",
-    name: "Skin Type",
-    options: [
-      { value: "normal", label: "Normal", checked: true },
-      { value: "dry", label: "Dry", checked: false },
-      { value: "oily", label: "Oily", checked: false },
-      { value: "combination", label: "Combination", checked: false },
-      { value: "sensitive", label: "Sensitive", checked: false },
-    ],
-  },
-  {
-    id: "category",
-    name: "Category",
-    options: [
-      { value: "new-arrivals", label: "New Arrivals", checked: false },
-      { value: "sale", label: "Sale", checked: false },
-    ],
-  },
-];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function Filters({ children }) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const filters = [];
+  const dispatch = useDispatch();
+
+  const productTypes = useSelector((state) => state.filters.productTypes);
+  const manufacturerCountry = useSelector(
+    (state) => state.filters.manufacturerCountry
+  );
+  filters.push(productTypes, manufacturerCountry);
+
+  const activeFilters = useSelector((state) => state.filters.activeFilters);
+
+  const getCheckedStatus = (arrayFilters, section, option) => {
+    return arrayFilters[section]?.includes(option) || false;
+  };
+
+  const activeSorting = useSelector(
+    (state) => state.filters.activeFilters.sort
+  );
+
+  const handleCheckboxChange = (e) => {
+    dispatch(
+      changeActiveFilter({ name: e.target.name, value: e.target.value })
+    );
+  };
+
+  const handleSort = (e) => {
+    e.preventDefault();
+    dispatch(
+      changeActiveSingleFilter({
+        name: "sort",
+        value: e.target.href.split("/").pop(),
+      })
+    );
+    dispatch(updateFiltersQuery());
+  };
+
+  const applyFilters = (e) => {
+    e.preventDefault();
+    dispatch(updateFiltersQuery());
+  };
+
+  const resetFilters = (e) => {
+    e.preventDefault();
+    dispatch(clearFilters());
+  };
 
   return (
     <div>
@@ -77,12 +103,12 @@ export default function Filters({ children }) {
               leaveFrom="translate-x-0"
               leaveTo="translate-x-full"
             >
-              <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
+              <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-[#eee4da] py-4 pb-12 shadow-xl">
                 <div className="flex items-center justify-between px-4">
-                  <h2 className="text-lg font-medium text-gray-900">Filters</h2>
+                  <h2 className="text-lg font-medium">Filters</h2>
                   <button
                     type="button"
-                    className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
+                    className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md p-2"
                     onClick={() => setMobileFiltersOpen(false)}
                   >
                     <span className="sr-only">Close menu</span>
@@ -91,7 +117,7 @@ export default function Filters({ children }) {
                 </div>
 
                 {/* Filters */}
-                <form className="mt-4 border-t border-gray-200">
+                <form className="mt-4">
                   {filters.map((section) => (
                     <Disclosure
                       as="div"
@@ -101,8 +127,8 @@ export default function Filters({ children }) {
                       {({ open }) => (
                         <>
                           <h3 className="-mx-2 -my-3 flow-root">
-                            <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                              <span className="font-medium text-gray-900">
+                            <Disclosure.Button className="flex w-full items-center justify-between px-2 py-3 text-gray-400 hover:text-gray-500">
+                              <span className="font-medium">
                                 {section.name}
                               </span>
                               <span className="ml-6 flex items-center">
@@ -129,15 +155,20 @@ export default function Filters({ children }) {
                                 >
                                   <input
                                     id={`filter-mobile-${section.id}-${optionIdx}`}
-                                    name={`${section.id}[]`}
+                                    name={`${section.id}`}
                                     defaultValue={option.value}
                                     type="checkbox"
-                                    defaultChecked={option.checked}
-                                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                    checked={getCheckedStatus(
+                                      activeFilters,
+                                      section.id,
+                                      option.value
+                                    )}
+                                    onChange={(e) => handleCheckboxChange(e)}
+                                    className="h-4 w-4 rounded border-gray-500 text-indigo-600 focus:ring-indigo-500"
                                   />
                                   <label
                                     htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                                    className="ml-3 min-w-0 flex-1 text-gray-500"
+                                    className="ml-3 min-w-0 flex-1 text-gray-500 capitalize"
                                   >
                                     {option.label}
                                   </label>
@@ -149,6 +180,26 @@ export default function Filters({ children }) {
                       )}
                     </Disclosure>
                   ))}
+                  <PriceRange
+                    className={"border-t border-gray-200 px-4 py-6"}
+                  />
+                  <div className="flex justify-between mt-4 mx-4">
+                    {" "}
+                    <Button
+                      action={(e) => resetFilters(e)}
+                      className={
+                        "button text-[#ac8f78] bg-[#d6cdc4]/[0.5] py-2 px-8"
+                      }
+                    >
+                      Reset
+                    </Button>{" "}
+                    <Button
+                      action={(e) => applyFilters(e)}
+                      className={"button bg-[#ac8f78]/[0.4] py-2 px-8"}
+                    >
+                      Apply
+                    </Button>
+                  </div>
                 </form>
               </Dialog.Panel>
             </Transition.Child>
@@ -158,9 +209,7 @@ export default function Filters({ children }) {
 
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-            Our products
-          </h1>
+          <h1 className="text-4xl font-bold tracking-tight">Our products</h1>
 
           <div className="flex items-center">
             <Menu as="div" className="relative inline-block text-left">
@@ -187,12 +236,14 @@ export default function Filters({ children }) {
                   <div className="py-1">
                     {sortOptions.map((option) => (
                       <Menu.Item key={option.name}>
+                        {/*@TODO fix 'active' status*/}
                         {({ active }) => (
                           <a
-                            href={option.href}
-                            className={classNames(
-                              option.current
-                                ? "font-medium text-gray-900"
+                            href={option.link}
+                            onClick={handleSort}
+                            className={joinClassNames(
+                              activeSorting === option.link
+                                ? "font-semibold"
                                 : "text-gray-500",
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm"
@@ -208,13 +259,6 @@ export default function Filters({ children }) {
               </Transition>
             </Menu>
 
-            {/*<button*/}
-            {/*  type="button"*/}
-            {/*  className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"*/}
-            {/*>*/}
-            {/*  <span className="sr-only">View grid</span>*/}
-            {/*  <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />*/}
-            {/*</button>*/}
             <button
               type="button"
               className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
@@ -227,26 +271,20 @@ export default function Filters({ children }) {
         </div>
 
         <section aria-labelledby="products-heading" className="pb-24 pt-6">
-          <h2 id="products-heading" className="sr-only">
-            Products
-          </h2>
-
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
             {/* Filters */}
             <form className="hidden lg:block">
               {filters.map((section) => (
-                  <Disclosure
-                      as="div"
-                      key={section.id}
-                      className="border-b border-gray-200 py-6"
-                  >
-                    {({open}) => (
-                        <>
+                <Disclosure
+                  as="div"
+                  key={section.id}
+                  className="border-b border-gray-200 py-6"
+                >
+                  {({ open }) => (
+                    <>
                       <h3 className="-my-3 flow-root">
                         <Disclosure.Button className="flex w-full items-center justify-between  py-3 text-sm text-gray-400 hover:text-gray-500">
-                          <span className="font-medium text-gray-900">
-                            {section.name}
-                          </span>
+                          <span className="font-medium">{section.name}</span>
                           <span className="ml-6 flex items-center">
                             {open ? (
                               <MinusIcon
@@ -271,15 +309,20 @@ export default function Filters({ children }) {
                             >
                               <input
                                 id={`filter-${section.id}-${optionIdx}`}
-                                name={`${section.id}[]`}
+                                name={`${section.id}`}
                                 defaultValue={option.value}
                                 type="checkbox"
-                                defaultChecked={option.checked}
+                                checked={getCheckedStatus(
+                                  activeFilters,
+                                  section.id,
+                                  option.value
+                                )}
+                                onChange={(e) => handleCheckboxChange(e)}
                                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                               />
                               <label
                                 htmlFor={`filter-${section.id}-${optionIdx}`}
-                                className="ml-3 text-sm text-gray-600"
+                                className="ml-3 text-sm text-gray-600 capitalize"
                               >
                                 {option.label}
                               </label>
@@ -291,6 +334,24 @@ export default function Filters({ children }) {
                   )}
                 </Disclosure>
               ))}
+              <PriceRange className={"mt-4 mb-4"} />
+              <div className="flex justify-between pt-4 border-t">
+                {" "}
+                <Button
+                  action={(e) => resetFilters(e)}
+                  className={
+                    "button text-[#ac8f78] bg-[#d6cdc4]/[0.5] py-2 px-5"
+                  }
+                >
+                  Reset
+                </Button>{" "}
+                <Button
+                  action={(e) => applyFilters(e)}
+                  className={"button bg-[#ac8f78]/[0.4] py-2 px-5"}
+                >
+                  Apply
+                </Button>
+              </div>
             </form>
 
             <div className="lg:col-span-4">{children}</div>
