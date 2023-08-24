@@ -52,7 +52,7 @@ function Shop() {
   useEffect(() => {
     const refetchOnMount = async () => {
       if (isLoggedIn) {
-        const data = await refetchServerCart();
+        const { data } = await refetchServerCart();
         if (isServerCartSuccess) {
           dispatch(initializeCart(data.products));
         }
