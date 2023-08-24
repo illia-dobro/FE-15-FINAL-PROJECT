@@ -37,11 +37,8 @@ function Shop() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
-  const {
-    data: serverCart,
-    isSuccess: isServerCartSuccess,
-    refetch: refetchServerCart,
-  } = useGetCartQuery();
+  const { isSuccess: isServerCartSuccess, refetch: refetchServerCart } =
+    useGetCartQuery();
 
   const stateCart = useSelector((state) => state.cart);
   const items = stateCart.products;
@@ -51,14 +48,12 @@ function Shop() {
 
   useEffect(() => {
     const refetchOnMount = async () => {
-      if (isLoggedIn) {
-        const { data } = await refetchServerCart();
-        if (isServerCartSuccess) {
-          dispatch(initializeCart(data.products));
-        }
+      const { data: updatedCart } = await refetchServerCart();
+      if (isServerCartSuccess) {
+        dispatch(initializeCart(updatedCart.products));
       }
     };
-    refetchOnMount();
+    if (isLoggedIn) refetchOnMount();
   }, []);
 
   const handleDecreaseQty = async (product) => {
