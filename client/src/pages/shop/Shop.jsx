@@ -102,7 +102,6 @@ function Shop() {
                           {item.product.name}
                         </h3>
                       </a>
-                      <FavoriteBtn></FavoriteBtn>
                       <QuantityBtns
                         handleIncrement={() => handleIncreaseQty(item.product)}
                         handleDecrement={() => handleDecreaseQty(item.product)}
