@@ -75,7 +75,7 @@ function Shop() {
       }
       return;
     }
-    dispatch(addToCart({ product: product, cartQuantity: counter }));
+    dispatch(addToCart({ product: product, cartQuantity: 1 }));
   };
   const handleRemove = async (product) => {
     if (isLoggedIn) {
