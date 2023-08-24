@@ -28,6 +28,7 @@ import {
 
 import styles from "./shop.module.scss";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 function Shop() {
   const [addProductToDb] = useAddProductToCartMutation();
@@ -64,10 +65,14 @@ function Shop() {
     }
     dispatch(decreaseQty({ product: product }));
   };
-  const handleIncreaseQty = async (product) => {
+  const handleIncreaseQty = async ({ product, cartQuantity }) => {
     if (isLoggedIn) {
-      const { data: responseCart } = await addProductToDb(product._id);
-      dispatch(initializeCart(responseCart.products));
+      if (product.quantity > cartQuantity) {
+        const { data: responseCart } = await addProductToDb(product._id);
+        dispatch(initializeCart(responseCart.products));
+      } else {
+        toast("We dont have more");
+      }
       return;
     }
     dispatch(addToCart({ product: product, cartQuantity: counter }));
@@ -102,7 +107,7 @@ function Shop() {
                       </a>
                       <FavoriteBtn></FavoriteBtn>
                       <QuantityBtns
-                        handleIncrement={() => handleIncreaseQty(item.product)}
+                        handleIncrement={() => handleIncreaseQty(item)}
                         handleDecrement={() => handleDecreaseQty(item.product)}
                         count={item.cartQuantity}
                         className={styles.shop__item_quantityBtn}
