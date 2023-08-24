@@ -12,6 +12,7 @@ import Delivery from "./pages/Delivery";
 import Contacts from "./pages/contacts";
 import Shop from "./pages/shop";
 import Login from "./pages/Client";
+import Checkout from "./pages/checkout/Checkout";
 import PageNotFound from "./pages/PageNotFound";
 import Category from "./layouts/category";
 import Footer from "./layouts/footer";
@@ -105,6 +106,7 @@ function App() {
             <Route path="/delivery" element={<Delivery />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/shop" element={<Shop />} />
+            <Route path="/checkout" element={<Checkout />} />
             <Route path="/login" element={<Login />} />
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/about" element={<About />} />
