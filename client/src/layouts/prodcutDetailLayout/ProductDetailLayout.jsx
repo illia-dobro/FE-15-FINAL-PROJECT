@@ -1,38 +1,115 @@
-import PropTypes from 'prop-types';
-import useDeviceType from '../../helpers/getDeviceType';
-import ProductDetailSlider from '../../components/productDetailSlider';
-import { LiaShoppingBagSolid } from 'react-icons/lia';
-import Recommended from '../../components/recommended';
-import QuantityBtns from '../../components/buttons/quantityBtns/QuantityBtns';
-import FavoriteBtn from '../../components/buttons/favoriteBtn';
-import { formatCurrency } from '../../helpers/currencyFormatter';
-import uniqueMainImgUrl from '../../assets/unique_main.png';
-import uniqueMainImgUrl2 from '../../assets/unique_main2.jpg';
-import DeliveryInfo from '../../components/static/DeliveryInfo';
-import Unique from '../../components/unique';
-import Button from '../../components/buttons/button';
-import Tabs from '../../components/tabs';
-import { useGetFilteredProductsQuery } from '../../app/services/productApi';
-import { useSelector } from 'react-redux';
-import { isTokenUser } from '../../app/slices/authSlice';
+import PropTypes from "prop-types";
+import useDeviceType from "../../helpers/getDeviceType";
+import { useDispatch, useSelector } from "react-redux";
+import ProductDetailSlider from "../../components/productDetailSlider";
+import { LiaCheckCircle, LiaShoppingBagSolid } from "react-icons/lia";
+import Recommended from "../../components/recommended";
+import QuantityBtns from "../../components/buttons/quantityBtns/QuantityBtns";
+import FavoriteBtn from "../../components/buttons/favoriteBtn";
+import { formatCurrency } from "../../helpers/currencyFormatter";
+import uniqueMainImgUrl from "../../assets/unique_main.png";
+import uniqueMainImgUrl2 from "../../assets/unique_main2.jpg";
+import DeliveryInfo from "../../components/static/DeliveryInfo";
+import Unique from "../../components/unique";
+import Button from "../../components/buttons/button";
+import Tabs from "../../components/tabs";
+import { useGetFilteredProductsQuery } from "../../app/services/productApi";
+import { isTokenUser } from "../../app/slices/authSlice";
+import {
+  useAddProductToCartMutation,
+  useCreateAndUpdateCartMutation,
+  useDecreaseProductQuantityMutation,
+} from "../../app/services/cartApi";
+import {
+  addToCart,
+  decreaseQty,
+  initializeCart,
+} from "../../app/slices/cartSlice";
+import styles from "../../pages/shop/shop.module.scss";
+import { useState } from "react";
 
 function ProductDetailLayout({ product }) {
   const { isDesktop } = useDeviceType();
-  const isUserAuth = Boolean(useSelector(isTokenUser));
+  const [counter, setCounter] = useState(1);
 
-  const { data: filtredProducts, isSuccess } = useGetFilteredProductsQuery(
+  // Select only one
+  const isUserAuth = Boolean(useSelector(isTokenUser));
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+  const [addProductToDb] = useAddProductToCartMutation();
+  const [decreaseProductFromDb] = useDecreaseProductQuantityMutation();
+  const [updateCart] = useCreateAndUpdateCartMutation();
+
+  const dispatch = useDispatch();
+
+  const cart = useSelector((state) => state.cart.products);
+
+  const inCart = cart.find((item) => item.product._id === product._id);
+  const inCartQty = inCart?.cartQuantity;
+
+  const handleDecreaseQty = async (product) => {
+    if (inCart) {
+      if (isLoggedIn) {
+        const { data: responseCart } = await decreaseProductFromDb(product._id);
+        dispatch(initializeCart(responseCart.products));
+        return;
+      }
+      dispatch(decreaseQty({ product: product }));
+    } else {
+      if (counter > 1) setCounter(counter - 1);
+    }
+  };
+  const handleIncreaseQty = async (product) => {
+    if (inCart) {
+      if (isLoggedIn) {
+        const { data: responseCart } = await addProductToDb(product._id);
+        dispatch(initializeCart(responseCart.products));
+        return;
+      }
+      dispatch(addToCart({ product: product, cartQuantity: counter }));
+    } else {
+      setCounter(counter + 1);
+    }
+  };
+
+  const handleAddToCart = async (product) => {
+    if (counter === 1) {
+      if (isLoggedIn) {
+        const { data: responseCart } = await addProductToDb(product._id);
+        dispatch(initializeCart(responseCart.products));
+        return;
+      }
+      dispatch(addToCart({ product: product, cartQuantity: counter }));
+    }
+    if (counter > 1) {
+      const multipleQtyProduct = { product: product, cartQuantity: counter };
+      console.log(multipleQtyProduct);
+      if (isLoggedIn) {
+        const { data: responseCart } = await updateCart({
+          products: [multipleQtyProduct, ...cart],
+        });
+        dispatch(initializeCart(responseCart.products));
+        setCounter(1);
+        return;
+      }
+      dispatch(addToCart({ product: product, cartQuantity: counter }));
+      setCounter(1);
+    }
+  };
+
+  const { data: filteredProducts, isSuccess } = useGetFilteredProductsQuery(
     `categories=${product.categories}&product_type=${product.product_type}&enabled=true&perPage=8`
   );
 
-  if (!filtredProducts) {
+  if (!filteredProducts) {
     return;
   }
 
-  const recommendedProducts = filtredProducts.products.filter(
+  const recommendedProducts = filteredProducts.products.filter(
     (recommendedProduct) => product._id !== recommendedProduct._id
   );
 
-  const thumbnailPosition = isDesktop ? 'left' : 'bottom';
+  const thumbnailPosition = isDesktop ? "left" : "bottom";
   const productDetailSliderSettings = {
     showThumbnails: true,
     showPlayButton: true,
@@ -44,8 +121,7 @@ function ProductDetailLayout({ product }) {
     showGalleryThumbnails: true,
     thumbnailPosition: thumbnailPosition,
   };
-
-  const spesificationTabsContent = (
+  const specificationTabsContent = (
     <ul>
       <li>
         Brand:<strong> {product.brand}</strong>
@@ -60,9 +136,9 @@ function ProductDetailLayout({ product }) {
     </ul>
   );
   const productTabs = [
-    { label: 'Product', content: product.description },
-    { label: 'Specifications', content: spesificationTabsContent },
-    { label: 'Delivery', content: <DeliveryInfo /> },
+    { label: "Product", content: product.description },
+    { label: "Specifications", content: specificationTabsContent },
+    { label: "Delivery", content: <DeliveryInfo /> },
   ];
   const productPictures = product.imageUrls.map((image) => ({
     original: image,
@@ -83,14 +159,34 @@ function ProductDetailLayout({ product }) {
             {isUserAuth && <FavoriteBtn id={product._id} />}
             <h2>{product.name}</h2>
             <div className="product-detail__quantity-price">
-              <QuantityBtns className="quantityBtnsLg" />
+              <QuantityBtns
+                handleIncrement={() => handleIncreaseQty(product)}
+                handleDecrement={() => handleDecreaseQty(product)}
+                count={inCart ? inCartQty : counter}
+                className="quantityBtnsLg"
+              />
               <span className="price">
                 {formatCurrency(product.currentPrice)}
               </span>
             </div>
-            <Button className="button button-color--secondary">
-              <LiaShoppingBagSolid />
-              <span>Add to shopping cart</span>
+            <Button
+              className="button button-color--secondary"
+              action={() => handleAddToCart(product)}
+              disabled={!!inCart}
+            >
+              {inCart ? (
+                <>
+                  <LiaCheckCircle />
+                  <span>
+                    {`Already ${inCartQty} in cart. Use ' + ' to add more`}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <LiaShoppingBagSolid />
+                  <span>{`Add to shopping cart`}</span>
+                </>
+              )}{" "}
             </Button>
             <div className="product-detail__tabs">
               <Tabs
@@ -125,7 +221,6 @@ function ProductDetailLayout({ product }) {
 
 export default ProductDetailLayout;
 
-
 ProductDetailLayout.propTypes = {
-  product: PropTypes.object
+  product: PropTypes.object,
 };
