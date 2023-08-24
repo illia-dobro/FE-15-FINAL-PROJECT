@@ -28,6 +28,7 @@ import {
 
 import styles from "./shop.module.scss";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 function Shop() {
   const [addProductToDb] = useAddProductToCartMutation();
@@ -37,11 +38,8 @@ function Shop() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
-  const {
-    data: serverCart,
-    isSuccess: isServerCartSuccess,
-    refetch: refetchServerCart,
-  } = useGetCartQuery();
+  const { isSuccess: isServerCartSuccess, refetch: refetchServerCart } =
+    useGetCartQuery();
 
   const stateCart = useSelector((state) => state.cart);
   const items = stateCart.products;
@@ -50,13 +48,14 @@ function Shop() {
   }, 0);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      refetchServerCart();
+    const refetchOnMount = async () => {
+      const { data: updatedCart } = await refetchServerCart();
       if (isServerCartSuccess) {
-        dispatch(initializeCart(serverCart.products));
+        dispatch(initializeCart(updatedCart.products));
       }
-    }
-  },[]);
+    };
+    if (isLoggedIn) refetchOnMount();
+  }, []);
 
   const handleDecreaseQty = async (product) => {
     if (isLoggedIn) {
@@ -66,13 +65,17 @@ function Shop() {
     }
     dispatch(decreaseQty({ product: product }));
   };
-  const handleIncreaseQty = async (product) => {
+  const handleIncreaseQty = async ({ product, cartQuantity }) => {
     if (isLoggedIn) {
-      const { data: responseCart } = await addProductToDb(product._id);
-      dispatch(initializeCart(responseCart.products));
+      if (product.quantity > cartQuantity) {
+        const { data: responseCart } = await addProductToDb(product._id);
+        dispatch(initializeCart(responseCart.products));
+      } else {
+        toast("We dont have more");
+      }
       return;
     }
-    dispatch(addToCart({ product: product, cartQuantity: counter }));
+    dispatch(addToCart({ product: product, cartQuantity: 1 }));
   };
   const handleRemove = async (product) => {
     if (isLoggedIn) {
@@ -104,7 +107,7 @@ function Shop() {
                       </a>
                       <FavoriteBtn></FavoriteBtn>
                       <QuantityBtns
-                        handleIncrement={() => handleIncreaseQty(item.product)}
+                        handleIncrement={() => handleIncreaseQty(item)}
                         handleDecrement={() => handleDecreaseQty(item.product)}
                         count={item.cartQuantity}
                         className={styles.shop__item_quantityBtn}
