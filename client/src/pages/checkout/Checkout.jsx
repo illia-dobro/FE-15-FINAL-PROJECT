@@ -129,7 +129,7 @@ function Checkout() {
                   {errors?.shipping && <p className={styles.form__field_error}>{errors?.shipping?.message || 'Error!'}</p>}
                 </div>
 
-                <p className={styles.additional__costCalc}>Shipping cost is calculated individually by the manager</p>
+                <p className={styles.additional__shipping_costCalc}>Shipping cost is calculated individually by the manager</p>
               </div>
             </div>
           </div>
