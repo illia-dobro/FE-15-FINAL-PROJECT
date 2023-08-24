@@ -144,7 +144,6 @@ function Shop() {
             {items.length > 0 && (
               <Button
                 className={styles.shop__order}
-                onClick={handlePlaceOrder}
               >
                 <Link to='/checkout' state={{total: formatCurrency(totalPrice), number: items.length }} className={styles.shop__order_text}>Place an order</Link>
                 <AiOutlineArrowRight className={styles.shop__order_arrow} />
