@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import Logo from "../logo";
-import { useState } from "react";
+import Logo from "../../components/logo";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { GoPerson, GoSearch } from "react-icons/go";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import { TbMenu } from "react-icons/tb";
@@ -17,6 +18,12 @@ function Nav() {
   const [onOpenNav, setOnOpenNav] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === "/";
+
+  const stateCart = useSelector((state) => state.cart.products);
+
+  const calculateCartQty = () =>
+    stateCart.reduce((total, product) => total + product.cartQuantity, 0);
+
   const dispatch = useDispatch();
   const NavLink = ({ to, children, className = "nav__link" }) => (
     <Link className={className} to={to} onClick={() => setOnOpenNav(false)}>
@@ -34,6 +41,7 @@ function Nav() {
     borderBottom: "1px solid rgba(0, 0, 0, 0.05)",
     color: "rgba(85, 85, 85, 1)",
   };
+
   const homePageNavStyles = {
     backgroundColor: "transparent",
     width: "100%",
@@ -66,11 +74,10 @@ function Nav() {
               <span className="nav__icon">
                 <GoSearch data-name="search" onClick={handleSearch} />
               </span>
-              <NavLink
-                className="nav__icon"
-                to="/shop"
-                children={<LiaShoppingBagSolid />}
-              />
+              <NavLink className="nav__icon" to="/shop">
+                <LiaShoppingBagSolid />
+                {calculateCartQty() || null}
+              </NavLink>
               <NavLink
                 className="nav__icon"
                 to="/login"
@@ -115,11 +122,10 @@ function Nav() {
               children={<GoPerson />}
             />
           )}
-          <NavLink
-            className="nav__icon"
-            to="/shop"
-            children={<LiaShoppingBagSolid />}
-          />
+          <NavLink className="nav__icon" to="/shop">
+            <LiaShoppingBagSolid />
+            <span>{calculateCartQty() || null}</span>
+          </NavLink>
         </nav>
       )}
     </>

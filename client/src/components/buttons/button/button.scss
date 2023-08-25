@@ -12,6 +12,10 @@
   align-items: center;
   padding: 4px;
   transition: color, background-color 0.2s ease-in-out;
+  &:active {
+    color: $dark;
+    background-color: darken($secondary, 4%);
+  }
 }
 .button-color--primary {
   background-color: $primary;

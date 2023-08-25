@@ -1,28 +1,24 @@
-import React from 'react';
-import { toast } from 'react-toastify';
-import { useNavigate, Link, Navigate } from 'react-router-dom';
-import { useLoginMutation, useGetUserQuery } from '../../../app/services/api';
-import { saveState } from '../../../helpers/localStorage';
-import { glass } from '../forms.module.scss'
+import React, { useEffect } from "react";
+import { toast } from "react-toastify";
+import { useNavigate, Link, Navigate } from "react-router-dom";
+import { useLoginMutation, useGetUserQuery } from "../../../app/services/api";
+import { saveState } from "../../../helpers/localStorage";
+import { glass } from "../forms.module.scss";
 
 function SignIn() {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
-  const [error, setError] = React.useState('');
-  const [login, {isLoading}] = useLoginMutation();
+  const [error, setError] = React.useState("");
+  const [login, { isLoading }] = useLoginMutation();
 
   const navigate = useNavigate();
 
-  const {isSuccess} = useGetUserQuery();
-
-  if (isSuccess) {
-    return  <Navigate to="/profile" replace={true} />
-  }
+  const { isSuccess } = useGetUserQuery();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     try {
       const data = await login({
         loginOrEmail: email,
@@ -31,18 +27,22 @@ function SignIn() {
       if (data.error) {
         throw data;
       } else {
-        toast('Congratulations, you have successfully sign in!');
-        saveState(data.data.token)
-        navigate('/');
+        toast("Congratulations, you have successfully sign in!");
+        saveState(data.data.token);
+        navigate("/");
       }
     } catch (err) {
       if (err.error.status === 404 || err.error.status === 400) {
         setError(err.error.data);
       } else {
-        toast('Something goes wrong!');
+        toast("Something goes wrong!");
       }
     }
   };
+
+  if (isSuccess) {
+    return <Navigate to="/profile" replace={true} />;
+  }
 
   return (
     <div className="flex min-h-full flex-col py-12 px-2 sm:px-6 lg:px-8">
@@ -59,9 +59,7 @@ function SignIn() {
       <div className={`${glass} mt-8 sm:mx-auto sm:w-full sm:max-w-md`}>
         <div className="px-4 py-8 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
-            <span className="text-red-500 text-sm">
-              {error.loginOrEmail}
-            </span>
+            <span className="text-red-500 text-sm">{error.loginOrEmail}</span>
             <div>
               <label
                 htmlFor="email"
@@ -116,9 +114,12 @@ function SignIn() {
               </button>
             </div>
           </form>
-          <div className='flex gap-2 items-center pt-4 justify-center'>
+          <div className="flex gap-2 items-center pt-4 justify-center">
             <span>Don`t have an account?</span>
-            <Link to='/sign-up' className='font-bold text-gray-600 hover:text-gray-700'>
+            <Link
+              to="/sign-up"
+              className="font-bold text-gray-600 hover:text-gray-700"
+            >
               Sign Up
             </Link>
           </div>

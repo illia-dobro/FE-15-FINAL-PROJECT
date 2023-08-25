@@ -1,116 +1,158 @@
-import { useState } from 'react';
+/* Need to be completed: /
+
+/1. +++Send Cart to the database if the user had items in the cart before logging in. /
+/2. +++If the user logs in, retrieve the Cart from the database. /
+/3. +++Product Detail Page, quantity buttons . /
+/4. For the Server only: Fix the issue where buttons send more quantities than available in the product's quantity. */
+/*5. Fix styles */
+
+import { useSelector, useDispatch } from "react-redux";
 import FavoriteBtn from "../../components/buttons/favoriteBtn";
 import QuantityBtns from "../../components/buttons/quantityBtns/QuantityBtns";
 import Button from "../../components/buttons/button";
 import { formatCurrency } from "../../helpers/currencyFormatter";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import {
+  useAddProductToCartMutation,
+  useDeleteProductFromTheCartMutation,
+  useDecreaseProductQuantityMutation,
+  useGetCartQuery,
+} from "../../app/services/cartApi";
+
+import {
+  decreaseQty,
+  addToCart,
+  removeProduct,
+  initializeCart,
+} from "../../app/slices/cartSlice";
 
 import styles from "./shop.module.scss";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 function Shop() {
-	const itemPrice = 30; // Вартість одного товару
+  const [addProductToDb] = useAddProductToCartMutation();
+  const [removeProductFromDb] = useDeleteProductFromTheCartMutation();
+  const [decreaseProductFromDb] = useDecreaseProductQuantityMutation();
 
-	const [items, setItems] = useState([]); // Масив товарів
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
-	const handleAddItem = () => {
-		const newItem = {
-			id: Date.now(), // Унікальний ідентифікатор для кожного товару
-			quantity: 1, // Початкова кількість товару
-		};
+  const { isSuccess: isServerCartSuccess, refetch: refetchServerCart } =
+    useGetCartQuery();
 
-		setItems([...items, newItem]);
-	};
+  const stateCart = useSelector((state) => state.cart);
+  const items = stateCart.products;
+  const totalPrice = items.reduce((total, product) => {
+    return total + product.product.currentPrice * product.cartQuantity;
+  }, 0);
 
-	const handleIncrement = (itemId) => {
-		setItems(prevItems =>
-			prevItems.map(item => {
-				if (item.id === itemId) {
-					return { ...item, quantity: item.quantity + 1 };
-				}
-				return item;
-			})
-		);
-	};
+  useEffect(() => {
+    const refetchOnMount = async () => {
+      const { data: updatedCart } = await refetchServerCart();
+      if (isServerCartSuccess) {
+        dispatch(initializeCart(updatedCart.products));
+      }
+    };
+    if (isLoggedIn) refetchOnMount();
+  }, []);
 
-	const handleDecrement = (itemId) => {
-		setItems(prevItems =>
-			prevItems.map(item => {
-				if (item.id === itemId && item.quantity > 0) {
-					return { ...item, quantity: item.quantity - 1 };
-				}
-				return item;
-			})
-		);
-	};
+  const handleDecreaseQty = async (product) => {
+    if (isLoggedIn) {
+      const { data: responseCart } = await decreaseProductFromDb(product._id);
+      dispatch(initializeCart(responseCart.products));
+      return;
+    }
+    dispatch(decreaseQty({ product: product }));
+  };
+  const handleIncreaseQty = async ({ product, cartQuantity }) => {
+    if (isLoggedIn) {
+      if (product.quantity > cartQuantity) {
+        const { data: responseCart } = await addProductToDb(product._id);
+        dispatch(initializeCart(responseCart.products));
+      } else {
+        toast("We dont have more");
+      }
+      return;
+    }
+    dispatch(addToCart({ product: product, cartQuantity: 1 }));
+  };
+  const handleRemove = async (product) => {
+    if (isLoggedIn) {
+      const { data: responseCart } = await removeProductFromDb(product._id);
+      dispatch(initializeCart(responseCart.products));
+      return;
+    }
+    dispatch(removeProduct({ product: product }));
+  };
 
-	const handleRemoveItem = (itemId) => {
-		console.log("Removing item with ID:", itemId);
-		setItems(prevItems => prevItems.filter(item => item.id !== itemId));
-	};
-
-	const totalAmount = items.reduce((total, item) => total + item.quantity * itemPrice, 0);
-
-	return (
-		<>
-			<button onClick={handleAddItem}>Add Item</button>
-			<div className={styles.shop}>
-				<div className={styles.shop__container}>
-					<h2 className={styles.shop__title}>Your cart</h2>
-					<ul className={styles.shop__list}>
-						{items.map(item => (
-							<li key={item.id} className={styles.shop__item}>
-								<a className={styles.shop__item_img}>
-									<img src="#" alt="Image"></img>
-								</a>
-								<div className={styles.shop__item_info}>
-									<div className={styles.shop__item_main}>
-										<a href='#'>
-											<h3 className={styles.shop__item_title}>EYEBROW PENCIL JONDOR</h3>
-										</a>
-										<FavoriteBtn></FavoriteBtn>
-										<QuantityBtns
-											handleIncrement={() => handleIncrement(item.id)}
-											handleDecrement={() => handleDecrement(item.id)}
-											count={item.quantity}
-											className={styles.shop__item_quantityBtn}
-										/>
-									</div>
-									<div className={styles.shop__item_adidional}>
-										<button
-											className={styles.shop__item_close}
-											onClick={() => handleRemoveItem(item.id)}
-										>x
-										</button>
-										<div className={styles.shop__item_price}>
-											<small className={styles.shop__item_count}>{item.quantity}x</small>
-											<span className={styles.shop__item_sum}>
-												{formatCurrency(item.quantity * itemPrice)}
-											</span>
-										</div>
-									</div>
-								</div>
-							</li>
-						))}
-					</ul>
-					{items.length > 0 && (
-						<div className={styles.shop__total}>
-							<p className={styles.shop__total_text}>Total</p>
-							<p className={styles.shop__total_sum}>{formatCurrency(totalAmount)}</p>
-						</div>
-					)}
-					{items.length > 0 && (
-						<Button className={styles.shop__order}>
-							<span className={styles.shop__order_text}>Place an order</span>
-							<AiOutlineArrowRight className={styles.shop__order_arrow} />
-						</Button>
-					)}
-					<div className="product-recommended__slider">
-						{/* Додайте вміст вашого слайдера тут */}
-					</div>
-				</div>
-			</div>
-		</>
-	);
+  return (
+    items && (
+      <>
+        <div className={styles.shop}>
+          <div className={styles.shop__container}>
+            <h2 className={styles.shop__title}>Your cart</h2>
+            <ul className={styles.shop__list}>
+              {items.map((item) => (
+                <li key={item.product._id} className={styles.shop__item}>
+                  <a className={styles.shop__item_img}>
+                    <img src={item.product.imageUrls[0]} alt="Image"></img>
+                  </a>
+                  <div className={styles.shop__item_info}>
+                    <div className={styles.shop__item_main}>
+                      <a href="#">
+                        <h3 className={styles.shop__item_title}>
+                          {item.product.name}
+                        </h3>
+                      </a>
+                      <FavoriteBtn></FavoriteBtn>
+                      <QuantityBtns
+                        handleIncrement={() => handleIncreaseQty(item)}
+                        handleDecrement={() => handleDecreaseQty(item.product)}
+                        count={item.cartQuantity}
+                        className={styles.shop__item_quantityBtn}
+                      />
+                    </div>
+                    <div className={styles.shop__item_adidional}>
+                      <Button
+                        className={styles.shop__item_close}
+                        action={() => handleRemove(item.product)}
+                      >
+                        x
+                      </Button>
+                      <div className={styles.shop__item_price}>
+                        <small className={styles.shop__item_count}>
+                          {item.cartQuantity}x
+                        </small>
+                        <span className={styles.shop__item_sum}>
+                          {formatCurrency(
+                            item.cartQuantity * item.product.currentPrice
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            {items.length > 0 && (
+              <div className={styles.shop__total}>
+                <p className={styles.shop__total_text}>Total</p>
+                <p className={styles.shop__total_sum}>
+                  {formatCurrency(totalPrice)}
+                </p>
+              </div>
+            )}
+            {items.length > 0 && (
+              <Button className={styles.shop__order}>
+                <span className={styles.shop__order_text}>Place an order</span>
+                <AiOutlineArrowRight className={styles.shop__order_arrow} />
+              </Button>
+            )}
+          </div>
+        </div>
+      </>
+    )
+  );
 }
-
 export default Shop;

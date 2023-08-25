@@ -2,33 +2,33 @@ import {
   ClockIcon,
   ArrowSmallRightIcon,
   ArrowSmallLeftIcon,
-} from '@heroicons/react/24/outline';
-import { useGetWishListQuery } from '../../../app/services/api';
-import ProductList from '../../productsList'
+} from "@heroicons/react/24/outline";
+import { useGetWishListQuery } from "../../../app/services/api";
+import ProductList from "../../productsList";
 
 const orders = [
   {
-    number: '233',
-    date: 'January 22, 2021',
-    datetime: '2021-01-22',
-    href: '#',
-    invoiceHref: '#',
-    total: '$302.00',
+    number: "233",
+    date: "January 22, 2021",
+    datetime: "2021-01-22",
+    href: "#",
+    invoiceHref: "#",
+    total: "$302.00",
     products: [
       {
         id: 1,
-        name: 'Nomad Tumbler',
+        name: "Nomad Tumbler",
         description:
           "This durable double-walled insulated tumbler keeps your beverages at the perfect temperature all day long. Hot, cold, or even lukewarm if you're weird like that, this bottle is ready for your next adventure.",
-        href: '#',
-        price: '$35.00',
-        status: 'out-for-delivery',
-        date: 'January 5, 2021',
-        datetime: '2021-01-05',
+        href: "#",
+        price: "$35.00",
+        status: "out-for-delivery",
+        date: "January 5, 2021",
+        datetime: "2021-01-05",
         imageSrc:
-          'https://tailwindui.com/img/ecommerce-images/order-history-page-06-product-01.jpg',
+          "https://tailwindui.com/img/ecommerce-images/order-history-page-06-product-01.jpg",
         imageAlt:
-          'Olive drab green insulated bottle with flared screw lid and flat top.',
+          "Olive drab green insulated bottle with flared screw lid and flat top.",
       },
       // More products...
     ],
@@ -37,17 +37,17 @@ const orders = [
 ];
 
 function HistoryOrders() {
-
-  const {data, isError, isLoading, isSuccess} = useGetWishListQuery();
+  const { data, isError, isLoading, isSuccess } = useGetWishListQuery();
 
   let wishlist;
 
-  if (isError) {
-    return null
-  } else if(isLoading){
-    wishlist = "isloading"
-  } else if (isSuccess){
-    wishlist = <ProductList products={data.products}/>
+  if (isError || !data) {
+    wishlist = "";
+  } else if (isLoading) {
+    wishlist = "is loading";
+  } else if (isSuccess) {
+    wishlist = <ProductList products={data.products} />;
+  }
 
   return (
     <div className="flex-1 basis-5/6 lg:basis-3/4 rounded drop-shadow-lg">
@@ -65,7 +65,7 @@ function HistoryOrders() {
             {orders.map((order) => (
               <div key={order.number}>
                 <h3 className="sr-only">
-                  Order placed on{' '}
+                  Order placed on{" "}
                   <time dateTime={order.datetime}>{order.date}</time>
                 </h3>
 
@@ -100,13 +100,16 @@ function HistoryOrders() {
         </div>
       </div>
       <div className="mx-auto max-w-4xl py-16 sm:px-6 sm:py-24">
-        <h2 className="text-3xl tracking-tight text-gray-700 px-4 sm:px-6 lg:px-8">Wish list</h2>
+        {data && (
+          <h2 className="text-3xl tracking-tight text-gray-700 px-4 sm:px-6 lg:px-8">
+            Wish list
+          </h2>
+        )}
+
         {wishlist}
       </div>
-
     </div>
   );
-}
 }
 
 export default HistoryOrders;
