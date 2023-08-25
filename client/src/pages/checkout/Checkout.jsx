@@ -1,6 +1,8 @@
 import { NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
+import { usePlaceOrderMutation, useGetUserQuery } from '../../app/services/api';
+import { selectCurrentUser } from '../../app/slices/authSlice';
 import { IoIosArrowRoundDown, IoIosArrowRoundForward } from 'react-icons/io';
 import { LuEdit2 } from 'react-icons/lu';
 import OrderDetails from '../../components/orderDetails';
@@ -18,11 +20,44 @@ function Checkout() {
     mode: 'onBlur',
   });
 
+  const [placeOrder] = usePlaceOrderMutation();
+
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
-  console.log(isLoggedIn);
+  let {
+    _id,
+    firstName: customerName,
+    lastName: customerLastName,
+    email: customerEmail,
+    telephone,
+  } = useSelector(selectCurrentUser);
 
-  const onSubmit = (data) => {
+
+
+  console.log(_id, customerName, customerLastName, customerEmail);
+
+  const onSubmit = async (data) => {
+    console.log(data);
+    try {
+      const response = await placeOrder({
+        customerId: _id,
+        deliveryAddress: {
+          address: data.address,
+        },
+        shipping: data.shipping,
+        paymentInfo: 'Credit card',
+        status: 'not shipped',
+        email: data.email,
+        mobile: data.phoneNumber,
+        letterSubject: 'Thank you for order! You are welcome!',
+        letterHtml:
+          '<h1>Your order is placed</p>',
+      });
+
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
     alert(JSON.stringify(data));
     reset();
   };
@@ -40,6 +75,7 @@ function Checkout() {
                   Surname, name and patronymic
                 </label>
                 <input
+                  value={customerName + ' ' + customerLastName}
                   className={styles.form__field_input}
                   {...register('name', {
                     required: 'This field is mandatory',
@@ -86,6 +122,7 @@ function Checkout() {
                   Contact number
                 </label>
                 <input
+                  value={telephone}
                   className={styles.form__field_input}
                   {...register('phoneNumber', {
                     required: 'This field is mandatory',
@@ -105,6 +142,7 @@ function Checkout() {
               <div className={styles.form__field}>
                 <label className={styles.form__field_label}>Email</label>
                 <input
+                  value={customerEmail}
                   className={styles.form__field_input}
                   {...register('email', {
                     required: 'This field is mandatory',
