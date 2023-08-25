@@ -6,11 +6,13 @@ import productApi from "./services/productApi";
 import catalogApi from "./services/catalogApi";
 import cartApi from "./services/cartApi";
 import cartReducer from "./slices/cartSlice";
+import searchReducer from "./slices/searchSlice.js";
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     filters: filtersReducer,
     cart: cartReducer,
+    search: searchReducer,
     [api.reducerPath]: api.reducer,
     [catalogApi.reducerPath]: catalogApi.reducer,
     [productApi.reducerPath]: productApi.reducer,
