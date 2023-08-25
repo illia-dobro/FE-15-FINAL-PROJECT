@@ -7,7 +7,7 @@ function Delivery() {
     return (
         <div className={styles.page}>
             <div className={styles.container}>
-                <button onClick={() => navigate(-1)}>&#8592; To back page</button>
+                <button onClick={() => navigate(-1)}>&#8592; Back</button>
                 <div className={styles.page_title}>Delivery information</div>
                 <div className={styles.page_img}>
                     <img src="../../../src/assets/img/delivery/Rectangle38.png" alt="delivery"/>
@@ -35,7 +35,7 @@ function Delivery() {
                             the composition and cost of the order, and an SMS with the order number.</li>
                         <li>Information about your
                             orders (current and completed) You can always look in your account in the &rdquo;My purchases&ldquo; section.</li>
-                        <li>The maximum cost of 1 order is 400,000 rubles when paying on the website and 50,000 rubles when
+                        <li>The maximum cost of 1 order is 15000 dollars when paying on the website and 5000 dollars when
                             paying by card or cash upon receipt.</li>
                         <li>If the cost of your order exceeds the maximum, we recommend
                             placing several orders.</li>
