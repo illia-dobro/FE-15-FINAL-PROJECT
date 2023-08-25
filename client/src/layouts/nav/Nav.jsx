@@ -9,9 +9,9 @@ import { VscChromeClose } from "react-icons/vsc";
 import { useLocation } from "react-router-dom";
 import useDeviceType from "../../helpers/getDeviceType";
 import "./nav.scss";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toggleSearch } from "../../app/slices/searchSlice.js";
-import Search from "../search/Search.jsx";
+import Search from "../../components/search";
 
 function Nav() {
   const { isMobile } = useDeviceType();
