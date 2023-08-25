@@ -5,6 +5,7 @@ import ProductsList from "../../layouts/productsList/ProductsList.jsx";
 import { useEffect, useRef } from "react";
 import HeartsLoader from "../heartsLoader/heartsLoader.jsx";
 import { NavLink } from "react-router-dom";
+import { debounce } from "lodash";
 
 const Search = () => {
   const newRef = useRef(null);
@@ -26,6 +27,7 @@ const Search = () => {
   const handleSearchInput = async (e) => {
     dispatch(setSearchQuery(e.target.value));
   };
+  const debouncedSearch = debounce(handleSearchInput, 500);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleOutsideClick);
@@ -51,7 +53,7 @@ const Search = () => {
           placeholder="Search..."
           autoFocus="autofocus"
           className="w-full text-[#555555] transition focus:outline-none focus:border-transparent p-4 appearance-none leading-normal text-lg lg:text-xl bg-gray-50"
-          onChange={(e) => handleSearchInput(e)}
+          onChange={debouncedSearch}
         />
       </div>
       <div className="flex flex-col align-middle mb-4">
