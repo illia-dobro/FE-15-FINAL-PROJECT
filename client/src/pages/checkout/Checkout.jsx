@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { IoIosArrowRoundDown, IoIosArrowRoundForward } from 'react-icons/io';
 import { LuEdit2 } from 'react-icons/lu';
@@ -8,6 +8,8 @@ import signInIcon from '../../assets/images/signIn.svg';
 import styles from './Checkout.module.scss';
 
 function Checkout() {
+  const navigate = useNavigate();
+
   const {
     register,
     formState: {errors},
@@ -20,6 +22,7 @@ function Checkout() {
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
     reset();
+    navigate('/')
   }
 
   return (
