@@ -73,7 +73,7 @@ function Checkout() {
                   Surname, name and patronymic
                 </label>
                 <input
-                  value={customerName + ' ' + customerLastName}
+                  defaultValue={customerName + ' ' + customerLastName}
                   className={styles.form__field_input}
                   {...register('name', {
                     required: 'This field is mandatory',
@@ -120,7 +120,7 @@ function Checkout() {
                   Contact number
                 </label>
                 <input
-                  value={telephone}
+                  defaultValue={telephone}
                   className={styles.form__field_input}
                   {...register('phoneNumber', {
                     required: 'This field is mandatory',
@@ -140,7 +140,7 @@ function Checkout() {
               <div className={styles.form__field}>
                 <label className={styles.form__field_label}>Email</label>
                 <input
-                  value={customerEmail}
+                  defaultValue={customerEmail}
                   className={styles.form__field_input}
                   {...register('email', {
                     required: 'This field is mandatory',
