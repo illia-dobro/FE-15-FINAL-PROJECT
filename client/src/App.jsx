@@ -8,7 +8,7 @@ import Nav from "./layouts/nav";
 import Home from "./pages/home";
 import About from "./pages/about/About";
 import Catalog from "./pages/catalog";
-import Delivery from "./pages/Delivery";
+import Delivery from "./pages/delivery";
 import Contacts from "./pages/contacts";
 import Shop from "./pages/shop";
 import Login from "./pages/Client";
