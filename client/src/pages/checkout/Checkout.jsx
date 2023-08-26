@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { IoIosArrowRoundDown, IoIosArrowRoundForward } from 'react-icons/io';
 import { LuEdit2 } from 'react-icons/lu';
 import OrderDetails from '../../components/orderDetails';
@@ -14,15 +15,16 @@ function Checkout() {
     register,
     formState: {errors},
     handleSubmit,
-    reset
+    // reset
   } = useForm({
     mode: 'onBlur'
   });
 
   const onSubmit = (data) => {
-    alert(JSON.stringify(data));
-    reset();
-    navigate('/')
+    // reset();
+    console.log(JSON.stringify(data));
+    toast('Your order was created!')
+    setTimeout(() => navigate('/'), 5000)
   }
 
   return (

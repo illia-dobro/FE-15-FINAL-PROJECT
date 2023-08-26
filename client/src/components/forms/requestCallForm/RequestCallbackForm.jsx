@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import { toast } from 'react-toastify';
 
 import styles from './RequestCallbackForm.module.scss';
 
@@ -107,8 +108,8 @@ const RequestCallbackForm = () => {
         if(formValid) {
             const data = {name, phoneNumber, email};
             console.log(data);
-            alert('Your request was sent successfully');
-            resetForm();
+            toast("Your request was sent successfully");
+            setTimeout(() => resetForm(), 2000)
         } else {
             setError('Please fill in all the fields')
         }
