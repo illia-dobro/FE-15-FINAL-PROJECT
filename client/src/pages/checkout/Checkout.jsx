@@ -1,8 +1,10 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate, useNavigation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
-import { usePlaceOrderMutation, useGetUserQuery } from '../../app/services/api';
+import { usePlaceOrderMutation } from '../../app/services/api';
+import { useDeleteCartMutation } from '../../app/services/cartApi'
 import { selectCurrentUser } from '../../app/slices/authSlice';
+import { initializeCart } from '../../app/slices/cartSlice';
 import { IoIosArrowRoundDown, IoIosArrowRoundForward } from 'react-icons/io';
 import { LuEdit2 } from 'react-icons/lu';
 import OrderDetails from '../../components/orderDetails';
@@ -14,13 +16,15 @@ function Checkout() {
   const {
     register,
     formState: { errors },
-    handleSubmit,
-    reset,
+    handleSubmit
   } = useForm({
     mode: 'onBlur',
   });
 
   const [placeOrder] = usePlaceOrderMutation();
+  const [deleteCart] = useDeleteCartMutation()
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
@@ -33,13 +37,10 @@ function Checkout() {
   } = useSelector(selectCurrentUser);
 
 
-
-  console.log(_id, customerName, customerLastName, customerEmail);
-
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const response = await placeOrder({
+      await placeOrder({
         customerId: _id,
         deliveryAddress: {
           address: data.address,
@@ -54,7 +55,13 @@ function Checkout() {
           '<h1>Your order is placed</p>',
       });
 
-      console.log(response);
+      try {
+        await deleteCart();
+        dispatch(initializeCart([]));
+        navigate('/profile')
+      } catch (error) {
+        console.log(error);
+      }
     } catch (error) {
       console.log(error);
     }
