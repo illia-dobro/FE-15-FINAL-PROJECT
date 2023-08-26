@@ -58,8 +58,6 @@ function Checkout() {
     } catch (error) {
       console.log(error);
     }
-    alert(JSON.stringify(data));
-    reset();
   };
 
   return (
