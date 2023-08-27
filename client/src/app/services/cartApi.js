@@ -1,14 +1,14 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const cartApi = createApi({
-  reducerPath: "cartApi",
+  reducerPath: 'cartApi',
 
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:4000/api/cart",
+    baseUrl: 'http://localhost:4000/api/cart',
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;
       if (token) {
-        headers.set("authorization", `${token}`);
+        headers.set('authorization', `${token}`);
       }
       return headers;
     },
@@ -17,7 +17,7 @@ const cartApi = createApi({
   endpoints: (builder) => ({
     createCart: builder.mutation({
       query: (cartData) => ({
-        method: "POST",
+        method: 'POST',
         body: cartData,
       }),
     }),
@@ -25,34 +25,45 @@ const cartApi = createApi({
     /* Update (edit) cart. will create cart if not exist;  */
     createAndUpdateCart: builder.mutation({
       query: (cartData) => ({
-        method: "PUT",
+        method: 'PUT',
         body: cartData,
       }),
     }),
 
     getCart: builder.query({
       query: () => ({}),
+      providesTags: ['Cart'],
     }),
 
     addProductToCart: builder.mutation({
       query: (productId) => ({
         url: `/${productId}`,
-        method: "PUT",
+        method: 'PUT',
       }),
+      invalidatesTags: ['Cart'],
     }),
 
     deleteProductFromTheCart: builder.mutation({
       query: (productId) => ({
         url: `/${productId}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
+      invalidatesTags: ['Cart'],
     }),
 
     decreaseProductQuantity: builder.mutation({
       query: (productId) => ({
         url: `product/${productId}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
+      invalidatesTags: ['Cart'],
+    }),
+    deleteCart: builder.mutation({
+      query: () => ({
+        url: '',
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Cart'],
     }),
   }),
 });
@@ -64,6 +75,7 @@ export const {
   useDecreaseProductQuantityMutation,
   useCreateCartMutation,
   useGetCartQuery,
+  useDeleteCartMutation,
 } = cartApi;
 
 export default cartApi;
