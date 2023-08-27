@@ -10,23 +10,20 @@ import { useGetFilteredProductsQuery } from "../../app/services/productApi.js";
 import { useGetCategoriesQuery } from "../../app/services/catalogApi.js";
 import Pagination from "../../components/pagination/index.js";
 import HeartsLoader from "../../components/heartsLoader/heartsLoader.jsx";
-import styles from "./Category.module.scss";
+import { useEffect } from "react";
 
 const Category = () => {
   const { categoryName } = useParams();
   const dispatch = useDispatch();
-  dispatch(productTypes(categoryName));
 
   const { data: categories, isSuccess: isCategoriesSuccess } =
     useGetCategoriesQuery();
 
   const filtersQuery = useSelector((state) => state.filters.filtersQuery);
-  const { data: productsData, isSuccess: isProductsSuccess } =
-    useGetFilteredProductsQuery(`categories=${categoryName}${filtersQuery}`);
-
-  if (isProductsSuccess) {
-    dispatch(setProductsAndPagesQty(productsData.productsQuantity));
-  }
+  const {
+    isSuccess: isProductsSuccess,
+    refetch: refetchProducts,
+  } = useGetFilteredProductsQuery(`categories=${categoryName}${filtersQuery}`);
 
   const perPage = useSelector((state) => state.filters.pagination.perPage);
   const startPage = useSelector((state) => state.filters.pagination.startPage);
@@ -39,6 +36,17 @@ const Category = () => {
   const category =
     isCategoriesSuccess &&
     categories.find((category) => category.name === categoryName);
+
+  useEffect(() => {
+    dispatch(productTypes(categoryName));
+
+    const updateProductsAndPagesQty = async () => {
+      const { data: updatedProductsList } = await refetchProducts();
+      dispatch(setProductsAndPagesQty(updatedProductsList.productsQuantity));
+    };
+
+    updateProductsAndPagesQty();
+  }, [dispatch, categoryName, isProductsSuccess, refetchProducts]);
 
   return isPaginatedProductsSuccess ? (
     <>
