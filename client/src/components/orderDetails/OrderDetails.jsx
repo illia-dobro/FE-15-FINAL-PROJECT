@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import { LuEuro } from "react-icons/lu";
 import ProductCard from '../productCard';
+import { formatCurrency } from "../../helpers/currencyFormatter";
 
 import styles from './OrderDetails.module.scss';
 
@@ -35,7 +35,7 @@ const Order = () => {
                 <p>Total:</p>
                 <p className={styles.order__total_sum}>
                     {totalSum}
-                    <LuEuro />
+                    {formatCurrency(totalSum)}
                 </p>
             </div>
         </div>
