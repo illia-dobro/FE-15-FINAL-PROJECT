@@ -20,10 +20,8 @@ const Category = () => {
     useGetCategoriesQuery();
 
   const filtersQuery = useSelector((state) => state.filters.filtersQuery);
-  const {
-    isSuccess: isProductsSuccess,
-    refetch: refetchProducts,
-  } = useGetFilteredProductsQuery(`categories=${categoryName}${filtersQuery}`);
+  const { data: productsData, isSuccess: isProductsSuccess } =
+    useGetFilteredProductsQuery(`categories=${categoryName}${filtersQuery}`);
 
   const perPage = useSelector((state) => state.filters.pagination.perPage);
   const startPage = useSelector((state) => state.filters.pagination.startPage);
@@ -39,14 +37,8 @@ const Category = () => {
 
   useEffect(() => {
     dispatch(productTypes(categoryName));
-
-    const updateProductsAndPagesQty = async () => {
-      const { data: updatedProductsList } = await refetchProducts();
-      dispatch(setProductsAndPagesQty(updatedProductsList.productsQuantity));
-    };
-
-    updateProductsAndPagesQty();
-  }, [dispatch, categoryName, isProductsSuccess, refetchProducts]);
+    dispatch(setProductsAndPagesQty(productsData?.productsQuantity));
+  }, [dispatch, categoryName, isProductsSuccess, productsData]);
 
   return isPaginatedProductsSuccess ? (
     <>
