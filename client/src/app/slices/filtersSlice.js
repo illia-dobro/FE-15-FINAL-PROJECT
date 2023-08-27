@@ -131,8 +131,7 @@ const filtersSlice = createSlice({
         action.payload / state.pagination.perPage
       );
 
-      if (state.pagination.startPage > state.pagination.pagesQty)
-        state.pagination.startPage = state.pagination.pagesQty || 1;
+      state.pagination.startPage = 1;
     },
 
     setPerPage: (state) => {
