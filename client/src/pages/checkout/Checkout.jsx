@@ -5,6 +5,7 @@ import { usePlaceOrderMutation } from '../../app/services/api';
 import { useDeleteCartMutation } from '../../app/services/cartApi'
 import { selectCurrentUser } from '../../app/slices/authSlice';
 import { initializeCart } from '../../app/slices/cartSlice';
+import { toast } from 'react-toastify';
 import { IoIosArrowRoundDown, IoIosArrowRoundForward } from 'react-icons/io';
 import { LuEdit2 } from 'react-icons/lu';
 import OrderDetails from '../../components/orderDetails';
@@ -54,6 +55,7 @@ function Checkout() {
         letterHtml:
           '<h1>Your order is placed</p>',
       });
+      toast("Thank you for order! You are welcome!");
 
       try {
         await deleteCart();
