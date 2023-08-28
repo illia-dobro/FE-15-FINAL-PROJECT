@@ -8,7 +8,7 @@ import Nav from "./layouts/nav";
 import Home from "./pages/home";
 import About from "./pages/about/About";
 import Catalog from "./pages/catalog";
-import Delivery from "./pages/Delivery";
+import Delivery from "./pages/delivery";
 import Contacts from "./pages/contacts";
 import Shop from "./pages/shop";
 import Login from "./pages/Client";
@@ -63,12 +63,14 @@ function App() {
             serverCart?.products,
             stateCart
           );
-          console.log("server", serverCart?.products);
-          console.log("state", stateCart);
-          console.log("merged", mergedCart);
-          const updatedCart = await updateCart({ products: mergedCart });
-          console.log("updated from server", updatedCart.data.products);
-          dispatch(initializeCart(updatedCart.data.products));
+          // console.log("server", serverCart?.products);
+          // console.log("state", stateCart);
+          // console.log("merged", mergedCart);
+          const { data: updatedCart } = await updateCart({
+            products: mergedCart,
+          });
+          // console.log("updated from server", updatedCart.data.products);
+          dispatch(initializeCart(updatedCart.products));
         };
         updateCartOnLogin();
       }

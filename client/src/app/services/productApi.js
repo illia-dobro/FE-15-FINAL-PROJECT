@@ -18,6 +18,13 @@ const productApi = createApi({
     getProductByNumber: builder.query({
       query: (itemNo) => `/${itemNo}`,
     }),
+    searchProduct: builder.mutation({
+      query: (query) => ({
+        url: "search",
+        method: "POST",
+        body: query,
+      }),
+    }),
   }),
 });
 
@@ -25,5 +32,6 @@ export const {
   useGetAllProductsQuery,
   useGetFilteredProductsQuery,
   useGetProductByNumberQuery,
+  useSearchProductMutation,
 } = productApi;
 export default productApi;

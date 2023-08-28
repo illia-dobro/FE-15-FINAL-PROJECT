@@ -5,29 +5,29 @@
 /3. +++Product Detail Page, quantity buttons . /
 /4. For the Server only: Fix the issue where buttons send more quantities than available in the product's quantity. */
 /*5. Fix styles */
-
-import { useSelector, useDispatch } from "react-redux";
-import FavoriteBtn from "../../components/buttons/favoriteBtn";
-import QuantityBtns from "../../components/buttons/quantityBtns/QuantityBtns";
-import Button from "../../components/buttons/button";
-import { formatCurrency } from "../../helpers/currencyFormatter";
-import { AiOutlineArrowRight } from "react-icons/ai";
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import QuantityBtns from '../../components/buttons/quantityBtns/QuantityBtns';
+import Button from '../../components/buttons/button';
+import { formatCurrency } from '../../helpers/currencyFormatter';
+import { AiOutlineArrowRight } from 'react-icons/ai';
 import {
   useAddProductToCartMutation,
   useDeleteProductFromTheCartMutation,
   useDecreaseProductQuantityMutation,
   useGetCartQuery,
-} from "../../app/services/cartApi";
+} from '../../app/services/cartApi';
 
 import {
   decreaseQty,
   addToCart,
   removeProduct,
   initializeCart,
-} from "../../app/slices/cartSlice";
+} from '../../app/slices/cartSlice';
 
-import styles from "./shop.module.scss";
-import { useEffect } from "react";
+import styles from './shop.module.scss';
+import { useEffect } from 'react';
+import { toast } from "react-toastify";
 
 function Shop() {
   const [addProductToDb] = useAddProductToCartMutation();
@@ -37,11 +37,8 @@ function Shop() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
-  const {
-    data: serverCart,
-    isSuccess: isServerCartSuccess,
-    refetch: refetchServerCart,
-  } = useGetCartQuery();
+  const { isSuccess: isServerCartSuccess, refetch: refetchServerCart } =
+    useGetCartQuery();
 
   const stateCart = useSelector((state) => state.cart);
   const items = stateCart.products;
@@ -50,13 +47,14 @@ function Shop() {
   }, 0);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      refetchServerCart();
+    const refetchOnMount = async () => {
+      const { data: updatedCart } = await refetchServerCart();
       if (isServerCartSuccess) {
-        dispatch(initializeCart(serverCart.products));
+        dispatch(initializeCart(updatedCart.products));
       }
-    }
-  },[]);
+    };
+    if (isLoggedIn) refetchOnMount();
+  }, []);
 
   const handleDecreaseQty = async (product) => {
     if (isLoggedIn) {
@@ -66,13 +64,17 @@ function Shop() {
     }
     dispatch(decreaseQty({ product: product }));
   };
-  const handleIncreaseQty = async (product) => {
+  const handleIncreaseQty = async ({ product, cartQuantity }) => {
     if (isLoggedIn) {
-      const { data: responseCart } = await addProductToDb(product._id);
-      dispatch(initializeCart(responseCart.products));
+      if (product.quantity > cartQuantity) {
+        const { data: responseCart } = await addProductToDb(product._id);
+        dispatch(initializeCart(responseCart.products));
+      } else {
+        toast("We dont have more");
+      }
       return;
     }
-    dispatch(addToCart({ product: product, cartQuantity: counter }));
+    dispatch(addToCart({ product: product, cartQuantity: 1 }));
   };
   const handleRemove = async (product) => {
     if (isLoggedIn) {
@@ -102,9 +104,8 @@ function Shop() {
                           {item.product.name}
                         </h3>
                       </a>
-                      <FavoriteBtn></FavoriteBtn>
                       <QuantityBtns
-                        handleIncrement={() => handleIncreaseQty(item.product)}
+                        handleIncrement={() => handleIncreaseQty(item)}
                         handleDecrement={() => handleDecreaseQty(item.product)}
                         count={item.cartQuantity}
                         className={styles.shop__item_quantityBtn}
@@ -141,8 +142,10 @@ function Shop() {
               </div>
             )}
             {items.length > 0 && (
-              <Button className={styles.shop__order}>
-                <span className={styles.shop__order_text}>Place an order</span>
+              <Button
+                className={styles.shop__order}
+              >
+                <Link to='/checkout' state={{total: formatCurrency(totalPrice), number: items.length }} className={styles.shop__order_text}>Place an order</Link>
                 <AiOutlineArrowRight className={styles.shop__order_arrow} />
               </Button>
             )}

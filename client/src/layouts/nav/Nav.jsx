@@ -9,6 +9,9 @@ import { VscChromeClose } from "react-icons/vsc";
 import { useLocation } from "react-router-dom";
 import useDeviceType from "../../helpers/getDeviceType";
 import "./nav.scss";
+import { useDispatch } from "react-redux";
+import { toggleSearch } from "../../app/slices/searchSlice.js";
+import Search from "../../components/search";
 
 function Nav() {
   const { isMobile } = useDeviceType();
@@ -21,13 +24,17 @@ function Nav() {
   const calculateCartQty = () =>
     stateCart.reduce((total, product) => total + product.cartQuantity, 0);
 
+  const dispatch = useDispatch();
   const NavLink = ({ to, children, className = "nav__link" }) => (
     <Link className={className} to={to} onClick={() => setOnOpenNav(false)}>
       {children}
     </Link>
   );
 
-  useEffect(() => {}, []);
+  const isSearchOpened = useSelector((state) => state.search.isSearchOpened);
+  const handleSearch = () => {
+    dispatch(toggleSearch());
+  };
 
   const otherPagesNavStyles = {
     backgroundColor: "rgba(245, 236, 227, 1)",
@@ -61,11 +68,11 @@ function Nav() {
           <div>
             <Logo logoFillColor={logoFillColor} />
           </div>
-          <div className="nav__right">
+          <div className="nav__right relative">
             <NavLink to="/contacts" children={"Contacts"} />
             <div className="nav__icons">
               <span className="nav__icon">
-                <GoSearch />
+                <GoSearch data-name="search" onClick={handleSearch} />
               </span>
               <NavLink className="nav__icon" to="/shop">
                 <LiaShoppingBagSolid />
@@ -77,6 +84,7 @@ function Nav() {
                 children={<GoPerson />}
               />
             </div>
+            {isSearchOpened && <Search />}
           </div>
         </nav>
       ) : (
@@ -90,11 +98,12 @@ function Nav() {
 
           {onOpenNav && (
             <span className="nav__icon">
-              <GoSearch />
+              <GoSearch data-name="search" onClick={handleSearch} />
             </span>
           )}
           {onOpenNav && (
             <div className="nav__mobile__dropdown">
+              {isSearchOpened && <Search />}
               <div className="nav-mobile__links">
                 <NavLink to="/">Main Page</NavLink>
                 <NavLink to="/catalog">Catalog</NavLink>

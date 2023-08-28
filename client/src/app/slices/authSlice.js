@@ -1,12 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { api } from "../services/api";
-import { getLocalStorage } from "../../helpers/localStorage";
+import { createSlice } from '@reduxjs/toolkit';
+import { api } from '../services/api';
+import { getLocalStorage } from '../../helpers/localStorage';
 
 const initToken = getLocalStorage() || null;
 
+const initUser = {
+  firstName: '',
+  lastName: '',
+  login: '',
+  email: '',
+  telephone: '',
+};
+
 const authSlice = createSlice({
-  name: "auth",
-  initialState: { isLoggedIn: false, user: null, token: initToken },
+  name: 'auth',
+  initialState: { isLoggedIn: false, user: initUser, token: initToken },
   reducers: {
     setLoggedIn: (state) => {
       state.isLoggedIn = true;
