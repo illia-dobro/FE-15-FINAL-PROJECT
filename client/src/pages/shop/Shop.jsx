@@ -146,19 +146,17 @@ function Shop() {
             </div>
           )}
           {items.length > 0 && (
-            <Button className={styles.shop__order}>
-              <Link
-                to="/checkout"
-                state={{
-                  total: formatCurrency(totalPrice),
-                  number: items.length,
-                }}
-                className={styles.shop__order_text}
-              >
-                Place an order
-              </Link>
+            <Link
+              to="/checkout"
+              state={{
+                total: formatCurrency(totalPrice),
+                number: items.length,
+              }}
+              className={styles.shop__order}
+            >
+              <span>Place an order</span>
               <AiOutlineArrowRight className={styles.shop__order_arrow} />
-            </Button>
+            </Link>
           )}
         </div>
       </div>
