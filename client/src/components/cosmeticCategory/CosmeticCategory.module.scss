@@ -1,7 +1,20 @@
+@import "../../assets/styles/common.scss";
+
 .category {
-    position: relative;
-    max-width: 310px;
-    height: 430px; 
+    display: flex;
+    gap: 2%;
+    margin-bottom: 30px;
+    height: 430px;
+
+    &:nth-child(2) {
+        flex-direction: row-reverse;
+    }
+
+    &__link {
+        position: relative;
+        width: 24%;
+        height: 100%; 
+    }
 
     &__image {
         height: 100%;
@@ -12,21 +25,55 @@
     &__name {
         position: absolute;
         content: '';
-        left: 30px;
-        bottom: 24px;
+        padding: 12px 0 12px 30px;
+        bottom: 40px;
         font-size: 48px;
         line-height: 120%;
         color: #555555;
+        background-color: rgba(255, 255, 255, 0.7);
+        width: 100%;
+    }
+
+    &__products {
+        @include flex-justify-between;
+        max-width: 74%;
+        gap: 20px;
+        height: 100%;
+
+        & a {
+            width: 32%;
+            gap: 2%;
+            height: 100%;
+        }
     }
 }
 
 @media screen and (max-width: 992px) {
     .category {
         max-width: 780px;
+        height: 390px;
+
+        &__link {
+            width: 32%;
+        }
 
         &__name {
-            left: 24px;
+            padding-left: 24px;
             font-size: 40px;
+        }
+
+        &__products {
+            width: 66%;
+
+            & a {
+                width: 49%;
+                gap: 2%;
+                height: 100%;
+
+                &:last-child {
+                    display: none;
+                }
+            }
         }
     }
 }
@@ -34,5 +81,14 @@
 @media screen and (max-width: 480px) {
     .category {
         max-width: 345px;
+        margin-bottom: 20px;
+
+        &__link {
+            width: 100%;
+        }
+
+        &__products {
+            display: none;
+        }
     }
 }

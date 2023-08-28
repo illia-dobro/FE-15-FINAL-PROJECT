@@ -15,27 +15,6 @@
     padding: 0 70px;
   }
 
-  &__careCosmetics,
-  &__beautyCosmetics,
-  &__browsCosmetics,
-  &__cosmeticsImages {
-    @include flex-justify-between;
-    gap: 20px;    
-  }
-
-  &__careCosmetics,
-  &__beautyCosmetics {
-    margin-bottom: 30px;
-  }
-
-  &__beautyCosmetics {
-    flex-direction: row-reverse;
-  }
-
-  &__cosmeticsImages img {
-    max-width: 310px;
-  }
-
   &__uniqueContainer {
     margin-top: 70px;
     margin-bottom: 136px;
@@ -64,10 +43,6 @@
 
     &__container {
       max-width: 780px;
-    }
-
-    &__cosmeticsContainer {
-      display: flex;
     }
     
     &__cosmeticsContainer,
@@ -110,9 +85,9 @@
       padding: 0 15px;
     }
 
-    &__cosmeticsContainer,
     &__socialMediaContainer {
       flex-direction: column;
+      gap: 20px;
     }
   
     &__socialMediaBtn {
