@@ -127,7 +127,6 @@ function Shop() {
                         </small>
                       )}
                       <span className={styles.shop__item_sum}>
-                        ,{" "}
                         {formatCurrency(
                           item.cartQuantity * item.product.currentPrice
                         )}
