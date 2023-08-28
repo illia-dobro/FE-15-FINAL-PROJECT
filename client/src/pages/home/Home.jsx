@@ -120,6 +120,7 @@
 
 // export default Home;
 import ProductCard from "../../components/productCard";
+import ProductsList from "../../layouts/productsList/ProductsList";
 import HomePageSlider from "../../components/homePageSlider";
 import Unique from "../../components/unique";
 import SocialMedia from "../../components/socialMedia";
@@ -154,8 +155,7 @@ function Home() {
 				{categories &&
 					categories.slice(0, 3).map((category, index) => (
 						<div
-							className={`${styles.home__careCosmetics} ${index === 1 ? styles.reverseFlexDirection : ""
-								}`}
+							className={`${styles.home__careCosmetics} ${index === 1 ? styles.reverseFlexDirection : ''}`}
 							key={category.name}
 						>
 							<CosmeticCategory
@@ -164,6 +164,7 @@ function Home() {
 								to={`/catalog/${category.name}`}
 							/>
 							<div className={styles.home__cosmeticsImages}>
+								{/* Відображення товарів для даної категорії */}
 								{products &&
 									products.slice(0, 3).map((product) => (
 										<ProductCard key={product.itemNo} product={product} />
