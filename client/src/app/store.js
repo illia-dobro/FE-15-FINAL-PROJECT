@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice";
 import filtersReducer from "./slices/filtersSlice";
+import productsReducer from "./slices/productsSlice";
 import { api } from "./services/api";
 import productApi from "./services/productApi";
 import catalogApi from "./services/catalogApi";
