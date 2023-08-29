@@ -1,31 +1,32 @@
-import { LuEuro } from "react-icons/lu";
-import ProductCard from '../productCard';
+import { useLocation } from 'react-router-dom';
 
 import styles from './OrderDetails.module.scss';
 
 const Order = () => {
-    const quantity = 0;
+  const location = useLocation();
 
-    return (
-        <div className={styles.order}>
-            <div className={styles.order__header}>
-                <h3 className={styles.order__header_title}>Order</h3>
-                <span className={styles.order__header_number}>{quantity} products</span>
-            </div>
+  return (
+    <div className={styles.order}>
+      <div className={styles.order__header}>
+        <h3 className={styles.order__header_title}>Order</h3>
+        {location.state.number === 1 ? 
+          <span className={styles.order__header_number}>{location.state.number} product</span> :
+            <span className={styles.order__header_number}>{location.state.number} products</span>
+        }
+      </div>
 
-            <div className={styles.order__product}>
-                <ProductCard product={{}}/>          
-            </div>
+      <div className={styles.order__product}>
 
-            <div className={styles.order__total}>
-                <p>Total:</p>
-                <p className={styles.order__total_sum}>
-                    ###
-                    <LuEuro />
-                </p>
-            </div>
-        </div>
-    )
+      </div>
+
+      <div className={styles.order__total}>
+        <p>Total:</p>
+        <p className={styles.order__total_sum}>
+          {location.state.total}
+        </p>
+      </div>
+    </div>
+  );
 };
 
 export default Order;

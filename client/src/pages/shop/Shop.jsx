@@ -1,13 +1,5 @@
-/* Need to be completed: /
-
-/1. +++Send Cart to the database if the user had items in the cart before logging in. /
-/2. +++If the user logs in, retrieve the Cart from the database. /
-/3. +++Product Detail Page, quantity buttons . /
-/4. For the Server only: Fix the issue where buttons send more quantities than available in the product's quantity. */
-/*5. Fix styles */
-
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import FavoriteBtn from "../../components/buttons/favoriteBtn";
 import QuantityBtns from "../../components/buttons/quantityBtns/QuantityBtns";
 import Button from "../../components/buttons/button";
 import { formatCurrency } from "../../helpers/currencyFormatter";
@@ -41,8 +33,7 @@ function Shop() {
   const { isSuccess: isServerCartSuccess, refetch: refetchServerCart } =
     useGetCartQuery();
 
-  const stateCart = useSelector((state) => state.cart);
-  const items = stateCart.products;
+  const items = useSelector((state) => state.cart.products);
   const totalPrice = items.reduce((total, product) => {
     return total + product.product.currentPrice * product.cartQuantity;
   }, 0);
@@ -86,73 +77,92 @@ function Shop() {
     dispatch(removeProduct({ product: product }));
   };
 
-  return (
-    items && (
-      <>
-        <div className={styles.shop}>
-          <div className={styles.shop__container}>
-            <h2 className={styles.shop__title}>Your cart</h2>
-            <ul className={styles.shop__list}>
-              {items.map((item) => (
-                <li key={item.product._id} className={styles.shop__item}>
-                  <a className={styles.shop__item_img}>
-                    <img src={item.product.imageUrls[0]} alt="Image"></img>
-                  </a>
-                  <div className={styles.shop__item_info}>
-                    <div className={styles.shop__item_main}>
-                      <a href="#">
-                        <h3 className={styles.shop__item_title}>
-                          {item.product.name}
-                        </h3>
-                      </a>
-                      <FavoriteBtn></FavoriteBtn>
-                      <QuantityBtns
-                        handleIncrement={() => handleIncreaseQty(item)}
-                        handleDecrement={() => handleDecreaseQty(item.product)}
-                        count={item.cartQuantity}
-                        className={styles.shop__item_quantityBtn}
-                      />
-                    </div>
-                    <div className={styles.shop__item_adidional}>
-                      <Button
-                        className={styles.shop__item_close}
-                        action={() => handleRemove(item.product)}
-                      >
-                        x
-                      </Button>
-                      <div className={styles.shop__item_price}>
+  return items ? (
+    <>
+      <div className={styles.shop}>
+        <div className="px-4 mx-auto w-full md:w-4/5 lg:w-3/4 xl:w-2/3">
+          <h2 className={styles.shop__title}>
+            Nice choice! Lets place an order
+          </h2>
+          <ul className={styles.shop__list}>
+            {items.map((item) => (
+              <li key={item.product._id} className={styles.shop__item}>
+                <Link
+                  to={`/product/${item.product.itemNo}`}
+                  className={styles.shop__item_img}
+                >
+                  <img
+                    src={item.product.imageUrls[0]}
+                    alt="Image"
+                    className={styles.shop__item_img_object}
+                  ></img>
+                </Link>
+                <div className={styles.shop__item_info}>
+                  <div className={styles.shop__item_main}>
+                    <Link to={`/product/${item.product.itemNo}`}>
+                      <h3 className={styles.shop__item_title}>
+                        {item.product.name}
+                      </h3>
+                    </Link>
+                    <QuantityBtns
+                      handleIncrement={() => handleIncreaseQty(item)}
+                      handleDecrement={() => handleDecreaseQty(item.product)}
+                      count={item.cartQuantity}
+                      className={styles.shop__item_quantityBtn}
+                    />
+                  </div>
+                  <div className={styles.shop__item_adidional}>
+                    <Button
+                      className={styles.shop__item_close}
+                      action={() => handleRemove(item.product)}
+                    >
+                      x
+                    </Button>
+                    <div className={styles.shop__item_price}>
+                      {item.cartQuantity > 1 && (
                         <small className={styles.shop__item_count}>
-                          {item.cartQuantity}x
+                          {`${formatCurrency(
+                            item.product.currentPrice
+                          )} for 1 item`}
                         </small>
-                        <span className={styles.shop__item_sum}>
-                          {formatCurrency(
-                            item.cartQuantity * item.product.currentPrice
-                          )}
-                        </span>
-                      </div>
+                      )}
+                      <span className={styles.shop__item_sum}>
+                        {formatCurrency(
+                          item.cartQuantity * item.product.currentPrice
+                        )}
+                      </span>
                     </div>
                   </div>
-                </li>
-              ))}
-            </ul>
-            {items.length > 0 && (
-              <div className={styles.shop__total}>
-                <p className={styles.shop__total_text}>Total</p>
-                <p className={styles.shop__total_sum}>
-                  {formatCurrency(totalPrice)}
-                </p>
-              </div>
-            )}
-            {items.length > 0 && (
-              <Button className={styles.shop__order}>
-                <span className={styles.shop__order_text}>Place an order</span>
-                <AiOutlineArrowRight className={styles.shop__order_arrow} />
-              </Button>
-            )}
-          </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+          {items.length > 0 && (
+            <div className={styles.shop__total}>
+              <p className={styles.shop__total_text}>Total</p>
+              <p className={styles.shop__total_sum}>
+                {formatCurrency(totalPrice)}
+              </p>
+            </div>
+          )}
+          {items.length > 0 && (
+            <Link
+              to="/checkout"
+              state={{
+                total: formatCurrency(totalPrice),
+                number: items.length,
+              }}
+              className={styles.shop__order}
+            >
+              <span>Place an order</span>
+              <AiOutlineArrowRight className={styles.shop__order_arrow} />
+            </Link>
+          )}
         </div>
-      </>
-    )
+      </div>
+    </>
+  ) : (
+    <h2>Your cart is empty. Add some products to place an order</h2>
   );
 }
 export default Shop;
