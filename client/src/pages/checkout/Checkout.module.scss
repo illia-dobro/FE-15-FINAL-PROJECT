@@ -65,20 +65,22 @@
         }
     
         &_label {
-            font-size: 13px;
+            font-size: 14px;
             line-height: 110%;
             opacity: 30%;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             color: #000000;
         }
     
         &_input {
             background-color: $primary;
+            padding-left: 8px;
             padding-bottom: 16px;
             border-bottom: 1px solid rgba(0,0,0,0.2)
         }
 
         &_error {
+            font-size: 14px;
             color: red;
         }
     }
@@ -133,15 +135,16 @@
             @include flex-col;
             gap: 24px;
         }
+
+        &_costCalc {
+            max-width: 240px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: $dark;
+            opacity: 50%;
+        }
     }
 
-    &__costCalc {
-        max-width: 240px;
-        margin-top: 20px;
-        font-size: 14px;
-        color: $dark;
-        opacity: 50%;
-    }
 }
 
 .shipping {
@@ -164,5 +167,99 @@
         display: flex;
         justify-content: space-between;
         width: 100%;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .checkout {
+        flex-direction: column-reverse;
+
+        &__order,
+        &__form {
+            width: 100%;
+            padding: 60px;
+        }
+
+        &__confirmBtn {
+            width: 60%;
+        }
+    }
+
+    .form {
+        &__field {
+            padding-bottom: 32px;
+
+            &_error {
+                font-size: 12px;
+            }
+        }
+    }
+
+    .additional {
+        &__signIn {
+            margin-bottom: 40px;
+            &_text {
+                font-size: 14px;
+            }
+        }
+
+        &__shipping {
+            &_chooseBtns {
+                gap: 10px;
+            }
+
+            &_costCalc {
+                margin-top: 12px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .checkout {
+        &__order,
+        &__form {
+            padding: 50px 15px;
+        }
+
+        &__form {
+            &_header {
+                font-size: 36px;
+            }
+
+        }
+    }
+    .form {
+        &__details {
+            flex-direction: column;
+        }
+
+        &__main,
+        &__additional,
+        &__confirmBtn {
+            width: 100%;
+        }
+
+        &__field {
+            &_label {
+                font-size: 12px;
+            }
+
+            &_input {
+                padding-bottom: 8px;
+            }
+        }
+
+        &__field:last-child {
+            padding-bottom: 50px;
+        }
+    }
+
+    .additional {
+        &__shipping {
+            &_chooseBtns {
+                gap: 10px;
+            }
+        }
     }
 }

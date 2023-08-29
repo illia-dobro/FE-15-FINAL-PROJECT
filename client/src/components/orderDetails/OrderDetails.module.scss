@@ -25,6 +25,7 @@
     &__product {
         display: grid;
         grid-template-columns: repeat(3, 32%);
+        gap: 2%;
     }
 
     &__total {
@@ -40,6 +41,8 @@
 
         &_sum {
             @include flex-justify-between;
+            align-items: center;
+            gap: 8px;
         }
     }
 }
