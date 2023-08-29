@@ -73,6 +73,11 @@
 
 		&__cosmeticsProducts {
 			width: 66%;
+			gap: 2%;
+
+			& a {
+				width: 49%;
+			}
 
 			& a:last-child {
 				display: none;
