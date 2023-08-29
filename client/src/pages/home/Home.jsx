@@ -145,9 +145,34 @@ function Home() {
 	console.log(categories);
 	console.log(products);
 
+	// Функція для перемішування масиву випадковим чином
+	const shuffleArray = (array) => {
+		const shuffled = array.slice();
+		for (let i = shuffled.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+		}
+		return shuffled;
+	};
 
+	// Створюємо об'єкт для зберігання випадкових товарів для кожної категорії
+	const randomProductsByCategory = {};
 
-
+	// Перемішуємо товари для кожної категорії окремо
+	if (categories && products) {
+		categories.forEach((category) => {
+			// Фільтруємо товари для поточної категорії
+			const productsInCategory = products.filter(
+				(product) => product.categories === category.name
+			);
+			// Перемішуємо товари для поточної категорії
+			const shuffledProducts = shuffleArray(productsInCategory);
+			// Вибираємо перші 3 випадкових товари для поточної категорії
+			const selectedProducts = shuffledProducts.slice(0, 3);
+			// Зберігаємо їх у об'єкті
+			randomProductsByCategory[category.name] = selectedProducts;
+		});
+	}
 	return (
 		<div className={styles.home}>
 			<HomePageSlider />
@@ -160,13 +185,13 @@ function Home() {
 						>
 							<CosmeticCategory
 								image={{ src: category.imgUrl, alt: category.name }}
-								category={category.name}
-								to={`/catalog/${category.name}`}
+								category={category.id}
+								to={`/catalog/${category.id}`}
 							/>
 							<div className={styles.home__cosmeticsImages}>
 								{/* Відображення товарів для даної категорії */}
-								{products &&
-									products.slice(0, 3).map((product) => (
+								{randomProductsByCategory[category.name] &&
+									randomProductsByCategory[category.name].map((product) => (
 										<ProductCard key={product.itemNo} product={product} />
 									))}
 							</div>
