@@ -55,8 +55,6 @@ function HistoryOrders() {
     }
   };
 
-  console.log("orders: ", orders);
-
   return (
     <div className="flex-1 basis-5/6 lg:basis-3/4 rounded drop-shadow-lg">
       <div className="mx-auto max-w-4xl py-16 sm:px-6 sm:py-24">
