@@ -119,8 +119,10 @@
 // }
 
 // export default Home;
+// Імпортуємо необхідні компоненти та бібліотеки
+import HeartsLoader from "../../components/heartsLoader/heartsLoader.jsx";
+import { useState, useEffect } from 'react';
 import ProductCard from "../../components/productCard";
-import ProductsList from "../../layouts/productsList/ProductsList";
 import HomePageSlider from "../../components/homePageSlider";
 import Unique from "../../components/unique";
 import SocialMedia from "../../components/socialMedia";
@@ -139,9 +141,31 @@ import SocialImgUrl4 from "../../components/socialMediaImages/socialImg4.png";
 import styles from "./Home.module.scss";
 
 function Home() {
-	const { data: categories } = useGetCategoriesQuery();
-	const { data: products } = useGetAllProductsQuery();
+	// Запити до API для отримання категорій та товарів
+	const { data: categories, isLoading: isLoadingCategories } = useGetCategoriesQuery();
+	const { data: products, isLoading: isLoadingProducts } = useGetAllProductsQuery();
 
+	// Створюємо стан для відстеження завантаження
+	const [isLoading, setIsLoading] = useState(true);
+
+	// Використовуємо useEffect для відстеження завантаження категорій та товарів
+	useEffect(() => {
+		if (!isLoadingCategories && !isLoadingProducts) {
+			// Якщо обидва запити завершилися, встановлюємо isLoading в false
+			setIsLoading(false);
+		}
+	}, [isLoadingCategories, isLoadingProducts]);
+
+	// Застосовуємо лоадер, якщо isLoading === true
+	if (isLoading) {
+		return (
+			<div className={styles.loaderContainer}>
+				<HeartsLoader wrapperClass="hearts" />
+			</div>
+		);
+	}
+
+	// Логуємо дані категорій та товарів у консоль
 	console.log(categories);
 	console.log(products);
 
@@ -173,6 +197,8 @@ function Home() {
 			randomProductsByCategory[category.name] = selectedProducts;
 		});
 	}
+
+	// Повертаємо компонент з відображенням отриманих даних
 	return (
 		<div className={styles.home}>
 			<HomePageSlider />
