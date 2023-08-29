@@ -1,7 +1,7 @@
 .category {
 	position: relative;
-	max-width: 310px;
-	height: 382px;
+	width: 24%;
+	height: 410px;
 
 	&__image {
 		height: 100%;
@@ -12,20 +12,23 @@
 	&__name {
 		position: absolute;
 		content: "";
-		left: 30px;
+		width: 100%;
+		padding: 8px 0px 8px 30px;
 		bottom: 24px;
 		font-size: 48px;
 		line-height: 120%;
 		color: #555555;
+		background-color: rgba(255, 255, 255, 0.7);
 	}
 }
 
 @media screen and (max-width: 992px) {
 	.category {
-		max-width: 780px;
+		height: 370px;
+		width: 32%;
 
 		&__name {
-			left: 24px;
+			padding-left: 24px;
 			font-size: 40px;
 		}
 	}
@@ -33,6 +36,6 @@
 
 @media screen and (max-width: 480px) {
 	.category {
-		max-width: 345px;
+		width: 100%;
 	}
 }
