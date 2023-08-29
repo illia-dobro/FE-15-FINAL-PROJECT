@@ -1,8 +1,8 @@
 import styles from "./ProductCard.module.scss";
 import { Link, Outlet } from "react-router-dom";
+import { formatCurrency } from "../../helpers/currencyFormatter.js";
 
 const ProductCard = ({ product }) => {
-
   return (
     <Link to={`/product/${product.itemNo}`} className="group">
       <div
@@ -17,8 +17,12 @@ const ProductCard = ({ product }) => {
           className="aspect-square h-full w-full object-cover object-center group-hover:opacity-75 "
         />
         <div className="lg:h-[80px] lg:p-4 p-6 flex justify-between items-center gap-2  text-[#555555] group-hover:bg-[#d6cdc4]">
-          <h3 className="capitalize line-clamp-3 text-xl md:text-lg lg:text-sm">{product.name}</h3>
-          <p className="text-lg font-semibold">{`$${product.currentPrice}`}</p>
+          <h3 className="capitalize line-clamp-3 text-xl md:text-lg lg:text-sm">
+            {product.name}
+          </h3>
+          <p className="text-lg font-semibold">
+            {formatCurrency(product.currentPrice)}
+          </p>
         </div>
       </div>
     </Link>
