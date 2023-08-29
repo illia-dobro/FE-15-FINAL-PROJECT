@@ -10,12 +10,12 @@ import { useGetFilteredProductsQuery } from "../../app/services/productApi.js";
 import { useGetCategoriesQuery } from "../../app/services/catalogApi.js";
 import Pagination from "../../components/pagination/index.js";
 import HeartsLoader from "../../components/heartsLoader/heartsLoader.jsx";
+import { useEffect } from "react";
 import styles from "./Category.module.scss";
 
 const Category = () => {
   const { categoryName } = useParams();
   const dispatch = useDispatch();
-  dispatch(productTypes(categoryName));
 
   const { data: categories, isSuccess: isCategoriesSuccess } =
     useGetCategoriesQuery();
@@ -23,10 +23,6 @@ const Category = () => {
   const filtersQuery = useSelector((state) => state.filters.filtersQuery);
   const { data: productsData, isSuccess: isProductsSuccess } =
     useGetFilteredProductsQuery(`categories=${categoryName}${filtersQuery}`);
-
-  if (isProductsSuccess) {
-    dispatch(setProductsAndPagesQty(productsData.productsQuantity));
-  }
 
   const perPage = useSelector((state) => state.filters.pagination.perPage);
   const startPage = useSelector((state) => state.filters.pagination.startPage);
@@ -39,6 +35,11 @@ const Category = () => {
   const category =
     isCategoriesSuccess &&
     categories.find((category) => category.name === categoryName);
+
+  useEffect(() => {
+    dispatch(productTypes(categoryName));
+    dispatch(setProductsAndPagesQty(productsData?.productsQuantity));
+  }, [dispatch, categoryName, isProductsSuccess, productsData]);
 
   return isPaginatedProductsSuccess ? (
     <>
