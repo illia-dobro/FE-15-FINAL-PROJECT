@@ -1,13 +1,12 @@
-import {
-  ClockIcon,
-} from '@heroicons/react/24/outline';
+import { ClockIcon } from "@heroicons/react/24/outline";
 import {
   useGetWishListQuery,
   useGetOrdersQuery,
-  useDeleteOrderMutation
-} from '../../../app/services/api';
-import ProductList from '../../productsList';
-import ProductCard from '../../../components/productCard';
+  useDeleteOrderMutation,
+} from "../../../app/services/api";
+import ProductCard from "../../../components/productCard";
+import ProductsList from "../../productsList";
+import { formatCurrency } from "../../../helpers/currencyFormatter.js";
 
 function HistoryOrders() {
   const { data, isError, isLoading, isSuccess } = useGetWishListQuery();
@@ -24,37 +23,37 @@ function HistoryOrders() {
   let customerOrders;
 
   if (isOrderError || !orders || orders.length <= 0) {
-    customerOrders = '';
+    customerOrders = "";
   } else if (isOrderLoading) {
-    customerOrders = 'is loading';
+    customerOrders = "is loading";
   } else if (isOrderSuccess) {
     customerOrders = orders;
     console.log(customerOrders[0].products[0].product);
   }
 
   if (isError || !data) {
-    wishlist = '';
+    wishlist = "";
   } else if (isLoading) {
-    wishlist = 'is loading';
+    wishlist = "is loading";
   } else if (isSuccess) {
-    wishlist = <ProductList products={data.products} />;
+    wishlist = <ProductsList products={data.products} />;
   }
 
   const handleDeleteOrder = async (id) => {
     try {
       const response = await deleteOrder(id);
-      console.log( response);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
 
     try {
       const response = await deleteOrder(id);
-      console.log( response);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <div className="flex-1 basis-5/6 lg:basis-3/4 rounded drop-shadow-lg">
@@ -73,7 +72,7 @@ function HistoryOrders() {
               customerOrders.map((order) => (
                 <div key={order.orderNo}>
                   <h3 className="sr-only">
-                    Order placed on{' '}
+                    Order placed on{" "}
                     <time dateTime={order.datetime}>{order.date}</time>
                   </h3>
 
@@ -83,7 +82,8 @@ function HistoryOrders() {
                         Order №{order.orderNo}
                       </p>
                       <p className="text-sm text-zinc-500">
-                        In the amount of {order.totalSum}$
+                        In the amount of currency{" "}
+                        {formatCurrency(order.totalSum)}
                       </p>
                     </div>
                     <p className="text-sm flex flex-shrink-0 gap-2 py-3 items-center bg-[#EEE4DA] px-4 lg:px-8 rounded-[66px]">
@@ -97,16 +97,15 @@ function HistoryOrders() {
                       Delete
                     </button>
                   </div>
-
-                  <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 sm:py-6 lg:max-w-7xl lg:px-8">
-                    <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-                      {order.products.map((product) => (
-                        <div key={product._id} className="flex py-6">
-                          <ProductCard product={product.product} />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  {/*@TODO after merging fix for ProductsList cols props, need to add cols props to this element*/}
+                  <ProductsList
+                    products={order.products.map((item) => {
+                      return {
+                        ...item.product,
+                        cartQuantity: item.cartQuantity,
+                      };
+                    })}
+                  />
                 </div>
               ))}
           </div>

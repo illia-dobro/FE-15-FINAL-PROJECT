@@ -8,9 +8,14 @@ const ProductCard = ({ product }) => {
       <div
         className={
           styles.product_card +
-          " aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md xl:aspect-h-8 xl:aspect-w-7"
+          " aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md xl:aspect-h-8 xl:aspect-w-7 relative"
         }
       >
+        {product?.cartQuantity > 1 && (
+          <div className="absolute top-0 right-0 w-1/5 aspect-square bg-[#555555] rounded-md flex flex-col justify-center text-center">
+            <span className="text-[#eee4da]">{product?.cartQuantity}</span>
+          </div>
+        )}
         <img
           src={product.imageUrls[0]}
           alt={product.imageAlt}
