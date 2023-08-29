@@ -1,5 +1,6 @@
 import styles from "./ProductCard.module.scss";
 import { Link, Outlet } from "react-router-dom";
+import { formatCurrency } from "../../helpers/currencyFormatter.js";
 
 const ProductCard = ({ product }) => {
   return (
@@ -24,7 +25,9 @@ const ProductCard = ({ product }) => {
           <h3 className="capitalize line-clamp-3 text-xl md:text-lg lg:text-sm">
             {product.name}
           </h3>
-          <p className="text-lg font-semibold">{`$${product.currentPrice}`}</p>
+          <p className="text-lg font-semibold">
+            {formatCurrency(product.currentPrice)}
+          </p>
         </div>
       </div>
     </Link>

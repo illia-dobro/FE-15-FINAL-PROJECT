@@ -5,9 +5,9 @@ import SocialMedia from "../../components/socialMedia";
 import SocialMediaBtn from "../../components/buttons/socialMediaBtn";
 import SocialMediaImages from "../../components/socialMediaImages";
 
-import careCosmeticsImg from "../../components/cosmeticCategory/care-cosmetics.png";
-import beautyCosmeticsImg from "../../components/cosmeticCategory/beauty-cosmetics.png";
-import browsCosmeticsImg from "../../components/cosmeticCategory/brows-cosmetics.png";
+import bodyCosmeticsImg from "../../components/cosmeticCategory/body-cosmetics.png";
+import faceCosmeticsImg from "../../components/cosmeticCategory/face-cosmetics.png";
+import hairCosmeticsImg from "../../components/cosmeticCategory/hair-cosmetics.png";
 import uniqueMainImgUrl from "../../assets/unique_main.png";
 import InstagramUrl from "../../components/buttons/socialMediaBtn/Instagram.png";
 import SocialImgUrl1 from "../../components/socialMediaImages/socialImg1.png";
@@ -28,9 +28,12 @@ function Home() {
         <div className={styles.home__cosmeticsContainer}>
           <div className={styles.home__careCosmetics}>
             <CosmeticCategory
-              image={{ src: careCosmeticsImg, alt: "Care Cosmetics Product" }}
-              category="Face"
-              to="/catalog"
+              image={{
+                src: bodyCosmeticsImg,
+                alt: "Body Cosmetics Product"
+              }}
+              category="Body"
+              to="/catalog/Bodycare"
             />
 
             <div className={styles.home__cosmeticsImages}>
@@ -41,11 +44,11 @@ function Home() {
           <div className={styles.home__beautyCosmetics}>
             <CosmeticCategory
               image={{
-                src: beautyCosmeticsImg,
-                alt: "Beauty Cosmetics Product",
+                src: faceCosmeticsImg,
+                alt: "Face Cosmetics Product",
               }}
-              category="Hair"
-              to="/catalog"
+              category="Face"
+              to="/catalog/Facecare"
             />
 
             <div className={styles.home__cosmeticsImages}>
@@ -55,9 +58,9 @@ function Home() {
 
           <div className={styles.home__browsCosmetics}>
             <CosmeticCategory
-              image={{ src: browsCosmeticsImg, alt: "Brows Cosmetics Product" }}
-              category="Brows"
-              to="/catalog"
+              image={{ src: hairCosmeticsImg, alt: "Hair Cosmetics Product" }}
+              category="Hair"
+              to="/catalog/Haircare"
             />
 
             <div className={styles.home__cosmeticsImages}>

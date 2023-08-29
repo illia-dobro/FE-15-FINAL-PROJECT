@@ -1,4 +1,4 @@
-import { NavLink, useNavigate, useNavigation } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { usePlaceOrderMutation } from '../../app/services/api';
@@ -229,7 +229,7 @@ function Checkout() {
                   )}
                 </div>
 
-                <p className={styles.additional__costCalc}>
+                <p className={styles.additional__shipping_costCalc}>
                   Shipping cost is calculated individually by the manager
                 </p>
               </div>
