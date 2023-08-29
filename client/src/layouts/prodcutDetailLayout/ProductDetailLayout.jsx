@@ -165,9 +165,14 @@ function ProductDetailLayout({ product }) {
                 count={inCart ? inCartQty : counter}
                 className="quantityBtnsLg"
               />
-              <span className="price">
-                {formatCurrency(product.currentPrice)}
-              </span>
+              <div className="price flex flex-col">
+                {inCart && (
+                  <span className="text-sm">
+                    Subtotal: {formatCurrency(inCartQty * product.currentPrice)}
+                  </span>
+                )}
+                <span>{formatCurrency(product.currentPrice)}</span>
+              </div>
             </div>
             <Button
               className="button button-color--secondary"

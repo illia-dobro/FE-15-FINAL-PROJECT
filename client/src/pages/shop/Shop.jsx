@@ -77,92 +77,96 @@ function Shop() {
     dispatch(removeProduct({ product: product }));
   };
 
-  return items ? (
-    <>
-      <div className={styles.shop}>
-        <div className="px-4 mx-auto w-full md:w-4/5 lg:w-3/4 xl:w-2/3">
-          <h2 className={styles.shop__title}>
-            Nice choice! Lets place an order
-          </h2>
-          <ul className={styles.shop__list}>
-            {items.map((item) => (
-              <li key={item.product._id} className={styles.shop__item}>
-                <Link
-                  to={`/product/${item.product.itemNo}`}
-                  className={styles.shop__item_img}
-                >
-                  <img
-                    src={item.product.imageUrls[0]}
-                    alt="Image"
-                    className={styles.shop__item_img_object}
-                  ></img>
-                </Link>
-                <div className={styles.shop__item_info}>
-                  <div className={styles.shop__item_main}>
-                    <Link to={`/product/${item.product.itemNo}`}>
-                      <h3 className={styles.shop__item_title}>
-                        {item.product.name}
-                      </h3>
-                    </Link>
-                    <QuantityBtns
-                      handleIncrement={() => handleIncreaseQty(item)}
-                      handleDecrement={() => handleDecreaseQty(item.product)}
-                      count={item.cartQuantity}
-                      className={styles.shop__item_quantityBtn}
-                    />
-                  </div>
-                  <div className={styles.shop__item_adidional}>
-                    <Button
-                      className={styles.shop__item_close}
-                      action={() => handleRemove(item.product)}
-                    >
-                      x
-                    </Button>
-                    <div className={styles.shop__item_price}>
-                      {item.cartQuantity > 1 && (
-                        <small className={styles.shop__item_count}>
-                          {`${formatCurrency(
-                            item.product.currentPrice
-                          )} for 1 item`}
-                        </small>
-                      )}
-                      <span className={styles.shop__item_sum}>
-                        {formatCurrency(
-                          item.cartQuantity * item.product.currentPrice
+  console.log(items);
+
+  return (
+    items && (
+      <>
+        <div className={styles.shop}>
+          <div className="px-4 mx-auto w-full md:w-4/5 lg:w-3/4 xl:w-2/3">
+            <h2 className={styles.shop__title}>
+              {items.length
+                ? "Nice choice! Lets place an order"
+                : "Your cart is empty. Add some products to place an order"}
+            </h2>
+            <ul className={styles.shop__list}>
+              {items.map((item) => (
+                <li key={item.product._id} className={styles.shop__item}>
+                  <Link
+                    to={`/product/${item.product.itemNo}`}
+                    className={styles.shop__item_img}
+                  >
+                    <img
+                      src={item.product.imageUrls[0]}
+                      alt="Image"
+                      className={styles.shop__item_img_object}
+                    ></img>
+                  </Link>
+                  <div className={styles.shop__item_info}>
+                    <div className={styles.shop__item_main}>
+                      <Link to={`/product/${item.product.itemNo}`}>
+                        <h3 className={styles.shop__item_title}>
+                          {item.product.name}
+                        </h3>
+                      </Link>
+                      <QuantityBtns
+                        handleIncrement={() => handleIncreaseQty(item)}
+                        handleDecrement={() => handleDecreaseQty(item.product)}
+                        count={item.cartQuantity}
+                        className={styles.shop__item_quantityBtn}
+                      />
+                    </div>
+                    <div className={styles.shop__item_adidional}>
+                      <Button
+                        className={styles.shop__item_close}
+                        action={() => handleRemove(item.product)}
+                      >
+                        x
+                      </Button>
+                      <div className={styles.shop__item_price}>
+                        {item.cartQuantity > 1 && (
+                          <small className={styles.shop__item_count}>
+                            {`${formatCurrency(
+                              item.product.currentPrice
+                            )} for 1 item`}
+                          </small>
                         )}
-                      </span>
+                        <span className={styles.shop__item_sum}>
+                          {formatCurrency(
+                            item.cartQuantity * item.product.currentPrice
+                          )}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-          {items.length > 0 && (
-            <div className={styles.shop__total}>
-              <p className={styles.shop__total_text}>Total</p>
-              <p className={styles.shop__total_sum}>
-                {formatCurrency(totalPrice)}
-              </p>
-            </div>
-          )}
-          {items.length > 0 && (
-            <Link
-              to="/checkout"
-              state={{
-                total: formatCurrency(totalPrice),
-                number: items.length,
-              }}
-              className={styles.shop__order}
-            >
-              <span>Place an order</span>
-              <AiOutlineArrowRight className={styles.shop__order_arrow} />
-            </Link>
-          )}
+                </li>
+              ))}
+            </ul>
+            {items.length > 0 && (
+              <div className={styles.shop__total}>
+                <p className={styles.shop__total_text}>Total</p>
+                <p className={styles.shop__total_sum}>
+                  {formatCurrency(totalPrice)}
+                </p>
+              </div>
+            )}
+            {items.length > 0 && (
+              <Link
+                to="/checkout"
+                state={{
+                  total: formatCurrency(totalPrice),
+                  number: items.length,
+                }}
+                className={styles.shop__order}
+              >
+                <span>Place an order</span>
+                <AiOutlineArrowRight className={styles.shop__order_arrow} />
+              </Link>
+            )}
+          </div>
         </div>
-      </div>
-    </>
-  ) : (
-    <h2>Your cart is empty. Add some products to place an order</h2>
+      </>
+    )
   );
 }
 export default Shop;
