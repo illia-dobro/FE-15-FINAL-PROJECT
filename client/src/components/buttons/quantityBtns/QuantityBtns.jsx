@@ -14,9 +14,9 @@ function QuantityBtns({ handleIncrement, handleDecrement, count = 1, className }
 	);
 }
 QuantityBtns.propTypes = {
-	handleIncrement: PropTypes.func.isRequired,
-	handleDecrement: PropTypes.func.isRequired,
-	count: PropTypes.number.isRequired,
+	handleIncrement: PropTypes.func,
+	handleDecrement: PropTypes.func,
+	count: PropTypes.number,
 	className: PropTypes.string
 };
 export default QuantityBtns;

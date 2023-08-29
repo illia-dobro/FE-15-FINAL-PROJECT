@@ -1,0 +1,265 @@
+@import "../../assets/styles/common.scss";
+
+.checkout {
+    display: flex;
+
+    &__form {
+        padding: 102px 70px;
+        width: 68%;
+        gap: 8%;
+        background-color: $primary;
+
+        &_header {
+            font-size: 48px;
+            line-height: 110%;
+            color: $dark;
+            margin-bottom: 48px;
+        }
+    }
+
+    &__order {
+        @include flex-col;
+        justify-content: center;
+        background-color: $secondary;
+        padding: 100px 68px;
+        width: 32%;
+    }
+
+    &__editBtn {
+        @include flex-justify-center;
+        align-items: center;
+        gap: 12px;
+        color: $primary-hover;
+        margin: 20px auto 0 auto;
+
+        span {
+            display: block;
+            margin-left: 8px;
+        }
+    }
+}
+
+.form {
+    width: 100%;
+
+    &__details {
+        @include flex-justify-between;
+        gap: 8%;
+        margin-bottom: 40px;
+    }
+
+    &__main {
+        width: 58%;
+    }
+
+    &__additional {
+        width: 34%;
+    }
+
+    &__field {
+        @include flex-col;
+        padding-bottom: 40px;
+    
+        &:last-child {
+            margin-bottom: 0;
+        }
+    
+        &_label {
+            font-size: 14px;
+            line-height: 110%;
+            opacity: 30%;
+            margin-bottom: 12px;
+            color: #000000;
+        }
+    
+        &_input {
+            background-color: $primary;
+            padding-left: 8px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(0,0,0,0.2)
+        }
+
+        &_error {
+            font-size: 14px;
+            color: red;
+        }
+    }
+
+    &__confirmBtn {
+        width: 30%;
+        margin: 0 auto;
+        background-color: $secondary;
+        @include flex-justify-center;
+        align-items: center;
+        border-radius: 66px;
+        padding: 28px 0;
+    
+        &_text {
+            font-size: 20px;
+            line-height: 120%;
+            color: $dark;
+            margin-right: 12px;
+        }
+    }
+}
+
+.additional {
+    &__title {
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 180%;
+        margin-bottom: 8px;
+        color: $dark;
+    }
+
+    &__signIn {
+        margin-bottom: 64px;
+
+        &_text {
+            font-size: 14px;
+            color: $dark;
+            margin-bottom: 18px;
+        }
+
+        &_icon {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            gap: 12px;
+            color: $primary-hover;
+        }
+    }
+
+    &__shipping {
+        &_chooseBtns {
+            @include flex-col;
+            gap: 24px;
+        }
+
+        &_costCalc {
+            max-width: 240px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: $dark;
+            opacity: 50%;
+        }
+    }
+
+}
+
+.shipping {
+    &__chooseBtn {
+        align-items: center;
+        width: 100%;
+        @include flex-justify-between;
+        padding: 12px 24px;
+        border-radius: 6px;
+        background-color: $secondary;
+    
+        &__text {
+            font-size: 16px;
+            line-height: 180%;
+            color: $dark;
+        }
+    }
+
+    &__label {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .checkout {
+        flex-direction: column-reverse;
+
+        &__order,
+        &__form {
+            width: 100%;
+            padding: 60px;
+        }
+
+        &__confirmBtn {
+            width: 60%;
+        }
+    }
+
+    .form {
+        &__field {
+            padding-bottom: 32px;
+
+            &_error {
+                font-size: 12px;
+            }
+        }
+    }
+
+    .additional {
+        &__signIn {
+            margin-bottom: 40px;
+            &_text {
+                font-size: 14px;
+            }
+        }
+
+        &__shipping {
+            &_chooseBtns {
+                gap: 10px;
+            }
+
+            &_costCalc {
+                margin-top: 12px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .checkout {
+        &__order,
+        &__form {
+            padding: 50px 15px;
+        }
+
+        &__form {
+            &_header {
+                font-size: 36px;
+            }
+
+        }
+    }
+    .form {
+        &__details {
+            flex-direction: column;
+        }
+
+        &__main,
+        &__additional,
+        &__confirmBtn {
+            width: 100%;
+        }
+
+        &__field {
+            &_label {
+                font-size: 12px;
+            }
+
+            &_input {
+                padding-bottom: 8px;
+            }
+        }
+
+        &__field:last-child {
+            padding-bottom: 50px;
+        }
+    }
+
+    .additional {
+        &__shipping {
+            &_chooseBtns {
+                gap: 10px;
+            }
+        }
+    }
+}

@@ -16,9 +16,14 @@
         color: $dark;
     }
 
+    &__form {
+        width: 100%;
+        margin-bottom: 54px;
+    }
+    
     &__sendBtn {
         width: 362px;
-        height: 80px;
+        padding: 28px 0;
         @include flex-justify-center;
         align-items: center;
         gap: 10px;
@@ -38,6 +43,10 @@
             gap: 70px;
             margin-bottom: 92px;
         }
+
+        &__form {
+            width: 80%;
+        }
     }
 }
 
@@ -48,6 +57,10 @@
             margin-bottom: 30px;
             font-size: 36px;
             color: $dark;
+        }
+
+        &__form {
+            width: 100%;
         }
 
         &__sendBtn {

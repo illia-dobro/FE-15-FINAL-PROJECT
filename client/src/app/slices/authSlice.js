@@ -4,15 +4,28 @@ import { getLocalStorage } from '../../helpers/localStorage';
 
 const initToken = getLocalStorage() || null;
 
+const initUser = {
+  firstName: '',
+  lastName: '',
+  login: '',
+  email: '',
+  telephone: '',
+};
+
 const authSlice = createSlice({
   name: 'auth',
-  initialState: { user: null, token: initToken },
+  initialState: { isLoggedIn: false, user: initUser, token: initToken },
   reducers: {
+    setLoggedIn: (state) => {
+      state.isLoggedIn = true;
+    },
     setCredentials: (state, { payload: { user, token } }) => {
+      state.isLoggedIn = true;
       state.user = user;
       state.token = token;
     },
     logout: (state) => {
+      state.isLoggedIn = false;
       state.user = null;
       state.token = null;
     },
@@ -21,12 +34,14 @@ const authSlice = createSlice({
     builder.addMatcher(
       api.endpoints.login.matchFulfilled,
       (state, { payload }) => {
+        state.isLoggedIn = true;
         state.token = payload.token;
       }
     );
     builder.addMatcher(
       api.endpoints.getUser.matchFulfilled,
       (state, { payload }) => {
+        state.isLoggedIn = true;
         state.user = payload;
       }
     );
@@ -39,7 +54,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { setLoggedIn, setCredentials, logout } = authSlice.actions;
 
 export default authSlice.reducer;
 
