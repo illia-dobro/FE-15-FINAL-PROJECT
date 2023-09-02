@@ -46,9 +46,9 @@ function Home() {
     );
   }
 
-  // Логуємо дані категорій та товарів у консоль
-  console.log(categories);
-  console.log(products);
+  // // Логуємо дані категорій та товарів у консоль
+  // console.log(categories);
+  // console.log(products);
 
   // Функція для перемішування масиву випадковим чином
   const shuffleArray = (array) => {
