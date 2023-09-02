@@ -9,7 +9,7 @@ import { useAddProductToCartMutation } from "../../app/services/cartApi.js";
 
 import { BsCartCheck, BsCartPlus } from "react-icons/bs";
 
-const ProductCard = ({ product, isHistory = false }) => {
+const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   const [isActionsShown, setActionsShown] = useState(false);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -34,7 +34,7 @@ const ProductCard = ({ product, isHistory = false }) => {
       onMouseEnter={() => setActionsShown(true)}
       onMouseLeave={() => setActionsShown(false)}
     >
-      {!isHistory && (isActionsShown || inCart) && (
+      {!product?.cartQuantity && (isActionsShown || inCart) && (
         <div className="absolute top-0 rounded-t-md w-full p-2 flex justify-between bg-gray-50/[0.5]">
           {isLoggedIn && (
             <FavoriteBtn id={product._id} isText={false} size={36} />
