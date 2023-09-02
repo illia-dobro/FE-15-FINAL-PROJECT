@@ -40,7 +40,7 @@ function UserData({ user }) {
           <ChangePassword setIsModalOpen={setIsModalPassword} />
         </Modal>
       )}
-      <div className="flex-1 bg-[#EEE4DA] px-10 xl:px-16 py-16 sm:py-24 flex flex-col items-center justify-center text-slate-700">
+      <div className="flex-1 bg-[#EEE4DA] px-10 xl:px-16 py-16 sm:py-24 flex flex-col items-center justify-items-start text-slate-700">
         <h3 className="text-3xl  pb-8">Profile</h3>
         <p className="pt-8 text-2xl">{user.firstName + ' ' + user.lastName}</p>
         <p className="pb-2 text-sm">{user.email}</p>

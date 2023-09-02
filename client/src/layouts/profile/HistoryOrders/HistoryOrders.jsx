@@ -31,10 +31,6 @@ function HistoryOrders() {
     customerOrders = orders
   }
 
-  console.log(customerOrders);
-
-  customerOrders = customerOrders && orders.sort((a, b) => Number(b.orderNo) - Number(a.orderNo));
-
   if (isError || !data) {
     wishlist = "";
   } else if (isLoading) {
