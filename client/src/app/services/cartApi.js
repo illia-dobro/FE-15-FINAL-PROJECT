@@ -4,7 +4,7 @@ const cartApi = createApi({
   reducerPath: 'cartApi',
 
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:4000/api/cart',
+    baseUrl: 'https://f-15.onrender.com/api/cart',
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;
       if (token) {
