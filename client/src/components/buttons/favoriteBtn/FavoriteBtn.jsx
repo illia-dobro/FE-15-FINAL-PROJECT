@@ -11,7 +11,7 @@ import Button from "../button";
 import "./favoriteBtn.scss";
 import { getProductFromWishlist } from "../../../helpers/getProductFromWishlist";
 
-function FavoriteBtn({ id, isText = true }) {
+function FavoriteBtn({ id, size = 16, isText = true }) {
   const { data: wishlist, isSuccess: isSuccessGetWishlist } =
     useGetWishListQuery();
   const [createWishList] = useCreateWishListMutation();
@@ -54,12 +54,12 @@ function FavoriteBtn({ id, isText = true }) {
     >
       {isInWishlist ? (
         <>
-          <VscHeartFilled size={16} color="#cf6d23" />
+          <VscHeartFilled size={size} color="#cf6d23" />
           {isText && <span>Remove from favorites</span>}
         </>
       ) : (
         <>
-          <VscHeart />
+          <VscHeart size={size} />
           {isText && <span>Add to favorites</span>}
         </>
       )}
