@@ -36,9 +36,6 @@ const ProductCard = ({ product }) => {
     >
       {!product?.cartQuantity && (isActionsShown || inCart) && (
         <div className="absolute top-0 rounded-t-md w-full p-2 flex justify-between bg-gray-50/[0.5]">
-          {isLoggedIn && (
-            <FavoriteBtn id={product._id} isText={false} size={36} />
-          )}
           {inCart ? (
             <Link to={`/shop`}>
               <BsCartCheck size={36} />
@@ -49,6 +46,9 @@ const ProductCard = ({ product }) => {
               size={36}
               className="cursor-pointer"
             />
+          )}
+          {(isLoggedIn && !inCart) && (
+            <FavoriteBtn id={product._id} isText={false} size={36} />
           )}
         </div>
       )}
