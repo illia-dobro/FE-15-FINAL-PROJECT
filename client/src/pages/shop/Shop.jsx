@@ -77,8 +77,6 @@ function Shop() {
     dispatch(removeProduct({ product: product }));
   };
 
-  console.log(items);
-
   return (
     items && (
       <>
