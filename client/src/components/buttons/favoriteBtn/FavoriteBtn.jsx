@@ -1,20 +1,20 @@
-import { VscHeart, VscHeartFilled } from 'react-icons/vsc';
-import PropTypes from 'prop-types';
-import { toast } from 'react-toastify';
+import { VscHeart, VscHeartFilled } from "react-icons/vsc";
+import PropTypes from "prop-types";
+import { toast } from "react-toastify";
 import {
   useCreateWishListMutation,
   useGetWishListQuery,
   useAddWishListMutation,
   useDeleteProductWishListMutation,
-} from '../../../app/services/api';
-import Button from '../button';
-import './favoriteBtn.scss';
-import { getProductFromWishlist } from '../../../helpers/getProductFromWishlist';
+} from "../../../app/services/api";
+import Button from "../button";
+import "./favoriteBtn.scss";
+import { getProductFromWishlist } from "../../../helpers/getProductFromWishlist";
 
-function FavoriteBtn({ id }) {
+function FavoriteBtn({ id, isText = true }) {
   const { data: wishlist, isSuccess: isSuccessGetWishlist } =
     useGetWishListQuery();
-  const [createWishList ] = useCreateWishListMutation();
+  const [createWishList] = useCreateWishListMutation();
   const [addWishList] = useAddWishListMutation();
   const [deleteProductWishList] = useDeleteProductWishListMutation();
 
@@ -30,7 +30,7 @@ function FavoriteBtn({ id }) {
         throw data;
       }
     } catch (err) {
-      toast('Something goes wrong!');
+      toast("Something goes wrong!");
     }
   }
 
@@ -43,7 +43,7 @@ function FavoriteBtn({ id }) {
         throw data;
       }
     } catch (err) {
-      toast('Something goes wrong!');
+      toast("Something goes wrong!");
     }
   }
 
@@ -52,11 +52,16 @@ function FavoriteBtn({ id }) {
       className="favorite-btn"
       action={!isInWishlist ? handleWishList : handleDelete}
     >
-      {isInWishlist ? <VscHeartFilled size={16} color='#cf6d23' /> : <VscHeart />}
       {isInWishlist ? (
-        <span>Remove from favorites</span>
+        <>
+          <VscHeartFilled size={16} color="#cf6d23" />
+          {isText && <span>Remove from favorites</span>}
+        </>
       ) : (
-        <span>Add to favorites</span>
+        <>
+          <VscHeart />
+          {isText && <span>Add to favorites</span>}
+        </>
       )}
     </Button>
   );
@@ -64,7 +69,6 @@ function FavoriteBtn({ id }) {
 
 export default FavoriteBtn;
 
-
 FavoriteBtn.propTypes = {
-  id: PropTypes.string
+  id: PropTypes.string,
 };
