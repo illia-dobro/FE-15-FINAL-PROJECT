@@ -27,9 +27,13 @@ function HistoryOrders() {
   } else if (isOrderLoading) {
     customerOrders = "is loading";
   } else if (isOrderSuccess) {
-    customerOrders = orders;
-    console.log(customerOrders[0].products[0].product);
+    console.log(orders);
+    customerOrders = orders
   }
+
+  console.log(customerOrders);
+
+  customerOrders = customerOrders && orders.sort((a, b) => Number(b.orderNo) - Number(a.orderNo));
 
   if (isError || !data) {
     wishlist = "";
@@ -54,6 +58,8 @@ function HistoryOrders() {
       console.log(error);
     }
   };
+
+
 
   return (
     <div className="flex-1 basis-5/6 lg:basis-3/4 rounded drop-shadow-lg">
