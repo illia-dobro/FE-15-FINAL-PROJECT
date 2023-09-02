@@ -1,14 +1,14 @@
-const Cart = require('../models/Cart');
-const Order = require('../models/Order');
-const Product = require('../models/Product');
-const sendMail = require('../commonHelpers/mailSender');
-const validateOrderForm = require('../validation/validationHelper');
-const queryCreator = require('../commonHelpers/queryCreator');
-const productAvailibilityChecker = require('../commonHelpers/productAvailibilityChecker');
-const subtractProductsFromCart = require('../commonHelpers/subtractProductsFromCart');
-const _ = require('lodash');
+const Cart = require("../models/Cart");
+const Order = require("../models/Order");
+const Product = require("../models/Product");
+const sendMail = require("../commonHelpers/mailSender");
+const validateOrderForm = require("../validation/validationHelper");
+const queryCreator = require("../commonHelpers/queryCreator");
+const productAvailibilityChecker = require("../commonHelpers/productAvailibilityChecker");
+const subtractProductsFromCart = require("../commonHelpers/subtractProductsFromCart");
+const _ = require("lodash");
 
-const uniqueRandom = require('unique-random');
+const uniqueRandom = require("unique-random");
 const rand = uniqueRandom(1000000, 9999999);
 
 exports.placeOrder = async (req, res, next) => {
@@ -31,14 +31,13 @@ exports.placeOrder = async (req, res, next) => {
 
     if (req.body.customerId) {
       order.customerId = req.body.customerId;
-
       cartProducts = await subtractProductsFromCart(order.customerId);
     }
 
     if (!req.body.products && cartProducts.length < 1) {
-      res
+      return res
         .status(400)
-        .json({ message: 'The list of products is required, but absent!' });
+        .json({ message: "The list of products is required, but absent!" });
     }
 
     if (cartProducts.length > 0) {
@@ -53,80 +52,60 @@ exports.placeOrder = async (req, res, next) => {
       0
     );
 
-    const productAvailibilityInfo = await productAvailibilityChecker(
+    const productAvailabilityInfo = await productAvailibilityChecker(
       order.products
     );
 
-    if (!productAvailibilityInfo.productsAvailibilityStatus) {
-      res.json({
-        message: 'Some of your products are unavailable for now',
-        productAvailibilityInfo,
+    if (!productAvailabilityInfo.productsAvailibilityStatus) {
+      return res.json({
+        message: "Some of your products are unavailable for now",
+        productAvailabilityInfo,
       });
-    } else {
-      const subscriberMail = req.body.email;
-      const letterSubject = req.body.letterSubject;
-      const letterHtml = req.body.letterHtml;
-
-      const { errors, isValid } = validateOrderForm(req.body);
-
-      // Check Validation
-      if (!isValid) {
-        return res.status(400).json(errors);
-      }
-
-      if (!letterSubject) {
-        return res.status(400).json({
-          message:
-            "This operation involves sending a letter to the client. Please provide field 'letterSubject' for the letter.",
-        });
-      }
-
-      if (!letterHtml) {
-        return res.status(400).json({
-          message:
-            "This operation involves sending a letter to the client. Please provide field 'letterHtml' for the letter.",
-        });
-      }
-
-      const newOrder = new Order(order);
-
-      if (order.customerId) {
-        newOrder.populate(['customerId']);
-      }
-
-      newOrder
-        .save()
-        .then(async (order) => {
-          // const mailResult = await sendMail(
-          //   subscriberMail,
-          //   letterSubject,
-          //   letterHtml,
-          //   res
-          // );
-          // console.log(id);
-
-          for (item of order.products) {
-            const id = item.product._id;
-
-            const product = await Product.findOne({ _id: id });
-            const productQuantity = product.quantity;
-            await Product.findOneAndUpdate(
-              { _id: id },
-              { quantity: productQuantity - item.cartQuantity },
-              { new: true }
-            );
-          }
-
-          res.json({ order });
-        })
-        .catch((err) =>
-          res.status(400).json({
-            message: `Error happened on server: "${err}" `,
-          })
-        );
     }
+
+    const subscriberMail = req.body.email;
+    const letterSubject = req.body.letterSubject;
+    const letterHtml = req.body.letterHtml;
+
+    const { errors, isValid } = validateOrderForm(req.body);
+
+    // Check Validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    if (!letterSubject || !letterHtml) {
+      return res.status(400).json({
+        message:
+          "This operation involves sending a letter to the client. Please provide both 'letterSubject' and 'letterHtml' fields for the letter.",
+      });
+    }
+
+    const newOrder = new Order(order);
+
+    if (order.customerId) {
+      await newOrder.populate(["customerId"]);
+    }
+
+    const savedOrder = await newOrder.save();
+
+    for (const item of savedOrder.products) {
+      const id = item.product._id;
+
+      const product = await Product.findOne({ _id: id });
+      const productQuantity = product.quantity;
+      await Product.findOneAndUpdate(
+        { _id: id },
+        { quantity: productQuantity - item.cartQuantity },
+        { new: true }
+      );
+    }
+
+    // Send the final response to the client
+    res.json({ order: savedOrder });
   } catch (err) {
-    res.status(400).json({
+    // Handle errors
+    return res.status(400).json({
       message: `Error happened on server: "${err}" `,
     });
   }
@@ -172,7 +151,7 @@ exports.updateOrder = (req, res, next) => {
 
         if (!productAvailibilityInfo.productsAvailibilityStatus) {
           res.json({
-            message: 'Some of your products are unavailable for now',
+            message: "Some of your products are unavailable for now",
             productAvailibilityInfo,
           });
         }
@@ -208,7 +187,7 @@ exports.updateOrder = (req, res, next) => {
         { $set: order },
         { new: true }
       )
-        .populate('customerId')
+        .populate("customerId")
         .then(async (order) => {
           const mailResult = await sendMail(
             subscriberMail,
@@ -265,7 +244,7 @@ exports.cancelOrder = (req, res, next) => {
         { canceled: true },
         { new: true }
       )
-        .populate('customerId')
+        .populate("customerId")
         .then(async (order) => {
           const mailResult = await sendMail(
             subscriberMail,
@@ -310,7 +289,7 @@ exports.deleteOrder = (req, res, next) => {
 
 exports.getOrders = (req, res, next) => {
   Order.find({ customerId: req.user.id })
-    .populate('customerId')
+    .populate("customerId")
     .then((orders) => res.json(orders))
     .catch((err) =>
       res.status(400).json({
@@ -321,7 +300,7 @@ exports.getOrders = (req, res, next) => {
 
 exports.getOrder = (req, res, next) => {
   Order.findOne({ orderNo: req.params.orderNo })
-    .populate('customerId')
+    .populate("customerId")
     .then((order) => res.json(order))
     .catch((err) =>
       res.status(400).json({
