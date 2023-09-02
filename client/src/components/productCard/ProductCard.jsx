@@ -1,14 +1,15 @@
 import styles from "./ProductCard.module.scss";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { formatCurrency } from "../../helpers/currencyFormatter.js";
 import { useState } from "react";
 import FavoriteBtn from "../buttons/favoriteBtn/index.js";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, initializeCart } from "../../app/slices/cartSlice.js";
 import { useAddProductToCartMutation } from "../../app/services/cartApi.js";
-import { LiaCartArrowDownSolid, LiaCartPlusSolid } from "react-icons/lia";
 
-const ProductCard = ({ product }) => {
+import { BsCartCheck, BsCartPlus } from "react-icons/bs";
+
+const ProductCard = ({ product, isHistory = false }) => {
   const dispatch = useDispatch();
   const [isActionsShown, setActionsShown] = useState(false);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -17,34 +18,41 @@ const ProductCard = ({ product }) => {
   const cart = useSelector((state) => state.cart.products);
   const inCart = cart.find((item) => item.product._id === product._id);
 
-  const handleAddToCart = async (product) => {
+  const handleAddToCart = async (event, product) => {
     if (isLoggedIn) {
       const { data: responseCart } = await addProductToDb(product._id);
       dispatch(initializeCart(responseCart.products));
+
       return;
     }
     dispatch(addToCart({ product: product, cartQuantity: 1 }));
   };
 
   return (
-    <Link to={`/product/${product.itemNo}`}>
-      <div
-        className="group relative"
-        onMouseEnter={() => setActionsShown(true)}
-        onMouseLeave={() => setActionsShown(false)}
-      >
-        {isActionsShown && (
-          <div className="absolute inset-0">
-            {isLoggedIn && <FavoriteBtn id={product._id} />}
-            {inCart ? (
-              <Link to={`/shop`}>
-                <LiaCartPlusSolid />
-              </Link>
-            ) : (
-              <LiaCartArrowDownSolid />
-            )}
-          </div>
-        )}
+    <div
+      className="group relative overflow-hidden"
+      onMouseEnter={() => setActionsShown(true)}
+      onMouseLeave={() => setActionsShown(false)}
+    >
+      {!isHistory && (isActionsShown || inCart) && (
+        <div className="absolute top-0 rounded-t-md w-full p-2 flex justify-between bg-gray-50/[0.5]">
+          {isLoggedIn && (
+            <FavoriteBtn id={product._id} isText={false} size={36} />
+          )}
+          {inCart ? (
+            <Link to={`/shop`}>
+              <BsCartCheck size={36} />
+            </Link>
+          ) : (
+            <BsCartPlus
+              onClick={(e) => handleAddToCart(e, product)}
+              size={36}
+              className="cursor-pointer"
+            />
+          )}
+        </div>
+      )}
+      <Link to={`/product/${product.itemNo}`}>
         {product?.cartQuantity > 1 && (
           <div className="absolute top-0 right-0 w-1/5 aspect-square bg-[#555555] rounded-md flex flex-col justify-center text-center">
             <span className="text-[#eee4da]">{product?.cartQuantity}</span>
@@ -70,8 +78,8 @@ const ProductCard = ({ product }) => {
             </p>
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 
