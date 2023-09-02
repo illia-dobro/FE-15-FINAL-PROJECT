@@ -1,0 +1,28 @@
+@import "../../../assets/styles/common.scss";
+
+.quantityBtns {
+  @include flex-justify-around;
+  background-color: $secondary;
+  border-radius: 66px;
+  align-items: center;
+  color: $dark;
+  letter-spacing: -0.03em;
+}
+
+.quantityBtnsLg {
+  width: 163px;
+  height: 46px;
+  font-weight: 400;
+
+  button {
+    font-size: 24px;
+    line-height: 29px;
+    &:active {
+      color: darken($secondary, 4%);
+    }
+  }
+  span {
+    font-size: 20px;
+    line-height: 24px;
+  }
+}

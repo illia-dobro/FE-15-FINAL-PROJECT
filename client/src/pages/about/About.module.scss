@@ -1,0 +1,87 @@
+@import "../../assets/styles/common.scss";
+
+.page {
+  background-color: $primary;
+  padding: 29px;
+
+  &_title {
+    font-size: 48px;
+    margin-bottom: 29px;
+    color: #555555;
+
+    @media (max-width: 545px) {
+      font-size: 36px;
+    }
+  }
+
+  &_img {
+    margin: 56px 0;
+    &_item {
+      object-fit: cover;
+
+      @media (max-width: 768px) {
+        height: 300px;
+      }
+    }
+  }
+
+  &_statistics {
+    margin: 67px 0;
+  }
+
+  &_summary {
+    margin: 28px 0;
+    font-size: 32px;
+    color: #555555;
+    font-weight: 400;
+  }
+
+  &_quotation {
+    margin-bottom: 111px;
+  }
+}
+
+.statistics {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  &_item {
+    letter-spacing: -0.4px;
+
+    padding: 20px;
+    width: 33%;
+
+    @media (max-width: 768px) {
+      width: 50%;
+    }
+  }
+
+  &_number {
+    color: #E3DAD0;
+    font-size: 96px;
+    font-weight: 300;
+    line-height: 1.1;
+
+    @media (max-width: 545px) {
+      font-size: 66px;
+    }
+  }
+}
+
+.text {
+  line-height: 1.8;
+  font-size: 20px;
+  color: #555555;
+
+  @media (max-width: 545px) {
+    font-size: 16px;
+  }
+}
+
+.container {
+  max-width: 809px;
+  margin: 0 auto;
+}
+
+
