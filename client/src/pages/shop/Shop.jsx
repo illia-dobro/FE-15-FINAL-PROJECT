@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import QuantityBtns from "../../components/buttons/quantityBtns/QuantityBtns";
 import Button from "../../components/buttons/button";
 import { formatCurrency } from "../../helpers/currencyFormatter";
-import { AiOutlineArrowRight } from "react-icons/ai";
+import { AiOutlineArrowRight, AiOutlineClose } from "react-icons/ai";
 import {
   useAddProductToCartMutation,
   useDeleteProductFromTheCartMutation,
@@ -62,7 +62,7 @@ function Shop() {
         const { data: responseCart } = await addProductToDb(product._id);
         dispatch(initializeCart(responseCart.products));
       } else {
-        toast("We dont have more");
+        toast("We don't have more");
       }
       return;
     }
@@ -83,12 +83,13 @@ function Shop() {
     items && (
       <>
         <div className={styles.shop}>
-          <div className="px-4 mx-auto w-full md:w-4/5 lg:w-3/4 xl:w-2/3">
-            <h2 className={styles.shop__title}>
+        <h2 className={styles.shop__title}>
               {items.length
                 ? "Nice choice! Lets place an order"
                 : "Your cart is empty. Add some products to place an order"}
             </h2>
+          <div className="px-4 sm:px-8 mx-auto w-full md:w-4/5 lg:w-3/5 xl:w-2/4 shadow-md py-2 mb-2 rounded-md">
+
             <ul className={styles.shop__list}>
               {items.map((item) => (
                 <li key={item.product._id} className={styles.shop__item}>
@@ -121,7 +122,7 @@ function Shop() {
                         className={styles.shop__item_close}
                         action={() => handleRemove(item.product)}
                       >
-                        x
+                        <AiOutlineClose />
                       </Button>
                       <div className={styles.shop__item_price}>
                         {item.cartQuantity > 1 && (
@@ -144,7 +145,7 @@ function Shop() {
             </ul>
             {items.length > 0 && (
               <div className={styles.shop__total}>
-                <p className={styles.shop__total_text}>Total</p>
+                <p className={styles.shop__total_text}>Total:</p>
                 <p className={styles.shop__total_sum}>
                   {formatCurrency(totalPrice)}
                 </p>

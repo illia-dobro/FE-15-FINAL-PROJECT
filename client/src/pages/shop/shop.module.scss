@@ -2,6 +2,7 @@
 
 .shop {
   padding-top: 10px;
+  margin-bottom: 40px;
 
   &__container {
     //max-width: 50%;
@@ -9,7 +10,7 @@
 
   &__title {
     margin-bottom: 15px;
-    font-size: 24px;
+    font-size: clamp(1.25rem, 1.1429rem + 0.4762vw, 1.5rem);
     line-height: 40px;
     font-weight: 400;
     text-align: center
@@ -26,6 +27,14 @@
     align-items: center;
     margin-bottom: 20px;
 
+    @media screen and (max-width: 500px){
+      position: relative;
+      flex-direction: column;
+      align-items: flex-start;
+      box-shadow: -1px 3px 12px -8px rgba(0,0,0,0.43);
+      padding: 14px;
+    }
+
     &_img {
       flex-shrink: 0;
       margin-right: 27px;
@@ -39,6 +48,8 @@
       border-radius: 6px;
       overflow: hidden;
 
+
+
       &_object {
         width: 100%;
         height: 100%;
@@ -50,31 +61,32 @@
       display: flex;
       justify-content: space-between;
       flex-grow: 1;
-    }
 
-    &_main {
-      padding: auto;
+      @media screen and (max-width: 500px){
+        width: 100%;
+      }
+
     }
 
     &_title {
       font-weight: 400;
       margin-bottom: 10px;
-      font-size: 24px;
+      font-size: clamp(1rem, 0.7857rem + 0.9524vw, 1.5rem);
       line-height: 29px;
       letter-spacing: -0.02em;
       color: #555;
     }
 
     &_quantityBtn {
-      padding: auto;
       display: flex;
-      align-items: baseline;
+      align-items: center;
       justify-content: space-around;
       margin-top: 18px;
       padding: 9px 10px;
       border-radius: 50px;
       background: #eee4da;
       max-width: 125px;
+      box-shadow: -1px 3px 12px -10px rgba(0,0,0,0.43);
     }
 
     &_adidional {
@@ -86,6 +98,13 @@
 
     &_close {
       margin-left: auto;
+
+      @media screen and (max-width: 500px){
+        position: absolute;
+        padding: 8px;
+        top: 0;
+        right: 0;
+      }
     }
 
     &_price {
@@ -146,6 +165,7 @@
     margin-bottom: 70px;
     width: 100%;
     max-width: 100%;
+    box-shadow: -1px 3px 12px -8px rgba(0,0,0,0.43);
   }
 
   &_text {
