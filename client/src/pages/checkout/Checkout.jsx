@@ -38,35 +38,50 @@ function Checkout() {
   } = useSelector(selectCurrentUser);
 
 
+  const orderFromStore = useSelector(state => state.cart.products);
+
   const onSubmit = async (data) => {
-    console.log(data);
-    try {
-      await placeOrder({
-        customerId: _id,
-        deliveryAddress: {
-          address: data.address,
-        },
-        shipping: data.shipping,
-        paymentInfo: 'Credit card',
-        status: 'not shipped',
-        email: data.email,
-        mobile: data.phoneNumber,
-        letterSubject: 'Thank you for order! You are welcome!',
-        letterHtml:
-          '<h1>Your order is placed</p>',
-      });
-      toast("Thank you for order! You are welcome!");
+      const newOrder =
+        {
+          customerId: _id,
+          deliveryAddress: {
+            address: data.address,
+          },
+          shipping: data.shipping,
+          paymentInfo: 'Credit card',
+          status: 'not shipped',
+          email: data.email,
+          mobile: data.phoneNumber,
+          letterSubject: 'Thank you for order! You are welcome!',
+          letterHtml:
+            '<h1>Your order is placed</p>',
+        }
+
 
       try {
-        await deleteCart();
-        dispatch(initializeCart([]));
-        navigate('/profile')
+        isLoggedIn ?
+        await placeOrder(newOrder) :
+        await placeOrder({...newOrder, products: orderFromStore})
+        ;
+        toast(`Thank you for order! You are welcome!`);
+
+
+        try {
+          await deleteCart();
+          dispatch(initializeCart([]));
+          if (!isLoggedIn){
+            navigate('/')
+          } else {
+            navigate('/profile')
+          }
+
+        } catch (error) {
+          console.log(error);
+        }
       } catch (error) {
         console.log(error);
       }
-    } catch (error) {
-      console.log(error);
-    }
+
   };
 
   return (

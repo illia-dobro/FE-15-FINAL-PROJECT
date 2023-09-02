@@ -11,7 +11,6 @@ import SocialMediaBtn from "../../components/buttons/socialMediaBtn";
 import SocialMediaImages from "../../components/socialMediaImages";
 import { useGetCategoriesQuery } from "../../app/services/catalogApi";
 import { useGetAllProductsQuery } from "../../app/services/productApi";
-import CosmeticCategory from "../../components/cosmeticCategory";
 import uniqueMainImgUrl from "../../assets/unique_main.png";
 import InstagramUrl from "../../components/buttons/socialMediaBtn/Instagram.png";
 import SocialImgUrl1 from "../../components/socialMediaImages/socialImg1.png";
