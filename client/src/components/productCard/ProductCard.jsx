@@ -8,6 +8,7 @@ import { addToCart, initializeCart } from "../../app/slices/cartSlice.js";
 import { useAddProductToCartMutation } from "../../app/services/cartApi.js";
 
 import { BsCartCheck, BsCartPlus } from "react-icons/bs";
+import productApi from "../../app/services/productApi.js";
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
@@ -47,12 +48,15 @@ const ProductCard = ({ product }) => {
               className="cursor-pointer"
             />
           )}
-          {(isLoggedIn && !inCart) && (
+          {isLoggedIn && !inCart && (
             <FavoriteBtn id={product._id} isText={false} size={36} />
           )}
         </div>
       )}
-      <Link to={`/product/${product.itemNo}`}>
+      <Link
+        to={`/product/${product.itemNo}`}
+        className={!product.quantity && "grayscale"}
+      >
         {product?.cartQuantity > 1 && (
           <div className="absolute top-0 right-0 w-1/5 aspect-square bg-[#555555] rounded-md flex flex-col justify-center text-center">
             <span className="text-[#eee4da]">{product?.cartQuantity}</span>
@@ -73,8 +77,10 @@ const ProductCard = ({ product }) => {
             <h3 className="capitalize line-clamp-3 text-xl md:text-lg lg:text-sm">
               {product.name}
             </h3>
-            <p className="text-lg font-semibold">
-              {formatCurrency(product.currentPrice)}
+            <p className="text-lg font-semibold text-center">
+              {product.quantity
+                ? formatCurrency(product.currentPrice)
+                : "Out of stock"}
             </p>
           </div>
         </div>
