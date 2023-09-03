@@ -65,7 +65,7 @@ function Shop() {
       }
       dispatch(addToCart({ product: product, cartQuantity: 1 }));
     } else {
-      toast.warning("We dont have more");
+      toast.warning("We don't have more");
     }
   };
   const handleRemove = async (product) => {
