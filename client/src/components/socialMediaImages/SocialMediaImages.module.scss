@@ -4,16 +4,16 @@
     justify-content: space-between;
 
     & img {
-        max-width: 24%;
+        width: 24%;
     }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1024px) {
     .socialMediaImgs {
         gap: 2%;
         
         & img {
-            max-width: 32%;
+            width: 32%;
 
             &:last-child {
                 display: none;
@@ -22,14 +22,14 @@
     }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 640px) {
     .socialMediaImgs {
         flex-wrap: wrap;
         gap: 16px;
+        justify-content: center;
 
         & img {
-            max-width: 164px;
-            max-height: 164px;
+            width: 45%;
 
             &:last-child {
                 display: flex;

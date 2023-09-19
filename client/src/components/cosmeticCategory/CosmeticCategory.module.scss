@@ -23,7 +23,7 @@
 	}
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1024px) {
 	.category {
 		height: 370px;
 		width: 32%;
@@ -35,8 +35,9 @@
 	}
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 640px) {
 	.category {
 		width: 100%;
+		max-width: 480px;
 	}
 }

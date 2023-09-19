@@ -34,7 +34,7 @@
     font-size: 36px;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1024px) {
     .contacts {
 
         &__details {
@@ -58,15 +58,17 @@
     }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 640px) {
     .contacts {
 
         &__details {
             margin-top: 50px;
             flex-direction: column;
+            align-items: center;
 
             &_content {
                 width: 100%;
+                max-width: 480px;
             }
         }
     }

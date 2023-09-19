@@ -5,7 +5,7 @@
         padding: 0 80px;
         @include flex-justify-between;
         align-items: center;
-        gap: 126px;
+        gap: 10%;
         margin-bottom: 140px;
     }
 
@@ -19,6 +19,10 @@
     &__form {
         width: 100%;
         margin-bottom: 54px;
+    }
+
+    &__image {
+        width: 57%;
     }
     
     &__sendBtn {
@@ -35,7 +39,7 @@
     }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1024px) {
     .request {
         &__container {
             flex-direction: column;
@@ -46,11 +50,12 @@
 
         &__form {
             width: 80%;
+            max-width: 780px;
         }
     }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 640px) {
     .request {
         &__title {
             margin-top: 50px;
@@ -61,6 +66,7 @@
 
         &__form {
             width: 100%;
+            max-width: 480px;
         }
 
         &__sendBtn {
@@ -77,6 +83,8 @@
         }
 
         &__image {
+            width: 100%;
+            max-width: 480px;
             height: 500px;
             object-fit: cover;
         }
