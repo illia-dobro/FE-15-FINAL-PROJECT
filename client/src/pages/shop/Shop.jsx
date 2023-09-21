@@ -82,8 +82,8 @@ function Shop() {
   return (
     items && (
       <>
-        <div className={styles.shop}>
-          <div className="px-4 mx-auto w-full md:w-4/5 lg:w-3/4 xl:w-2/3">
+        <div className={`${styles.shop} ${!items.length && 'flex'} `}>
+          <div className="px-4 mx-auto w-full self-center pb-2 md:w-4/5 lg:w-3/4 xl:w-2/3">
             <h2 className={styles.shop__title}>
               {items.length
                 ? "Nice choice! Lets place an order"
