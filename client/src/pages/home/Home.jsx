@@ -97,7 +97,7 @@ function Home() {
               >
                 <CosmeticCategory
                   image={{ src: category.imgUrl, alt: category.name }}
-                  category={category.id}
+                  category={category.id.slice(0,4)}
                   to={`/catalog/${category.id}`}
                 />
                 <div className={styles.home__cosmeticsProducts}>

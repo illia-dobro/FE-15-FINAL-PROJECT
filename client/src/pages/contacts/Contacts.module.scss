@@ -47,10 +47,10 @@
     }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1024px) {
     .contacts {
         &__container {
-            max-width: 780px;
+            max-width: 980px;
             padding: 0 25px;
         }
 
@@ -68,10 +68,10 @@
     }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 640px) {
     .contacts {
         &__container {
-            max-width: 375px;
+            // max-width: 480px;
             padding: 0 15px;
         }
 

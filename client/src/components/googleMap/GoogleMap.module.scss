@@ -13,10 +13,9 @@
 
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 640px) {
     .contacts {
         &__map {
-            max-width: 375px;
             height: 500px;
             margin-top: 50px;
             margin-bottom: 90px;

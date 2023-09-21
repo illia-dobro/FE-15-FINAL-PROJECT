@@ -55,12 +55,12 @@
 	}
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1024px) {
 	.home {
 		padding-bottom: 90px;
 
 		&__container {
-			max-width: 780px;
+			max-width: 980px;
 		}
 
 		&__cosmeticsContainer,
@@ -100,11 +100,8 @@
 	}
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 640px) {
 	.home {
-		&__container {
-			max-width: 375px;
-		}
 
 		&__cosmeticsContainer,
 		&__socialMediaContainer,
@@ -116,11 +113,13 @@
 		&__socialMediaContainer {
 			@include flex-col;
 			gap: 20px;
+			align-items: center;
 		}
 
 		&__cosmeticsCategory {
 			width: 100%;
 			margin-bottom: 0;
+			justify-content: center;
 		}
 
 		&__cosmeticsProducts {
