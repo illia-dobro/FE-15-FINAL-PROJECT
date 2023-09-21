@@ -57,16 +57,16 @@ function Shop() {
     dispatch(decreaseQty({ product: product }));
   };
   const handleIncreaseQty = async ({ product, cartQuantity }) => {
-    if (isLoggedIn) {
-      if (product.quantity > cartQuantity) {
+    if (product.quantity > cartQuantity) {
+      if (isLoggedIn) {
         const { data: responseCart } = await addProductToDb(product._id);
         dispatch(initializeCart(responseCart.products));
-      } else {
-        toast("We dont have more");
+        return;
       }
-      return;
+      dispatch(addToCart({ product: product, cartQuantity: 1 }));
+    } else {
+      toast.warning("We don't have more");
     }
-    dispatch(addToCart({ product: product, cartQuantity: 1 }));
   };
   const handleRemove = async (product) => {
     if (isLoggedIn) {
@@ -125,13 +125,13 @@ function Shop() {
                         {item.cartQuantity > 1 && (
                           <small className={styles.shop__item_count}>
                             {`${formatCurrency(
-                              item.product.currentPrice
+                              item.product.currentPrice,
                             )} for 1 item`}
                           </small>
                         )}
                         <span className={styles.shop__item_sum}>
                           {formatCurrency(
-                            item.cartQuantity * item.product.currentPrice
+                            item.cartQuantity * item.product.currentPrice,
                           )}
                         </span>
                       </div>
