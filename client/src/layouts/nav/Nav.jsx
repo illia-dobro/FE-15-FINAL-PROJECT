@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Logo from "../../components/logo";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { GoPerson, GoSearch } from "react-icons/go";
 import { LiaShoppingBagSolid } from "react-icons/lia";
@@ -12,6 +12,8 @@ import "./nav.scss";
 import { useDispatch } from "react-redux";
 import { toggleSearch } from "../../app/slices/searchSlice.js";
 import Search from "../../components/search";
+import SocialLinks from "../../components/socialLinks/SocialLinks";
+import signature from '../../assets/images/signature.png';
 
 function Nav() {
   const { isMobile } = useDeviceType();
@@ -76,7 +78,7 @@ function Nav() {
               </span>
               <NavLink className="nav__icon" to="/shop">
                 <LiaShoppingBagSolid />
-                {calculateCartQty() || null}
+                <span>{calculateCartQty() || null}</span>
               </NavLink>
               <NavLink
                 className="nav__icon"
@@ -111,7 +113,10 @@ function Nav() {
                 <NavLink to="/delivery">Delivery</NavLink>
                 <NavLink to="/contacts">Contacts</NavLink>
               </div>
-              {/* Social Btns and signature; slider*/}
+              <div className="nav__mobile__footer">
+                <SocialLinks />
+                <img src={signature} alt="signature" width={"160px"}/>
+              </div>
             </div>
           )}
           <Logo logoFillColor={logoFillColor} />
