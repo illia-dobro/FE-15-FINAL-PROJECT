@@ -1,5 +1,6 @@
 import styles from './Delivery.module.scss';
 import {useNavigate} from "react-router-dom";
+import Image from '../../../src/assets/img/delivery/Rectangle38.png'
 
 
 function Delivery() {
@@ -10,7 +11,7 @@ function Delivery() {
                 <button onClick={() => navigate(-1)}>&#8592; Back</button>
                 <div className={styles.page_title}>Delivery information</div>
                 <div className={styles.page_img}>
-                    <img src="../../../src/assets/img/delivery/Rectangle38.png" alt="delivery"/>
+                    <img src={Image}/>
                 </div>
                 <div className={styles.text_title}>Place an order on the website</div>
 

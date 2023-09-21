@@ -1,6 +1,10 @@
 import styles from './About.module.scss';
 import Quotation from "../../components/quotation/Quotation.jsx";
 import {useNavigate} from "react-router-dom";
+import Image1 from '../../../src/assets/img/about/Ellipse_8.png';
+import Image2 from '../../../src/assets/img/about/signature.jpg';
+import Image3 from '../../../src/assets/img/about/Rectangle_37.png';
+import Image4 from '../../../src/assets/img/about/./Rectangle_38.png';
 
 function About() {
   const navigate = useNavigate();
@@ -42,8 +46,8 @@ function About() {
         mass market.`,
     authorName: 'Zara Boltaeva',
     authorCaption: 'CEO, Founder',
-    imageSrc: '../../../src/assets/img/about/Ellipse_8.png',
-    signatureSrc: `../../../src/assets/img/about/signature.jpg`
+    imageSrc: Image1,
+    signatureSrc: Image2
   }
 
   return (
@@ -58,7 +62,7 @@ function About() {
           focused on exclusive sales, but not on the mass market.
         </div>
         <div className={styles.page_img}>
-          <img src="../../../src/assets/img/about/Rectangle_37.png" alt="about"/>
+          <img src={Image3} alt="about"/>
         </div>
         <div className={styles.text}>The brand seeks to build respect among the audience for its products, so that the presence of the
           company&apos;s products is a sign of prestige, since the focus of the business is focused on exclusive sales,
@@ -85,7 +89,7 @@ function About() {
           focused on exclusive sales, but not on the mass market.
         </div>
         <div className={styles.page_img}>
-          <img className={styles.page_img_item} src="../../../src/assets/img/about/./Rectangle_38.png" alt="about"/>
+          <img className={styles.page_img_item} src={Image4} alt="about"/>
         </div>
         <div className={styles.page_summary}>
           Each Boltaeva brand product is truly unique - everything is thought out to the smallest detail.
