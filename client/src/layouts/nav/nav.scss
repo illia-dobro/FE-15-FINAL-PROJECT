@@ -7,8 +7,7 @@
 .nav__icon {
   @include flex-justify-center;
   align-items: center;
-  width: 50px;
-  span{
+  span {
     font-size: 14px;
   }
 }
@@ -16,18 +15,20 @@
   padding: 4px;
   height: 120px;
   gap: 50px;
+  .nav__icon {
+    width: 50px;
+  }
   .nav__right {
     display: flex;
     align-items: center;
-
   }
   .nav__icons {
     @include flex-justify-center;
     align-items: center;
   }
 
-  .nav__links{
-   @include flex-justify-between;
+  .nav__links {
+    @include flex-justify-between;
     gap: 50px;
   }
   .nav__link {
@@ -36,7 +37,7 @@
     line-height: 17px;
     transition: color 0.2s ease-in-out;
   }
-  .nav__link:hover{
+  .nav__link:hover {
     color: $primary-hover;
   }
 
@@ -44,42 +45,44 @@
     font-size: 18px;
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
-   
   }
   .nav__icon:hover {
     transform: scale(1.1);
-    color:$primary-hover;
+    color: $primary-hover;
   }
-
 }
 .nav-mobile {
   height: 80px;
   position: relative;
   .nav__mobile__dropdown {
     position: absolute;
-    background-color: $primary;
+    background-color: white;
     top: 100%;
     width: 100%;
     z-index: 999;
     right: 0;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
   }
- 
+  .nav__mobile__footer {
+    @include flex-justify-between;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 10px;
+  }
   .nav-mobile__links {
     @include flex-col;
     text-align: center;
     font-size: 16px;
     font-weight: 400;
     line-height: 26px;
-    letter-spacing: -0.03em;
     .nav__link {
-      color:$dark;
+      color: $dark;
     }
-    a:hover{
-        background-color: $secondary;
-      }
-    a{
-        padding: 34px;
+    a:hover {
+      background-color: $secondary;
+    }
+    a {
+      padding: 34px;
     }
   }
 }

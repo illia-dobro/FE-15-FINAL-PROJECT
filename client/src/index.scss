@@ -4,6 +4,10 @@
 @import './assets/styles/common.scss';
 
 /*  font-family: 'PT Sans', sans-serif;*/
+
+*{
+  color: inherit;
+}
 html,
 body {
   font-family: "PT Sans", sans-serif;
