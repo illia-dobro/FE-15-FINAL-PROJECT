@@ -1,4 +1,4 @@
-import SocialLinks from '../SocialLinks';
+import SocialLinks from '../../../components/socialLinks/SocialLinks';
 import ContactsLinks from '../ContactsLinks/ContactsLinks';
 import signature from '../../../assets/images/signature.jpg';
 import {

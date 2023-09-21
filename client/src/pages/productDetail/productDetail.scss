@@ -125,6 +125,9 @@
     align-items: center;
     display: flex;
   }
+  .image-gallery-content.image-gallery-thumbnails-left .image-gallery-slide .image-gallery-image, .image-gallery-content.image-gallery-thumbnails-right .image-gallery-slide .image-gallery-image {
+    height: 100%;
+  }
 }
 .hearts{
   @include flex-justify-center;
