@@ -4,8 +4,10 @@ import SocialMedia from "../../components/socialMedia";
 import SocialMediaBtn from "../../components/buttons/socialMediaBtn";
 import SocialMediaImages from "../../components/socialMediaImages";
 import RequestCallBack from "../../components/requestCallBack";
+import Image3 from '../../assets/contacts_intro.png';
 
 import styles from './Contacts.module.scss';
+import SocialLinks from '../../layouts/footer/SocialLinks'
 
 function Contacts() {
   const contactsMediaLinks = [
@@ -39,9 +41,9 @@ function Contacts() {
   return (
     <>
       <div className={styles.contacts__container}>
-        
+
         <p className={styles.contacts__title}>Our contacts</p>
-        <img src="../../src/assets/contacts_intro.png" alt="#" className={styles.contacts__introImg} />
+        <img src={Image3} alt="intro" className={styles.contacts__introImg} />
 
         <ContactsDetails />
 
@@ -50,13 +52,13 @@ function Contacts() {
         <div className={styles.contacts__socialMedia}>
           <SocialMedia text='Each Boltaeva brand product is truly unique - everything is thought out to the smallest detail.' />
 
-          <nav className={styles.contacts__socialMedia_buttons}>
+          {/* <nav className={styles.contacts__socialMedia_buttons}>
             <SocialMediaBtn icons={contactsMediaLinks}/>
-          </nav>
+          </nav> */}
         </div>
 
-        <div className={styles.contacts__mediaImages_visible}>
-          <SocialMediaImages 
+        {/* <div className={styles.contacts__mediaImages_visible}>
+          <SocialMediaImages
             socialMediaImages = {[
               {
                 src: '../../src/components/socialMediaImages/socialImg1.png',
@@ -79,7 +81,7 @@ function Contacts() {
         </div>
 
         <div className={styles.contacts__mediaImages_hidden}>
-          <SocialMediaImages 
+          <SocialMediaImages
             socialMediaImages = {[
               {
                 src: '../../src/components/socialMediaImages/socialImg3.png',
@@ -99,11 +101,11 @@ function Contacts() {
               },
             ]}
           />
-        </div>
-      
+        </div> */}
+
         <RequestCallBack />
       </div>
-      
+
     </>
   )
 }
